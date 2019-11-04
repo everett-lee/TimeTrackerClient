@@ -8,3 +8,6 @@
     transform: translate(-50%, -50%);
 }
 
+.loginGridColumn {
+    min-width: 500px;
+}
