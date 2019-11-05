@@ -37,6 +37,7 @@ function LoginForm() {
 
                     <Grid.Column verticalAlign='middle' className="loginGridColumn">
                         <RegisterModal 
+                            data-testid="registerModal"
                             trigger={<Button content='Sign up'
                             icon='signup' size='big' 
                             onClick = { () => changeModalState() }/>}
