@@ -4,7 +4,7 @@ import {render, fireEvent, cleanup} from '@testing-library/react';
 
 afterEach(cleanup)
 
-test('Shows register modal when register clicked', () => {
+test('Shows register modal when "sign up" is clicked', () => {
     const { queryByText, getByText } = render(<LoginForm />);
     
     // at first the modal is not present 
