@@ -1,8 +1,8 @@
 import React from 'react';
 import { Modal, Button, Form, Message } from 'semantic-ui-react'
 
-function RegisterModal({ callRegisterEndpoint, modalActive, trigger, password, setPassword,
-                         email, setEmail, error, errorMsg }) {
+function RegisterModal({ callRegisterEndpoint, active, changeModalState, trigger, 
+                        password, setPassword, email, setEmail, error, errorMsg}) {
 
     const emailOnChangeHandler = (e) => {
         setEmail(e.target.value);
@@ -23,7 +23,7 @@ function RegisterModal({ callRegisterEndpoint, modalActive, trigger, password, s
     }
 
     return (
-        <Modal trigger={trigger} centered={true} open={modalActive}>
+        <Modal trigger={trigger} centered={true} open={active} >
             <Modal.Header>Register</Modal.Header>
             <Modal.Content>
                 <Form>
@@ -41,6 +41,9 @@ function RegisterModal({ callRegisterEndpoint, modalActive, trigger, password, s
                     {displayError()}
                     <Button type='submit' onClick={callRegisterEndpoint}>
                         Submit
+                    </Button>
+                    <Button onClick={changeModalState   W}>
+                        Close
                     </Button>
                 </Form>
             </Modal.Content>

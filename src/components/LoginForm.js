@@ -12,21 +12,23 @@ function LoginForm() {
     const [error, setError] = useState(false);
     const [errorMsg, setErrorMsg] = useState('');
 
-
-    const REGEX = /already exists/i;
-
     // register the user and update the user object if successful
     // otherwise display an error in the modal
     const callRegisterEndpoint = async () => {
         let user;
+        let msg;
         try {
             user = await register(email, password);
         } catch (error) {
-            let msg = error.response.data.message;
-            if (REGEX.test(msg)) {
-                setErrorMsg(msg)
-                setError(true)
-            } 
+            // response from server
+            if (error.response) {
+                msg = error.response.data.message;
+            // server not reached
+            } else {
+                msg = 'Unable to reach server'
+            }
+            setErrorMsg(msg)
+            setError(true)
         }
         
         if (user) {
@@ -68,7 +70,7 @@ function LoginForm() {
                             trigger={<Button content='Sign up'
                                 icon='signup' size='big'
                                 onClick={changeModalState} />}
-                            modalActive={active}
+                            active={active}
                             callRegisterEndpoint={callRegisterEndpoint}
                             password={password}
                             setPassword={setPassword}
@@ -76,6 +78,7 @@ function LoginForm() {
                             setEmail={setEmail}
                             error={error}
                             errorMsg={errorMsg} 
+                            changeModalState={changeModalState}
                             />
                     </Grid.Column>
                 </Grid>
