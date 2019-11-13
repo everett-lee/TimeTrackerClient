@@ -3,6 +3,7 @@ import { Button, Divider, Form, Grid, Segment, Message } from 'semantic-ui-react
 import { AuthenticationContext } from './providers/AuthenticationProvider';
 import RegisterModal from './RegisterModal';
 import { register, authenticate } from './providers/RequestAPI';
+import sleep from './utils/sleep';
 
 function LoginForm() {
     const authentcationContext = useContext(AuthenticationContext);
@@ -10,8 +11,8 @@ function LoginForm() {
     const [active, modalActive] = useState(false);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [modalErrorMsg, setModalErrorMsg] = useState('');
-    const [errorMsg, setErrorMsg] = useState('');
+    const [resultMsg, setResultMsg] = useState(''); // info message for api calls
+    const [apiSuccess, setApiSuccess] = useState(false); // is api call success or failure
 
     const emailOnChangeHandler = (e) => {
         setEmail(e.target.value);
@@ -34,6 +35,7 @@ function LoginForm() {
         try {
             user = await register(email, password);
         } catch (error) {
+            setApiSuccess(false)
             // response from server
             if (error.response) {
                 msg = error.response.data.message;
@@ -41,13 +43,15 @@ function LoginForm() {
             } else {
                 msg = 'Unable to reach server'
             }
-            setModalErrorMsg(msg)
+            setResultMsg(msg)
         }
 
         if (user) {
+            setApiSuccess(true)
+            setResultMsg('Registration successful')
+
             // switch modal off and clear error if successful
-            changeModalState();
-            setModalErrorMsg('')
+            changeModalState()
         }
     }
 
@@ -63,6 +67,7 @@ function LoginForm() {
             user = await authenticate(email, password);
             console.log(user)
         } catch (error) {
+            setApiSuccess(false)
             // response from server
             if (error.response) {
                 msg = error.response.data.message;
@@ -70,26 +75,36 @@ function LoginForm() {
             } else {
                 msg = 'Unable to reach server'
             }
-            setErrorMsg(msg)
+            setResultMsg(msg)
         }
 
         if (user) {
             // clear error message
             authentcationContext.setUser(user);
             authentcationContext.setAuthenticated(true);
-            setErrorMsg('')
+            setResultMsg('')
         }
     }
 
     const displayError = () => {
-        if (errorMsg.length >= 1) {
-            return (
-                <Message negative>
-                    <Message.Header>{errorMsg}</Message.Header>
-                </Message>
-            );
+        if (resultMsg.length >= 1) {
+
+            if (apiSuccess) {
+                return (
+                    <Message positive>
+                        <Message.Header>{resultMsg}</Message.Header>
+                    </Message>
+                );
+            } else {
+                return (
+                    <Message negative>
+                        <Message.Header>{resultMsg}</Message.Header>
+                    </Message>
+                );
+            }
         }
     }
+
 
     const changeModalState = () => {
         modalActive(!active)
@@ -131,7 +146,7 @@ function LoginForm() {
                             passwordOnChangeHandler={passwordOnChangeHandler}
                             email={email}
                             emailOnChangeHandler={emailOnChangeHandler}
-                            error={modalErrorMsg}
+                            resultMsg={resultMsg}
                             changeModalState={changeModalState}
                         />
                     </Grid.Column>

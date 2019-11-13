@@ -1,18 +1,15 @@
 import React from 'react';
 import { Modal, Button, Form, Message } from 'semantic-ui-react'
 
-function RegisterModal({ callRegisterEndpoint, active, changeModalState, trigger, 
-                        password, passwordOnChangeHandler, email, emailOnChangeHandler, 
-                        error}) {
+function RegisterModal({ callRegisterEndpoint, active, changeModalState, trigger,
+    password, passwordOnChangeHandler, email, emailOnChangeHandler, resultMsg }) {
 
-
-
-    const displayError = () => {
-        if (error.length >= 1) {
+    const resultMessage = () => {
+        if (resultMsg.length >= 1) {
             return (
-            <Message negative>
-                <Message.Header>{error}</Message.Header>
-            </Message>
+                <Message negative>
+                    <Message.Header>{resultMsg}</Message.Header>
+                </Message>
             );
         }
     }
@@ -33,7 +30,7 @@ function RegisterModal({ callRegisterEndpoint, active, changeModalState, trigger
                         type={'password'}
                         value={password}
                         onChange={passwordOnChangeHandler} />
-                    {displayError()}
+                    {resultMessage()}
                     <Button type='submit' onClick={callRegisterEndpoint}>
                         Submit
                     </Button>
