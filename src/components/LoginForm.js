@@ -1,9 +1,8 @@
 import React, { useContext, useState } from 'react';
-import { Button, Divider, Form, Grid, Segment, Message } from 'semantic-ui-react';
+import { Button, Divider, Form, Grid, Segment, Message, Input } from 'semantic-ui-react';
 import { AuthenticationContext } from './providers/AuthenticationProvider';
 import RegisterModal from './RegisterModal';
-import { register, authenticate } from './providers/RequestAPI';
-import sleep from './utils/sleep';
+import { register, authenticate } from './providers/ApiActions';
 
 function LoginForm() {
     const authentcationContext = useContext(AuthenticationContext);
@@ -65,7 +64,6 @@ function LoginForm() {
 
         try {
             user = await authenticate(email, password);
-            console.log(user)
         } catch (error) {
             setApiSuccess(false)
             // response from server
@@ -128,6 +126,7 @@ function LoginForm() {
                                 iconPosition='left'
                                 label='Password'
                                 type='password'
+                                placeholder='Password'
                                 value={password}
                                 onChange={passwordOnChangeHandler} />
                             <Button content='Login' primary
