@@ -11,3 +11,30 @@
 .loginGridColumn {
     min-width: 500px;
 }
+
+#topSegment {
+}
+
+#selectionBox {
+    width: 40%;
+}
+
+#timerBox {
+    width: 60%;
+}
+  
+.counterWrapper {
+}
+  
+.counter {
+    border: 2px gray dotted;
+    margin: 0.25em;
+    width: 5em;
+    height: 5em;
+    border-radius: 50%;
+    font-size: 3em;
+    color: black;
+    line-height: 5em;
+    text-align: center;
+    background: #99ccff;
+}

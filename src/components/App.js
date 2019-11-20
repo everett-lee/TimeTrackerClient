@@ -1,6 +1,6 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import LoginForm from './LoginForm';
-import TopSegment from './TopSegment';
+import TopSegment from './topsegment/TopSegment';
 import { AuthenticationContext }  from './providers/AuthenticationProvider';
 
 function App() {
