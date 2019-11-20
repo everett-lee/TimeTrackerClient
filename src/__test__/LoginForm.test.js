@@ -5,6 +5,7 @@ import {render, fireEvent, cleanup} from '@testing-library/react';
 
 const mockToken = "token";
 const mockUser = { id: 30, token: mockToken};
+authenticate.mockImplementation((username, password) => Promise.resolve(mockUser));
 
 afterEach(cleanup);
 
@@ -24,6 +25,7 @@ test('Shows register modal when "sign up" is clicked', () => {
     expect(getByText(/register/i).textContent).toBe('Register');
 });
 
+
 test('Api called when "login" clicked', () => {
     const { getAllByPlaceholderText, getByText } = render(<LoginForm />);
     
@@ -31,7 +33,6 @@ test('Api called when "login" clicked', () => {
     let elements = getAllByPlaceholderText('Username');
     let input = elements[0];
     fireEvent.change(input, { target: { value: 'test' } });
-
 
     // insert password
     elements = getAllByPlaceholderText('Password');

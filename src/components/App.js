@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react';
-import LoginForm from './components/LoginForm'
-import { AuthenticationContext }  from './components/providers/AuthenticationProvider';
+import LoginForm from './LoginForm';
+import TopSegment from './TopSegment';
+import { AuthenticationContext }  from './providers/AuthenticationProvider';
 
 function App() {
   const authentcationContext = useContext(AuthenticationContext);
@@ -12,10 +13,10 @@ function App() {
     );
   }
 
-  if (!authentcationContext.authenticated) {
+  if (!authentcationContext.authenticated && 1 === 2) {
     return loginView();
   } else {
-    return <div>hi</div>
+    return <TopSegment></TopSegment>
   }
 }
 
