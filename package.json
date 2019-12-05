@@ -34,5 +34,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "apollo-client": "^2.6.4",
+    "install-peers": "^1.0.3"
   }
 }
