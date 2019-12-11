@@ -13,7 +13,7 @@ function App() {
     );
   }
 
-  if (!authentcationContext.authenticated && 1 === 2) {
+  if (!authentcationContext.authenticated) {
     return loginView();
   } else {
     return <TopSegment></TopSegment>
