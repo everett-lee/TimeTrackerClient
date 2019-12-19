@@ -36,5 +36,7 @@
     color: black;
     line-height: 5em;
     text-align: center;
-    background: #99ccff;
+    background: #eaeaea;
+    box-shadow: 0 0 3px #000, 0 0 5px #C7C7D5;
+    text-shadow: -2px 1px 2px #a8a6a6;
 }

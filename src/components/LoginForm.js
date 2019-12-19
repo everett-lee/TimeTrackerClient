@@ -5,7 +5,7 @@ import RegisterModal from './RegisterModal';
 import { register, authenticate } from './providers/ApiActions';
 
 function LoginForm() {
-    const authentcationContext = useContext(AuthenticationContext);
+    const authenticationContext = useContext(AuthenticationContext);
 
     const [active, modalActive] = useState(false);
     const [email, setEmail] = useState('');
@@ -78,8 +78,8 @@ function LoginForm() {
 
         if (user) {
             // clear error message
-            authentcationContext.setUser(user);
-            authentcationContext.setAuthenticated(true);
+            authenticationContext.updateUserandLocalStorage(user);
+            authenticationContext.setAuthenticated(true);
             setResultMsg('')
         }
     }
