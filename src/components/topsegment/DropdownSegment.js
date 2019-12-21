@@ -1,13 +1,15 @@
 import React from 'react';
 import { Segment, Dropdown } from 'semantic-ui-react';
 
-function DropdownSegment() {
+function DropdownSegment({ clients }) {
     return (
         <Segment.Group horizontal>
             <Segment>
-                <Dropdown placeholder='NT' search selection options={{text:"nt", value:"hi"}} />
+                <Dropdown placeholder='Client' options={clients} search selection />
             </Segment>
-            <Segment>Right</Segment>
+            <Segment>
+                
+            </Segment>
       </Segment.Group>
     );
 }
