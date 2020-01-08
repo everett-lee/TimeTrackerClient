@@ -30,7 +30,7 @@ function TopSegment() {
   return (
     <Segment.Group horizontal id="topSegment">
       <Segment id="selectionBox">
-        <DropdownSegment clients={clients} />
+        <DropdownSegment clients={clients} /> 
       </Segment>
       <AddClientModal />
       <TimerBox></TimerBox>
