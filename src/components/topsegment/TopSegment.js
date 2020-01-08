@@ -4,15 +4,16 @@ import { Segment } from 'semantic-ui-react';
 import { useQuery } from '@apollo/react-hooks';
 
 import { AuthenticationContext } from '../providers/AuthenticationProvider';
-import queries from '../../queries/queries'
+import Queries from '../../queries/Queries'
 import TimerBox from "./TimerBox";
 import DropdownSegment from "./DropdownSegment";
+import AddClientModal from './AddClientModal';
 
 
 function TopSegment() {
   const authenticationContext = useContext(AuthenticationContext);
 
-  const { loading, error, data } = useQuery(queries.ALL_CLIENTS(authenticationContext.user.id));
+  const { loading, error, data } = useQuery(Queries.ALL_CLIENTS(authenticationContext.user.id));
 
   if (loading) return <p>Loading...</p>;
   if (error) console.log(error + "the error")
@@ -31,6 +32,7 @@ function TopSegment() {
       <Segment id="selectionBox">
         <DropdownSegment clients={clients} />
       </Segment>
+      <AddClientModal />
       <TimerBox></TimerBox>
     </Segment.Group>
   );

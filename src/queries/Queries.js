@@ -5,7 +5,7 @@ import { gql } from 'apollo-boost';
  * APollo API
  */
 
-const queries = {
+const Queries = {
     ALL_CLIENTS: (id) => gql`
     {
     getAllClients(ownerId: ${id}) {
@@ -17,4 +17,4 @@ const queries = {
     `,
 }
 
-export default queries;
+export default Queries;
