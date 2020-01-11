@@ -1,10 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { useMutation } from '@apollo/react-hooks';
 import { Modal, Button, Form, Message } from 'semantic-ui-react'
+import { AuthenticationContext } from '../providers/AuthenticationProvider';
+
+import Mutatations from '../../graphql/Mutations'
 
 function AddClientModal({ }) {
+    const authenticationContext = useContext(AuthenticationContext);
 
     const [clientName, setClientName] = useState('');
     const [businessType, setbusinessType] = useState('');
+    const [location, setLocation] = useState('');
+
+    let input;
+    const [createClient, { data }] = useMutation(Mutatations.CREATE_CLIENT);
 
     const clientNameOnChangeHandler = (e) => {
         setClientName(e.target.value)
@@ -14,9 +23,19 @@ function AddClientModal({ }) {
         setbusinessType(e.target.value)
     }
 
-    const callAddClient = () => {
-        console.log(clientName, businessType)
-        return;
+    const locationOnChangeHandler = (e) => {
+        setLocation(e.target.value)
+    }
+
+    const callCreateClient = () => {
+        createClient({ variables: 
+            { "ownerId": authenticationContext.user.id,
+              "clientName": clientName,
+              "businessType": businessType,
+              "location": location }  
+        });
+
+        console.log("hi")
     }
 
     return (
@@ -31,8 +50,13 @@ function AddClientModal({ }) {
                 placeholder={'Business type'}
                 onChange={businessTypeOnChangeHandler}
                 value={businessType} />
+            <Form.Input required={true}
+                label={'Location'}
+                placeholder={'Location'}
+                onChange={locationOnChangeHandler}
+                value={location} />
             {'resultMessage()'}
-            <Button type='submit' onClick={callAddClient}>
+            <Button type='submit' onClick={callCreateClient}>
                 Save
             </Button>
         </Form>
