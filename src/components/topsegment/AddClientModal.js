@@ -3,17 +3,16 @@ import { useMutation } from '@apollo/react-hooks';
 import { Modal, Button, Form, Message } from 'semantic-ui-react'
 import { AuthenticationContext } from '../providers/AuthenticationProvider';
 
-import Mutatations from '../../graphql/Mutations'
+import Mutations from '../../graphql/Mutations'
 
-function AddClientModal({ }) {
+function AddClientModal({ onClose }) {
     const authenticationContext = useContext(AuthenticationContext);
 
     const [clientName, setClientName] = useState('');
     const [businessType, setbusinessType] = useState('');
     const [location, setLocation] = useState('');
 
-    let input;
-    const [createClient, { data }] = useMutation(Mutatations.CREATE_CLIENT);
+    const [createClient] = useMutation(Mutations.CREATE_CLIENT);
 
     const clientNameOnChangeHandler = (e) => {
         setClientName(e.target.value)
@@ -28,14 +27,19 @@ function AddClientModal({ }) {
     }
 
     const callCreateClient = () => {
-        createClient({ variables: 
-            { "ownerId": authenticationContext.user.id,
-              "clientName": clientName,
-              "businessType": businessType,
-              "location": location }  
-        });
-
-        console.log("hi")
+        // if all fields are completed
+        if (clientName && businessType && location) {
+            createClient({
+                variables:
+                {
+                    "ownerId": authenticationContext.user.id,
+                    "clientName": clientName,
+                    "businessType": businessType,
+                    "location": location
+                }
+            });
+            onClose();
+        }
     }
 
     return (
@@ -55,9 +59,11 @@ function AddClientModal({ }) {
                 placeholder={'Location'}
                 onChange={locationOnChangeHandler}
                 value={location} />
-            {'resultMessage()'}
             <Button type='submit' onClick={callCreateClient}>
                 Save
+            </Button>
+            <Button type='close' onClick={onClose}>
+                Close
             </Button>
         </Form>
     )

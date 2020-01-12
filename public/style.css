@@ -23,7 +23,12 @@
     width: 60%;
 }
   
-.counterWrapper {
+#dropdownContainerLeft {
+    width: 70%;
+}
+
+#dropdown {
+    width: 60%;
 }
   
 .counter {
