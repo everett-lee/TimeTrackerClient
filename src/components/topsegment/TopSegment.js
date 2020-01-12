@@ -11,9 +11,9 @@ import DropdownSegment from "./DropdownSegment";
 function TopSegment() {
   const authenticationContext = useContext(AuthenticationContext);
 
-  const { loading, error, data } = useQuery(Queries.ALL_CLIENTS(authenticationContext.user.id));
+  const { loading, error, data, refetch } = useQuery(Queries.ALL_CLIENTS(authenticationContext.user.id));
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return null;
   if (error) console.log(error);
 
   const clients = data.getAllClients.map((el, index) => ({
@@ -23,12 +23,10 @@ function TopSegment() {
   })
   );
 
-  data.getAllClients.forEach(el => console.log(el))
-
   return (
     <Segment.Group horizontal id="topSegment">
       <Segment id="selectionBox">
-        <DropdownSegment clients={clients} />
+        <DropdownSegment refetch={refetch} clients={clients} />
       </Segment>
       <TimerBox></TimerBox>
     </Segment.Group>

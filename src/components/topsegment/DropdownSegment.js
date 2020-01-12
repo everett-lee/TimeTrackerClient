@@ -3,11 +3,14 @@ import { Segment, Dropdown, Button, Modal } from 'semantic-ui-react';
 
 import AddcClientModal from './AddClientModal';
 
-function DropdownSegment({ clients }) {
+function DropdownSegment({ clients, refetch }) {
     return (
         <Segment.Group horizontal>
             <Segment>
-                <Dropdown placeholder='Client' options={clients} search selection />
+                <Dropdown placeholder='Client' 
+                options={clients}  
+                onClick={() => refetch()} 
+                search selection />
             </Segment>
             <Segment>
                 <Modal trigger={<Button basic>New client</Button>}>
