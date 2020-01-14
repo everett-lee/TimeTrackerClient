@@ -3,14 +3,14 @@ import React, { useContext } from 'react';
 import { Segment } from 'semantic-ui-react';
 import { useQuery } from '@apollo/react-hooks';
 
-import { AuthenticationContext } from '../providers/AuthenticationProvider';
+import { AuthenticationContext } from '../providers/AuthenticationProvider';    
 import Queries from '../../graphql/Queries'
 import TimerBox from "./TimerBox";
 import DropdownSegment from "./DropdownSegment";
 
 function TopSegment() {
   const authenticationContext = useContext(AuthenticationContext);
-
+  
   const { loading, error, data, refetch } = useQuery(Queries.ALL_CLIENTS(authenticationContext.user.id));
 
   const orderAlphabetically = (elOne, elTwo) => {
@@ -27,7 +27,7 @@ function TopSegment() {
       text: el.clientName,
       value: el.id
     })
-    );
+  );
 
   return (
     <Segment.Group horizontal id="topSegment">

@@ -12,7 +12,7 @@ function AddClientModal({ onClose }) {
     const [businessType, setbusinessType] = useState('');
     const [location, setLocation] = useState('');
 
-    const [createClient] = useMutation(Mutations.CREATE_CLIENT);
+    const [createClient, { data }] = useMutation(Mutations.CREATE_CLIENT);
 
     const clientNameOnChangeHandler = (e) => {
         setClientName(e.target.value)
@@ -38,6 +38,8 @@ function AddClientModal({ onClose }) {
                     "location": location
                 }
             });
+
+            console.log(data)
             onClose();
         }
     }
