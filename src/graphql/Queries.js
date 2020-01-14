@@ -9,6 +9,7 @@ const Queries = {
     ALL_CLIENTS: (id) => gql`
     {
     getAllClients(ownerId: ${id}) {
+        id
         clientName
         businessType
         location

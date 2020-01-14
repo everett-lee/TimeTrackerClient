@@ -13,15 +13,21 @@ function TopSegment() {
 
   const { loading, error, data, refetch } = useQuery(Queries.ALL_CLIENTS(authenticationContext.user.id));
 
+  const orderAlphabetically = (elOne, elTwo) => {
+    return elOne.clientName.localeCompare(elTwo.clientName);
+  }
+
   if (loading) return null;
   if (error) console.log(error);
 
-  const clients = data.getAllClients.map((el, index) => ({
-    key: index,
-    text: el.clientName,
-    value: el.clientName
-  })
-  );
+  const clients = data.getAllClients
+    .sort(orderAlphabetically)
+    .map((el, index) => ({
+      key: index,
+      text: el.clientName,
+      value: el.id
+    })
+    );
 
   return (
     <Segment.Group horizontal id="topSegment">

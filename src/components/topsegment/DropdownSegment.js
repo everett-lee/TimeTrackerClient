@@ -5,10 +5,15 @@ import AddcClientModal from './AddClientModal';
 
 function DropdownSegment({ clients, refetch }) {
     const [modalOpen, setModalOpen] = useState(false);
+    const [dropdownValue, setDropdowValue] = useState(null);
 
     const handleOpen = () => setModalOpen(true);
 
     const handleClose = () => setModalOpen(false);
+
+    const handleDropdownChange = (e, { value }) => {
+        setDropdowValue(value)   
+    }
 
     return (
         <Segment.Group horizontal>
@@ -18,8 +23,11 @@ function DropdownSegment({ clients, refetch }) {
                     placeholder='Select client'
                     options={clients}
                     onClick={() => refetch()}
-                    search selection /> 
+                    onChange={handleDropdownChange}
+                    search selection 
+                    value={dropdownValue} /> 
             </Segment>
+            delete client
             <Segment textAlign="center">
                 <Modal
                     trigger={<Button basic onClick={handleOpen}>New client</Button>}

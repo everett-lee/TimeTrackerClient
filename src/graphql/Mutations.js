@@ -10,7 +10,12 @@ const Mutations = {
           location
         }
       }
-`
+    `,
+    DELETE_CLIENT: gql`
+    mutation deleteClient($ownerId: ID!, $clientId: ID!){
+      deleteClient(ownerId: $ownerId, clientId: $clientId)
+    }
+    `
 };
 
 export default Mutations;
