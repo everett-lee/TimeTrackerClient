@@ -1,10 +1,11 @@
 import React, { useContext } from 'react';
 
 import { Segment } from 'semantic-ui-react';
-import { useQuery } from '@apollo/react-hooks';
+import { useQuery, useMutation } from '@apollo/react-hooks';
 
 import { AuthenticationContext } from '../providers/AuthenticationProvider';    
-import Queries from '../../graphql/Queries'
+import Queries from '../../graphql/Queries';
+import Mutations from '../../graphql/Mutations';
 import TimerBox from "./TimerBox";
 import DropdownSegment from "./DropdownSegment";
 
@@ -12,6 +13,8 @@ function TopSegment() {
   const authenticationContext = useContext(AuthenticationContext);
   
   const { loading, error, data, refetch } = useQuery(Queries.ALL_CLIENTS(authenticationContext.user.id));
+
+  const [deleteClient] = useMutation(Mutations.DELETE_CLIENT);
 
   const orderAlphabetically = (elOne, elTwo) => {
     return elOne.clientName.localeCompare(elTwo.clientName);
@@ -29,10 +32,27 @@ function TopSegment() {
     })
   );
 
+
+  const callDeleteClient = (id) => {
+    if (id) {
+        deleteClient({
+            variables:
+            {
+                "ownerId": authenticationContext.user.id,
+                "clientId": id 
+            }
+        });
+        refetch();
+    }
+}
+
   return (
     <Segment.Group horizontal id="topSegment">
       <Segment id="selectionBox">
-        <DropdownSegment refetch={refetch} clients={clients} />
+        <DropdownSegment 
+        refetch={refetch} 
+        clients={clients} 
+        deleteItem={callDeleteClient} />
       </Segment>
       <TimerBox></TimerBox>
     </Segment.Group>

@@ -12,7 +12,7 @@ function AddClientModal({ onClose }) {
     const [businessType, setbusinessType] = useState('');
     const [location, setLocation] = useState('');
 
-    const [createClient, { data }] = useMutation(Mutations.CREATE_CLIENT);
+    const [createClient, { onCompleted }] = useMutation(Mutations.CREATE_CLIENT);
 
     const clientNameOnChangeHandler = (e) => {
         setClientName(e.target.value)
@@ -35,11 +35,10 @@ function AddClientModal({ onClose }) {
                     "ownerId": authenticationContext.user.id,
                     "clientName": clientName,
                     "businessType": businessType,
-                    "location": location
+                    "location": location    
                 }
             });
 
-            console.log(data)
             onClose();
         }
     }
