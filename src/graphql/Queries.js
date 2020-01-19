@@ -6,14 +6,13 @@ import { gql } from 'apollo-boost';
  */
 
 const Queries = {
-    ALL_CLIENTS: (id) => gql`
-    {
-    getAllClients(ownerId: ${id}) {
-        id
-        clientName
-        businessType
-        location
-    }
+    ALL_CLIENTS: gql`
+    query getAllClients($ownerId: ID!) {
+        getAllClients(ownerId: $ownerId) {
+           clientName
+           businessType
+           location
+        }
     }
     `,
 }

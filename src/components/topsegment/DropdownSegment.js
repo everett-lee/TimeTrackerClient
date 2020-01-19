@@ -1,10 +1,10 @@
 import React, { useState, useContext } from 'react';
 import { Segment, Dropdown, Button, Modal } from 'semantic-ui-react';
 
-import AddcClientModal from './AddClientModal';
+import AddClientModal from './AddClientModal';
 import { TaskContext } from '../providers/TaskProvider';
 
-function DropdownSegment({ clients, refetch, deleteItem }) {
+function DropdownSegment({ items, refetch, deleteItem }) {
     const [modalOpen, setModalOpen] = useState(false);
     const [dropdownValue, setDropdownValue] = useState(null);
 
@@ -19,8 +19,10 @@ function DropdownSegment({ clients, refetch, deleteItem }) {
         setDropdownValue(value)
     }
 
-    // update store of clients
-    taskContext.setClients(clients);
+    // update store
+    if (items.type === "CLIENTS") {
+        taskContext.setClients(items.results);
+    }
 
     const callDeleteItem = () => {
         deleteItem(dropdownValue);
@@ -33,14 +35,14 @@ function DropdownSegment({ clients, refetch, deleteItem }) {
                 <Dropdown
                     id="dropdown"
                     placeholder='Select client'
-                    options={clients}
+                    options={items.results}
                     onClick={() => refetch()}
                     onChange={handleDropdownChange}
                     search selection
                     value={dropdownValue} />
             </Segment>
             <Segment textAlign="center">
-            <Button basic onClick={callDeleteItem}>Delete client</Button>
+                <Button basic onClick={callDeleteItem}>Delete client</Button>
             </Segment>
             <Segment textAlign="center">
                 <Modal
@@ -49,7 +51,7 @@ function DropdownSegment({ clients, refetch, deleteItem }) {
                 >
                     <Modal.Header>Add client</Modal.Header>
                     <Modal.Content>
-                        <AddcClientModal onClose={handleClose}></AddcClientModal>
+                        <AddClientModal onClose={handleClose}> </AddClientModal>
                     </Modal.Content>
                 </Modal>
             </Segment>

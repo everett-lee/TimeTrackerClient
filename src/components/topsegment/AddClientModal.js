@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { useMutation } from '@apollo/react-hooks';
-import { Modal, Button, Form, Message } from 'semantic-ui-react'
+import { Button, Form, Message } from 'semantic-ui-react'
 import { AuthenticationContext } from '../providers/AuthenticationProvider';
 
 import Mutations from '../../graphql/Mutations'
@@ -12,7 +12,7 @@ function AddClientModal({ onClose }) {
     const [businessType, setbusinessType] = useState('');
     const [location, setLocation] = useState('');
 
-    const [createClient, { onCompleted }] = useMutation(Mutations.CREATE_CLIENT);
+    const [createClient] = useMutation(Mutations.CREATE_CLIENT);
 
     const clientNameOnChangeHandler = (e) => {
         setClientName(e.target.value)
