@@ -11,23 +11,28 @@ import DropdownSegment from "./DropdownSegment";
 
 function TopSegment() {
   const authenticationContext = useContext(AuthenticationContext);
-
-  const { loading, error, data, refetch } = useQuery(Queries.ALL_CLIENTS, {
-    variables: { ownerId: authenticationContext.user.id },
-  });
-  
-  const [deleteClient] = useMutation(Mutations.DELETE_CLIENT);
+  const ownerId = authenticationContext.user.id;
 
   const orderAlphabetically = (elOne, elTwo) => {
     return elOne.clientName.localeCompare(elTwo.clientName);
   }
 
-  if (loading) return null; 
-  if (error) console.log(error);
+  const { loading: clientsLoading, error: clientsError, data: clientsData, refetch: clientsRefetch } = useQuery(Queries.ALL_CLIENTS, {
+    variables: { ownerId },
+  });
+
+  const { loading: tasksLoading, error: tasksError, data: tasksData, refetch: tasksRefetch } = useQuery(Queries.ALL_TASKS, {
+    variables: { ownerId },
+  });
+
+  const [deleteClient] = useMutation(Mutations.DELETE_CLIENT);
+
+  if (clientsLoading || tasksLoading) return null;
+  if (clientsError || tasksError) clientsError ? console.error(clientsError) : console.error(tasksError);
 
   const clients = {
     "type": "CLIENTS",
-    "results": data.getAllClients
+    "results": clientsData.getAllClients
       .sort(orderAlphabetically)
       .map((el, index) => ({
         key: index,
@@ -36,17 +41,18 @@ function TopSegment() {
       })
       )
   };
+  
 
   const callDeleteClient = (id) => {
     if (id) {
       deleteClient({
         variables:
         {
-          "ownerId": authenticationContext.user.id,
+          "ownerId": ownerId,
           "clientId": id
         }
       });
-      refetch();
+      clientsRefetch();
     }
   }
 
@@ -54,7 +60,7 @@ function TopSegment() {
     <Segment.Group horizontal id="topSegment">
       <Segment id="selectionBox">
         <DropdownSegment
-          refetch={refetch}
+          refetch={clientsRefetch}
           items={clients}
           deleteItem={callDeleteClient} />
       </Segment>
