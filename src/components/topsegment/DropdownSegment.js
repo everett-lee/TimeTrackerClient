@@ -2,13 +2,12 @@ import React, { useState, useContext } from 'react';
 import { Segment, Dropdown, Button, Modal } from 'semantic-ui-react';
 
 import AddClientModal from './AddClientModal';
-import { TaskContext } from '../providers/TaskProvider';
 
-function DropdownSegment({ items, refetch, deleteItem }) {
+function DropdownSegment({ items, refetch, deleteItem, itemName }) {
     const [modalOpen, setModalOpen] = useState(false);
     const [dropdownValue, setDropdownValue] = useState(null);
 
-    const taskContext = useContext(TaskContext);
+    //const taskContext = useContext(TaskContext);
 
     const handleOpen = () => setModalOpen(true);
     const handleClose = () => setModalOpen(false);
@@ -17,11 +16,6 @@ function DropdownSegment({ items, refetch, deleteItem }) {
     // selected item
     const handleDropdownChange = (e, { value }) => {
         setDropdownValue(value)
-    }
-
-    // update store
-    if (items.type === "CLIENTS") {
-        taskContext.setClients(items.results);
     }
 
     const callDeleteItem = () => {
@@ -34,22 +28,22 @@ function DropdownSegment({ items, refetch, deleteItem }) {
             <Segment id="dropdownContainerLeft" textAlign="center">
                 <Dropdown
                     id="dropdown"
-                    placeholder='Select client'
-                    options={items.results}
+                    placeholder={`Select ${itemName}`}
+                    options={items}
                     onClick={() => refetch()}
                     onChange={handleDropdownChange}
                     search selection
                     value={dropdownValue} />
             </Segment>
             <Segment textAlign="center">
-                <Button basic onClick={callDeleteItem}>Delete client</Button>
+                <Button basic onClick={callDeleteItem}>Delete {itemName}</Button>
             </Segment>
             <Segment textAlign="center">
                 <Modal
-                    trigger={<Button basic onClick={handleOpen}>New client</Button>}
+                    trigger={<Button basic onClick={handleOpen}>New {itemName}</Button>}
                     open={modalOpen}
                 >
-                    <Modal.Header>Add client</Modal.Header>
+                    <Modal.Header>Add {itemName}</Modal.Header>
                     <Modal.Content>
                         <AddClientModal onClose={handleClose}> </AddClientModal>
                     </Modal.Content>
