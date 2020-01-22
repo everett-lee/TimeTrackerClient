@@ -3,7 +3,7 @@ import { Segment, Dropdown, Button, Modal } from 'semantic-ui-react';
 
 import AddClientModal from './AddClientModal';
 
-function DropdownSegment({ items, refetch, deleteItem, itemName }) {
+function DropdownSegment({ items, refetch, deleteItem, itemName, setActiveItem }) {
     const [modalOpen, setModalOpen] = useState(false);
     const [dropdownValue, setDropdownValue] = useState(null);
 
@@ -15,7 +15,8 @@ function DropdownSegment({ items, refetch, deleteItem, itemName }) {
     // update the dropdown value, the id associated with the 
     // selected item
     const handleDropdownChange = (e, { value }) => {
-        setDropdownValue(value)
+        setDropdownValue(value);
+        setActiveItem(value);
     }
 
     const callDeleteItem = () => {

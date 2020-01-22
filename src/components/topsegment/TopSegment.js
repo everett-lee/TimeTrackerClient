@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { Segment } from 'semantic-ui-react';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 
@@ -10,12 +10,17 @@ import DropdownSegment from "./DropdownSegment";
 import Queries from '../../graphql/Queries';
 import Mutations from '../../graphql/Mutations';
 
-
+/** 
+ * Top level component for storing and getting data 
+ * from the server
+**/
 function TopSegment() {
   const authenticationContext = useContext(AuthenticationContext);
   const ownerId = authenticationContext.user.id;
 
   const taskContext = useContext(TaskContext);
+
+  const [activeClientId, setActiveClientId] = useState(null);
 
   const mapForDropdown = (data, itemName) => {
     return data.sort((a, b) => a[itemName].localeCompare(b[itemName]))
@@ -26,6 +31,8 @@ function TopSegment() {
       }))
   }
 
+  const [deleteClient] = useMutation(Mutations.DELETE_CLIENT);
+
   const { loading: clientsLoading, error: clientsError, data: clientsData, refetch: clientsRefetch } = useQuery(Queries.ALL_CLIENTS, {
     variables: { ownerId },
   });
@@ -34,8 +41,6 @@ function TopSegment() {
     variables: { ownerId },
   });
 
-  const [deleteClient] = useMutation(Mutations.DELETE_CLIENT);
-
   if (clientsLoading || tasksLoading) return null;
   if (clientsError || tasksError) clientsError ? console.error(clientsError) : console.error(tasksError);
 
@@ -43,7 +48,8 @@ function TopSegment() {
   const clients = mapForDropdown(clientsData.getAllClients, "clientName");
 
   taskContext.setTasks(tasksData.getAllTasks);
-  const tasks = mapForDropdown(tasksData.getAllTasks, "taskName"); 
+  const tasks = mapForDropdown(tasksData.getAllTasks
+    .filter(el => el.client.id === activeClientId), "taskName");
 
   const callDeleteClient = (id) => {
     if (id) {
@@ -65,12 +71,14 @@ function TopSegment() {
           refetch={clientsRefetch}
           items={clients}
           deleteItem={callDeleteClient}
-          itemName={"client"} />
+          itemName={"client"}
+          setActiveItem={setActiveClientId} />
         <DropdownSegment
           refetch={tasksRefetch}
           items={tasks}
           deleteItem={null}
-          itemName={"task"} />
+          itemName={"task"}
+          setActiveItem={() => null} />
       </Segment>
       <TimerBox></TimerBox>
     </Segment.Group>
