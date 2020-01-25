@@ -22,8 +22,17 @@ const Queries = {
            id
            taskName
            subtasks {
-             id
-           }
+            id
+            subtaskName
+            category
+            timeCommits {
+               id 
+               time
+            }
+            dependsOn {
+               id   
+            }
+        }
            client {
                id
                clientName

@@ -51,7 +51,12 @@ function TopSegment() {
 
   taskContext.setTasks(tasksData.getAllTasks);
   const tasks = mapForDropdown(tasksData.getAllTasks
-    .filter(el => el.client.id === activeClientId), "taskName");
+    .filter(task => task.client.id === activeClientId), "taskName");
+
+  const activeSubtasks = tasksData.getAllTasks
+    .filter(task => task.client.id === activeClientId && task.id === activeTaskId)
+    .flatMap(task => task.subtasks);
+  const subtasks = mapForDropdown(activeSubtasks, "subtaskName")
 
   const callDeleteClient = (id) => {
     if (id) {
@@ -94,7 +99,14 @@ function TopSegment() {
           deleteItem={callDeleteTask}
           itemName={"task"}
           setActiveItem={setActiveTaskId}
-          activeClientId={activeClientId}  />
+          activeClientId={activeClientId} />
+        <DropdownSegment
+          refetch={tasksRefetch}
+          items={subtasks}
+          deleteItem={null}
+          itemName={"subtask"}
+          setActiveItem={null}
+          activeSubtaskId={null} />
       </Segment>
       <TimerBox></TimerBox>
     </Segment.Group>
