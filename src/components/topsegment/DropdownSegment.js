@@ -21,8 +21,10 @@ function DropdownSegment({ items, refetch, deleteItem, itemName, setActiveItem, 
     }
 
     const callDeleteItem = () => {
-        deleteItem(dropdownValue);
-        setDropdownValue(null);
+        if (dropdownValue) {
+            deleteItem(dropdownValue);
+            setDropdownValue(null);
+        }
     }
 
     let modal;

@@ -21,6 +21,7 @@ function TopSegment() {
   const taskContext = useContext(TaskContext);
 
   const [activeClientId, setActiveClientId] = useState(null);
+  const [activeTaskId, setActiveTaskId] = useState(null);
 
   const mapForDropdown = (data, itemName) => {
     return data.sort((a, b) => a[itemName].localeCompare(b[itemName]))
@@ -32,6 +33,7 @@ function TopSegment() {
   }
 
   const [deleteClient] = useMutation(Mutations.DELETE_CLIENT);
+  const [deleteTask] = useMutation(Mutations.DELETE_TASK);
 
   const { loading: clientsLoading, error: clientsError, data: clientsData, refetch: clientsRefetch } = useQuery(Queries.ALL_CLIENTS, {
     variables: { ownerId },
@@ -66,14 +68,14 @@ function TopSegment() {
 
   const callDeleteTask = (id) => {
     if (id) {
-      deleteClient({
+      deleteTask({
         variables:
         {
           "ownerId": ownerId,
-          "clientId": id
+          "taskId": id
         }
       });
-      clientsRefetch();
+      tasksRefetch();
     }
   }
 
@@ -89,9 +91,9 @@ function TopSegment() {
         <DropdownSegment
           refetch={tasksRefetch}
           items={tasks}
-          deleteItem={null}
+          deleteItem={callDeleteTask}
           itemName={"task"}
-          setActiveItem={() => null}
+          setActiveItem={setActiveTaskId}
           activeClientId={activeClientId}  />
       </Segment>
       <TimerBox></TimerBox>

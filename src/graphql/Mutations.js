@@ -28,6 +28,11 @@ const Mutations = {
       }
     }
     `,
+    DELETE_TASK: gql`
+    mutation deleteTask($ownerId: ID!, $taskId: ID!){
+      deleteTask(ownerId: $ownerId, taskId: $taskId) 
+    }
+    `
 };
 
 export default Mutations;
