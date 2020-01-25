@@ -16,6 +16,18 @@ const Mutations = {
       deleteClient(ownerId: $ownerId, clientId: $clientId) 
     }
     `,
+    CREATE_TASK: gql`
+    mutation createTask($ownerId: ID!, $taskName: String!, $clientId: ID!) {
+      createTask(ownerId: $ownerId, taskName: $taskName, clientId: $clientId) {
+        id
+        taskName
+        client {
+          id
+          clientName
+        }
+      }
+    }
+    `,
 };
 
 export default Mutations;

@@ -1,9 +1,9 @@
 import React, { useState, useContext } from 'react';
 import { useMutation } from '@apollo/react-hooks';
-import { Button, Form, Message } from 'semantic-ui-react'
-import { AuthenticationContext } from '../providers/AuthenticationProvider';
+import { Button, Form } from 'semantic-ui-react'
+import { AuthenticationContext } from '../../providers/AuthenticationProvider';
 
-import Mutations from '../../graphql/Mutations'
+import Mutations from '../../../graphql/Mutations'
 
 function AddClientModal({ onClose }) {
     const authenticationContext = useContext(AuthenticationContext);

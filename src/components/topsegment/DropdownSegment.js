@@ -1,9 +1,10 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import { Segment, Dropdown, Button, Modal } from 'semantic-ui-react';
 
-import AddClientModal from './AddClientModal';
+import AddClientModal from './modals/AddClientModal';
+import AddTaskModal from './modals/AddTaskModal';
 
-function DropdownSegment({ items, refetch, deleteItem, itemName, setActiveItem }) {
+function DropdownSegment({ items, refetch, deleteItem, itemName, setActiveItem, activeClientId }) {
     const [modalOpen, setModalOpen] = useState(false);
     const [dropdownValue, setDropdownValue] = useState(null);
 
@@ -24,6 +25,16 @@ function DropdownSegment({ items, refetch, deleteItem, itemName, setActiveItem }
         setDropdownValue(null);
     }
 
+    let modal;
+    switch (itemName) {
+        case 'client':
+            modal = <AddClientModal onClose={handleClose}> </AddClientModal>;
+            break;
+        case 'task':
+            modal = <AddTaskModal onClose={handleClose} activeClientId={activeClientId}> </AddTaskModal>;
+            break;
+    }
+
     return (
         <Segment.Group horizontal>
             <Segment id="dropdownContainerLeft" textAlign="center">
@@ -42,11 +53,10 @@ function DropdownSegment({ items, refetch, deleteItem, itemName, setActiveItem }
             <Segment textAlign="center">
                 <Modal
                     trigger={<Button basic onClick={handleOpen}>New {itemName}</Button>}
-                    open={modalOpen}
-                >
+                    open={modalOpen} >
                     <Modal.Header>Add {itemName}</Modal.Header>
                     <Modal.Content>
-                        <AddClientModal onClose={handleClose}> </AddClientModal>
+                        {modal}
                     </Modal.Content>
                 </Modal>
             </Segment>

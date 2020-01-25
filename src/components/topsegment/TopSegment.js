@@ -64,6 +64,19 @@ function TopSegment() {
     }
   }
 
+  const callDeleteTask = (id) => {
+    if (id) {
+      deleteClient({
+        variables:
+        {
+          "ownerId": ownerId,
+          "clientId": id
+        }
+      });
+      clientsRefetch();
+    }
+  }
+
   return (
     <Segment.Group horizontal id="topSegment">
       <Segment id="selectionBox">
@@ -78,7 +91,8 @@ function TopSegment() {
           items={tasks}
           deleteItem={null}
           itemName={"task"}
-          setActiveItem={() => null} />
+          setActiveItem={() => null}
+          activeClientId={activeClientId}  />
       </Segment>
       <TimerBox></TimerBox>
     </Segment.Group>
