@@ -3,12 +3,13 @@ import { Segment, Dropdown, Button, Modal } from 'semantic-ui-react';
 
 import AddClientModal from './modals/AddClientModal';
 import AddTaskModal from './modals/AddTaskModal';
+import AddSubtaskModal from './modals/AddSubtaskModal';
 
-function DropdownSegment({ items, refetch, deleteItem, itemName, setActiveItem, activeClientId }) {
+function DropdownSegment({ items, refetch, deleteItem, itemName, setActiveItem, activeClientId, activeTaskId,
+    addDisabled, deleteDisabled }) {
+
     const [modalOpen, setModalOpen] = useState(false);
     const [dropdownValue, setDropdownValue] = useState(null);
-
-    //const taskContext = useContext(TaskContext);
 
     const handleOpen = () => setModalOpen(true);
     const handleClose = () => setModalOpen(false);
@@ -35,26 +36,35 @@ function DropdownSegment({ items, refetch, deleteItem, itemName, setActiveItem, 
         case 'task':
             modal = <AddTaskModal onClose={handleClose} activeClientId={activeClientId}> </AddTaskModal>;
             break;
+        case 'subtask':
+            modal = <AddSubtaskModal onClose={handleClose} activeTaskId={activeTaskId} subtasks={items} refetch={refetch}> </AddSubtaskModal>;
+            break;
     }
+
+    const deleteButton = deleteDisabled ? <Button disabled basic onClick={callDeleteItem}>Delete {itemName}</Button> :
+        <Button basic onClick={callDeleteItem}>Delete {itemName}</Button>
+
+    const addButton = addDisabled ? <Button disabled basic onClick={handleOpen}>New {itemName}</Button> :
+        <Button basic onClick={handleOpen}>New {itemName}</Button>
 
     return (
         <Segment.Group horizontal>
             <Segment id="dropdownContainerLeft" textAlign="center">
                 <Dropdown
+                    search selection
                     id="dropdown"
                     placeholder={`Select ${itemName}`}
                     options={items}
                     onClick={() => refetch()}
                     onChange={handleDropdownChange}
-                    search selection
                     value={dropdownValue} />
             </Segment>
             <Segment textAlign="center">
-                <Button basic onClick={callDeleteItem}>Delete {itemName}</Button>
+                {deleteButton}
             </Segment>
             <Segment textAlign="center">
                 <Modal
-                    trigger={<Button basic onClick={handleOpen}>New {itemName}</Button>}
+                    trigger={addButton}
                     open={modalOpen} >
                     <Modal.Header>Add {itemName}</Modal.Header>
                     <Modal.Content>

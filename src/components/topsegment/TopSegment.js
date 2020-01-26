@@ -22,6 +22,7 @@ function TopSegment() {
 
   const [activeClientId, setActiveClientId] = useState(null);
   const [activeTaskId, setActiveTaskId] = useState(null);
+  const [activeSubtaskId, setActiveSubtaskId] = useState(null);
 
   const mapForDropdown = (data, itemName) => {
     return data.sort((a, b) => a[itemName].localeCompare(b[itemName]))
@@ -53,6 +54,7 @@ function TopSegment() {
   const tasks = mapForDropdown(tasksData.getAllTasks
     .filter(task => task.client.id === activeClientId), "taskName");
 
+  // subtasks associated with the currently selected task
   const activeSubtasks = tasksData.getAllTasks
     .filter(task => task.client.id === activeClientId && task.id === activeTaskId)
     .flatMap(task => task.subtasks);
@@ -67,6 +69,7 @@ function TopSegment() {
           "clientId": id
         }
       });
+      setActiveClientId(null);
       clientsRefetch();
     }
   }
@@ -80,8 +83,20 @@ function TopSegment() {
           "taskId": id
         }
       });
+      setActiveTaskId(null);
       tasksRefetch();
     }
+  }
+  
+  const callSetClientId = (id) => {
+    setActiveClientId(id);
+    setActiveTaskId(null);
+    setActiveSubtaskId(null);
+  }
+
+  const callSetTaskId = (id) => {
+    setActiveTaskId(id);
+    setActiveSubtaskId(null);
   }
 
   return (
@@ -92,21 +107,27 @@ function TopSegment() {
           items={clients}
           deleteItem={callDeleteClient}
           itemName={"client"}
-          setActiveItem={setActiveClientId} />
+          setActiveItem={callSetClientId}
+          deleteDisabled={!Boolean(activeClientId)}
+          addDisabled={false}  />
         <DropdownSegment
           refetch={tasksRefetch}
           items={tasks}
           deleteItem={callDeleteTask}
           itemName={"task"}
-          setActiveItem={setActiveTaskId}
-          activeClientId={activeClientId} />
+          setActiveItem={callSetTaskId}
+          activeClientId={activeClientId} 
+          addDisabled={!Boolean(activeClientId)}
+          deleteDisabled={!Boolean(activeTaskId)} />
         <DropdownSegment
           refetch={tasksRefetch}
           items={subtasks}
           deleteItem={null}
           itemName={"subtask"}
-          setActiveItem={null}
-          activeSubtaskId={null} />
+          setActiveItem={setActiveSubtaskId}
+          activeTaskId={activeTaskId} 
+          addDisabled={!Boolean(activeTaskId)}
+          deleteDisabled={!Boolean(activeSubtaskId)} />
       </Segment>
       <TimerBox></TimerBox>
     </Segment.Group>

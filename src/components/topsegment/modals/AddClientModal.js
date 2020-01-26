@@ -9,7 +9,7 @@ function AddClientModal({ onClose }) {
     const authenticationContext = useContext(AuthenticationContext);
 
     const [clientName, setClientName] = useState('');
-    const [businessType, setbusinessType] = useState('');
+    const [businessType, setBusinessType] = useState('');
     const [location, setLocation] = useState('');
 
     const [createClient] = useMutation(Mutations.CREATE_CLIENT);
@@ -19,7 +19,7 @@ function AddClientModal({ onClose }) {
     }
 
     const businessTypeOnChangeHandler = (e) => {
-        setbusinessType(e.target.value)
+        setBusinessType(e.target.value)
     }
 
     const locationOnChangeHandler = (e) => {

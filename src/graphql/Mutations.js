@@ -32,6 +32,16 @@ const Mutations = {
     mutation deleteTask($ownerId: ID!, $taskId: ID!){
       deleteTask(ownerId: $ownerId, taskId: $taskId) 
     }
+    `,
+    CREATE_SUBTASK: gql`
+    mutation createSubtask($ownerId: ID!, $taskId: ID!, $subtaskName: String!, $category: String!, $dependsOnIds: [ID]!) {
+      createSubtask(ownerId: $ownerId, taskId: $taskId, subtaskName: $subtaskName, category: $category, dependsOnIds: $dependsOnIds) {
+             id
+             dependsOn {
+                 id
+             }
+        }
+    }
     `
 };
 
