@@ -5,21 +5,24 @@ import { useQuery, useMutation } from '@apollo/react-hooks';
 import { AuthenticationContext } from '../providers/AuthenticationProvider';
 import { TaskContext } from '../providers/TaskProvider';
 import TimerBox from "./TimerBox";
-import DropdownSegment from "./DropdownSegment";
 
+import { curry, callDeleteClient, callDeleteTask, callDeleteSubtask } from './helpers/deleteFunctions';
+import DropdownSegment from "./DropdownSegment";
 import Queries from '../../graphql/Queries';
 import Mutations from '../../graphql/Mutations';
-
 /** 
  * Top level component for storing and getting data 
  * from the server
 **/
 function TopSegment() {
   const authenticationContext = useContext(AuthenticationContext);
-  const ownerId = authenticationContext.user.id;
-
   const taskContext = useContext(TaskContext);
-
+  const ownerId = authenticationContext.user.id;
+  
+  const [deleteClient] = useMutation(Mutations.DELETE_CLIENT);
+  const [deleteTask] = useMutation(Mutations.DELETE_TASK);
+  const [deleteSubtask] = useMutation(Mutations.DELETE_SUBTASK);
+  
   const [activeClientId, setActiveClientId] = useState(null);
   const [activeTaskId, setActiveTaskId] = useState(null);
   const [activeSubtaskId, setActiveSubtaskId] = useState(null);
@@ -32,9 +35,6 @@ function TopSegment() {
         value: el.id
       }))
   }
-
-  const [deleteClient] = useMutation(Mutations.DELETE_CLIENT);
-  const [deleteTask] = useMutation(Mutations.DELETE_TASK);
 
   const { loading: clientsLoading, error: clientsError, data: clientsData, refetch: clientsRefetch } = useQuery(Queries.ALL_CLIENTS, {
     variables: { ownerId },
@@ -60,34 +60,6 @@ function TopSegment() {
     .flatMap(task => task.subtasks);
   const subtasks = mapForDropdown(activeSubtasks, "subtaskName")
 
-  const callDeleteClient = (id) => {
-    if (id) {
-      deleteClient({
-        variables:
-        {
-          "ownerId": ownerId,
-          "clientId": id
-        }
-      });
-      setActiveClientId(null);
-      clientsRefetch();
-    }
-  }
-
-  const callDeleteTask = (id) => {
-    if (id) {
-      deleteTask({
-        variables:
-        {
-          "ownerId": ownerId,
-          "taskId": id
-        }
-      });
-      setActiveTaskId(null);
-      tasksRefetch();
-    }
-  }
-  
   const callSetClientId = (id) => {
     setActiveClientId(id);
     setActiveTaskId(null);
@@ -99,33 +71,45 @@ function TopSegment() {
     setActiveSubtaskId(null);
   }
 
+  const curry = (f) => {
+    return (a, b, c, d) => {
+      return (e) => {
+        console.log(a, b, c, d, e)
+        return f(a, b, c, d, e);
+      }
+    } 
+  }
+
+  const curriedDeleteClient = curry(callDeleteClient);
+  const curriedDeleteTask = curry(callDeleteTask);
+
   return (
     <Segment.Group horizontal id="topSegment">
       <Segment id="selectionBox">
         <DropdownSegment
           refetch={clientsRefetch}
           items={clients}
-          deleteItem={callDeleteClient}
+          deleteItem={curriedDeleteClient(setActiveClientId, clientsRefetch, deleteClient, ownerId)}
           itemName={"client"}
           setActiveItem={callSetClientId}
           deleteDisabled={!Boolean(activeClientId)}
-          addDisabled={false}  />
+          addDisabled={false} />
         <DropdownSegment
           refetch={tasksRefetch}
           items={tasks}
-          deleteItem={callDeleteTask}
+          deleteItem={curriedDeleteTask(setActiveTaskId, tasksRefetch, deleteTask, ownerId)}
           itemName={"task"}
           setActiveItem={callSetTaskId}
-          activeClientId={activeClientId} 
+          activeClientId={activeClientId}
           addDisabled={!Boolean(activeClientId)}
           deleteDisabled={!Boolean(activeTaskId)} />
         <DropdownSegment
           refetch={tasksRefetch}
           items={subtasks}
-          deleteItem={null}
+          deleteItem={callDeleteSubtask}
           itemName={"subtask"}
           setActiveItem={setActiveSubtaskId}
-          activeTaskId={activeTaskId} 
+          activeTaskId={activeTaskId}
           addDisabled={!Boolean(activeTaskId)}
           deleteDisabled={!Boolean(activeSubtaskId)} />
       </Segment>

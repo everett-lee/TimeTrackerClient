@@ -42,6 +42,11 @@ const Mutations = {
              }
         }
     }
+    `,
+    DELETE_SUBTASK: gql`
+    mutation deleteSubtask($ownerId: ID!, $subtaskId: ID!){
+      deleteSubtask(ownerId: $ownerId, subtaskId: $subtaskId) 
+    }
     `
 };
 
