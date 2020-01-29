@@ -9,8 +9,6 @@ import { ApolloProvider } from '@apollo/react-hooks';
 import client from './Apollo';
 import 'semantic-ui-css/semantic.min.css';
 
-
-
 ReactDOM.render(
   <ApolloProvider client={client}>
     <TaskProvider>

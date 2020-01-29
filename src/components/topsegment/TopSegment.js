@@ -6,7 +6,7 @@ import { AuthenticationContext } from '../providers/AuthenticationProvider';
 import { TaskContext } from '../providers/TaskProvider';
 import TimerBox from "./TimerBox";
 
-import { curry, callDeleteClient, callDeleteTask, callDeleteSubtask } from './helpers/deleteFunctions';
+import { curryDeleteClient, callDeleteClient, callDeleteTask, callDeleteSubtask } from './helpers/deleteFunctions';
 import DropdownSegment from "./DropdownSegment";
 import Queries from '../../graphql/Queries';
 import Mutations from '../../graphql/Mutations';
@@ -22,6 +22,10 @@ function TopSegment() {
   const [deleteClient] = useMutation(Mutations.DELETE_CLIENT);
   const [deleteTask] = useMutation(Mutations.DELETE_TASK);
   const [deleteSubtask] = useMutation(Mutations.DELETE_SUBTASK);
+
+  const curriedDeleteClient = curryDeleteClient(callDeleteClient);
+  const curriedDeleteTask = curryDeleteClient(callDeleteTask);
+  const curriedDeleteSubtask = curryDeleteClient(callDeleteSubtask);
   
   const [activeClientId, setActiveClientId] = useState(null);
   const [activeTaskId, setActiveTaskId] = useState(null);
@@ -71,18 +75,6 @@ function TopSegment() {
     setActiveSubtaskId(null);
   }
 
-  const curry = (f) => {
-    return (a, b, c, d) => {
-      return (e) => {
-        console.log(a, b, c, d, e)
-        return f(a, b, c, d, e);
-      }
-    } 
-  }
-
-  const curriedDeleteClient = curry(callDeleteClient);
-  const curriedDeleteTask = curry(callDeleteTask);
-
   return (
     <Segment.Group horizontal id="topSegment">
       <Segment id="selectionBox">
@@ -106,7 +98,7 @@ function TopSegment() {
         <DropdownSegment
           refetch={tasksRefetch}
           items={subtasks}
-          deleteItem={callDeleteSubtask}
+          deleteItem={curriedDeleteSubtask(setActiveSubtaskId, tasksRefetch, deleteSubtask, ownerId)}
           itemName={"subtask"}
           setActiveItem={setActiveSubtaskId}
           activeTaskId={activeTaskId}

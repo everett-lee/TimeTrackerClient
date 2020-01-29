@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { Button, Divider, Form, Grid, Segment, Message, Input } from 'semantic-ui-react';
+import { Button, Divider, Form, Grid, Segment, Message } from 'semantic-ui-react';
 import { AuthenticationContext } from './providers/AuthenticationProvider';
 import RegisterModal from './RegisterModal';
 import { register, authenticate } from './providers/ApiActions';
