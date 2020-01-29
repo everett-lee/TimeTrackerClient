@@ -1,4 +1,3 @@
-
 .loginDiv {
     margin: 0;
     position: absolute;
@@ -12,17 +11,12 @@
     min-width: 500px;
 }
 
-#topSegment {
-}
+#topSegment {}
 
 #selectionBox {
     width: 40%;
 }
 
-#timerBox {
-    width: 60%;
-}
-  
 #dropdownContainerLeft {
     width: 70%;
 }
@@ -30,18 +24,43 @@
 #dropdown {
     width: 60%;
 }
-  
-.counter {
-    border: 2px gray dotted;
-    margin: 0.25em;
-    width: 5em;
-    height: 5em;
-    border-radius: 50%;
-    font-size: 3em;
-    color: black;
-    line-height: 5em;
+
+.timerButton {
+    display: inline-block;
+    padding: 15px 25px;
+    font-size: 24px;
+    cursor: pointer;
     text-align: center;
-    background: #eaeaea;
-    box-shadow: 0 0 3px #000, 0 0 5px #C7C7D5;
-    text-shadow: -2px 1px 2px #a8a6a6;
+    text-decoration: none;
+    outline: none;
+    color: #fff;
+    background-color: #4CAF50;
+    border: none;
+    border-radius: 125px;
+    box-shadow: 0 9px #999;
+    width: 60%;
+}
+
+.timerButton:hover {
+    background-color: #3e8e41
+}
+
+.timerButton:active {
+    background-color: #1ddd23;
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
+}
+
+#timerCol {
+    width: 50%;
+}
+
+#timerButtons {
+    line-height: 250px;
+    padding-right: 200px;
+}
+
+#timerBox {
+    line-height: 250px;
+    width: 35%;
 }

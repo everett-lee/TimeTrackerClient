@@ -1,13 +1,12 @@
 /**
  *  Helper function to export graphql delete wrapper functions
  */
-
 const curryDeleteClient = (f) => {
   return (setActive, refetch, deleteItem, ownerId) => {
     return (id) => {
       return f(setActive, refetch, deleteItem, ownerId, id);
     }
-  } 
+  }
 }
 
 const callDeleteClient = (setActive, refetch, deleteItem, ownerId, id) => {
@@ -38,7 +37,6 @@ const callDeleteTask = (setActive, refetch, deleteItem, ownerId, id) => {
 }
 
 const callDeleteSubtask = (setActive, refetch, deleteItem, ownerId, id) => {
-  console.log((setActive, refetch, deleteItem, ownerId, id))
   if (id) {
     deleteItem({
       variables:
@@ -51,7 +49,5 @@ const callDeleteSubtask = (setActive, refetch, deleteItem, ownerId, id) => {
     refetch();
   }
 }
-
-
 
 export { curryDeleteClient, callDeleteClient, callDeleteTask, callDeleteSubtask };

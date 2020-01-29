@@ -11,25 +11,25 @@ import DropdownSegment from "./DropdownSegment";
 import Queries from '../../graphql/Queries';
 import Mutations from '../../graphql/Mutations';
 /** 
- * Top level component for storing and getting data 
- * from the server
+ * Top level component for storing and sending data 
 **/
 function TopSegment() {
   const authenticationContext = useContext(AuthenticationContext);
   const taskContext = useContext(TaskContext);
   const ownerId = authenticationContext.user.id;
+    
+  const [activeClientId, setActiveClientId] = useState(null);
+  const [activeTaskId, setActiveTaskId] = useState(null);
+  const [activeSubtaskId, setActiveSubtaskId] = useState(null);
   
   const [deleteClient] = useMutation(Mutations.DELETE_CLIENT);
   const [deleteTask] = useMutation(Mutations.DELETE_TASK);
   const [deleteSubtask] = useMutation(Mutations.DELETE_SUBTASK);
 
+  // Curry delete mutations to return when item id provided
   const curriedDeleteClient = curryDeleteClient(callDeleteClient);
   const curriedDeleteTask = curryDeleteClient(callDeleteTask);
   const curriedDeleteSubtask = curryDeleteClient(callDeleteSubtask);
-  
-  const [activeClientId, setActiveClientId] = useState(null);
-  const [activeTaskId, setActiveTaskId] = useState(null);
-  const [activeSubtaskId, setActiveSubtaskId] = useState(null);
 
   const mapForDropdown = (data, itemName) => {
     return data.sort((a, b) => a[itemName].localeCompare(b[itemName]))
