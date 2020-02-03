@@ -4,7 +4,7 @@ import { useQuery, useMutation } from '@apollo/react-hooks';
 
 import { AuthenticationContext } from '../providers/AuthenticationProvider';
 import { TaskContext } from '../providers/TaskProvider';
-import TimerBox from "./TimerBox";
+import TimerBox from "./timer/TimerBox";
 
 import { curryDeleteClient, callDeleteClient, callDeleteTask, callDeleteSubtask } from './helpers/deleteFunctions';
 import DropdownSegment from "./DropdownSegment";
