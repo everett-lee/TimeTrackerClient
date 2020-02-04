@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Segment, Grid, Button } from 'semantic-ui-react';
 
-import { callTimer } from './Timer';
+import { callTimer, resetTimer } from './Timer';
 
 function TimerBox() {
     const [time, setTime] = useState(0);
@@ -24,6 +24,12 @@ function TimerBox() {
         callTimer(setTime);
     }
 
+    const handleResetTimerClick = () => {
+        resetTimer(setTime);
+    }
+
+
+
     return (
         <Segment id="timerBox">
             <Grid columns={2} stackable textAlign='center'>
@@ -36,7 +42,7 @@ function TimerBox() {
                 <Grid.Column id='timerCol'>
                     <Button.Group id='timerButtons'>
                         <Button size='huge' basic color='green'>Save</Button>
-                        <Button size='huge' basic color='green'>Reset</Button>
+                        <Button size='huge' basic color='green' onClick={handleResetTimerClick}>Reset</Button>
                     </ Button.Group>
                 </Grid.Column>
             </Grid>

@@ -15,4 +15,14 @@ const callTimer = (setTime) => {
     }
 }
 
-export { callTimer };
+const resetTimer = (setTime) => {
+    clearInterval(interval);
+    setTime(0);
+    isRunning = false;
+    const returnTime = time;
+    time = 0;
+
+    return returnTime;
+}
+
+export { callTimer, resetTimer };
