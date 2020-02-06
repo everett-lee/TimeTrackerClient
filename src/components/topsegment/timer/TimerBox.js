@@ -1,10 +1,33 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Segment, Grid, Button } from 'semantic-ui-react';
+import { useMutation } from '@apollo/react-hooks';
 
 import { callTimer, resetTimer } from './Timer';
+import Mutations from '../../../graphql/Mutations'
+import { AuthenticationContext } from '../../providers/AuthenticationProvider';
+import { TaskContext } from '../../providers/TaskProvider';
 
 function TimerBox() {
+    const authenticationContext = useContext(AuthenticationContext);
+    const taskContext = useContext(TaskContext);
+
     const [time, setTime] = useState(0);
+    const [createOrUpdateTimeCommit] = useMutation(Mutations.CREATE_OR_UPDATE_TIMECOMMIT);
+
+    const callCreateOrUpdateTimeCommit = () => {
+        // if all fields are completed
+        if (time > 0) {
+            createOrUpdateTimeCommit({
+                variables:
+                {
+                    "ownerId": authenticationContext.user.id,
+                    "subtaskId": taskContext.activeSubtaskId,
+                    "time": time
+                }
+            });
+        }
+    }
+
 
     const convertToMinutesAndSecondsDisplay = (timeIn) => {
         // Time will stop updating after 23:59
@@ -27,8 +50,6 @@ function TimerBox() {
     const handleResetTimerClick = () => {
         resetTimer(setTime);
     }
-
-
 
     return (
         <Segment id="timerBox">

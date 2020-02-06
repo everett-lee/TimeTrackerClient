@@ -17,11 +17,11 @@ function TopSegment() {
   const authenticationContext = useContext(AuthenticationContext);
   const taskContext = useContext(TaskContext);
   const ownerId = authenticationContext.user.id;
-    
+
   const [activeClientId, setActiveClientId] = useState(null);
   const [activeTaskId, setActiveTaskId] = useState(null);
   const [activeSubtaskId, setActiveSubtaskId] = useState(null);
-  
+
   const [deleteClient] = useMutation(Mutations.DELETE_CLIENT);
   const [deleteTask] = useMutation(Mutations.DELETE_TASK);
   const [deleteSubtask] = useMutation(Mutations.DELETE_SUBTASK);
@@ -38,6 +38,11 @@ function TopSegment() {
         text: el[itemName],
         value: el.id
       }))
+  }
+
+  const handleUpdateActiveSubtaskId = (id) => {
+    setActiveSubtaskId(id);
+    taskContext.setActiveSubtaskId(id);
   }
 
   const { loading: clientsLoading, error: clientsError, data: clientsData, refetch: clientsRefetch } = useQuery(Queries.ALL_CLIENTS, {
@@ -100,7 +105,7 @@ function TopSegment() {
           items={subtasks}
           deleteItem={curriedDeleteSubtask(setActiveSubtaskId, tasksRefetch, deleteSubtask, ownerId)}
           itemName={"subtask"}
-          setActiveItem={setActiveSubtaskId}
+          setActiveItem={handleUpdateActiveSubtaskId}
           activeTaskId={activeTaskId}
           addDisabled={!Boolean(activeTaskId)}
           deleteDisabled={!Boolean(activeSubtaskId)} />

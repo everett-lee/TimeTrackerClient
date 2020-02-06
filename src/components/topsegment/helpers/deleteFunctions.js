@@ -19,7 +19,7 @@ const callDeleteClient = (setActive, refetch, deleteItem, ownerId, id) => {
     });
     setActive(null);
     refetch();
-  }
+  } 
 }
 
 const callDeleteTask = (setActive, refetch, deleteItem, ownerId, id) => {

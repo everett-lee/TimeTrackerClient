@@ -47,7 +47,16 @@ const Mutations = {
     mutation deleteSubtask($ownerId: ID!, $subtaskId: ID!){
       deleteSubtask(ownerId: $ownerId, subtaskId: $subtaskId) 
     }
-    `
+    `,
+    CREATE_OR_UPDATE_TIMECOMMIT: gql`
+    mutation createOrUpdateTimeCommit($ownerId: ID!, $subtaskId: ID!, $time: Long!){
+      createOrUpdateTimeCommit(ownerId: $ownerId, subtaskId: $subtaskId, time: $time) {
+        id
+        ownerId
+        time
+      }
+    }
+    `,
 };
 
 export default Mutations;
