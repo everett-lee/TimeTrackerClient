@@ -4,7 +4,7 @@ import { createHttpLink } from 'apollo-link-http';
 import { setContext } from 'apollo-link-context';
 
 /**
- * Appolo config file
+ * Apollo config file
  * 
  */
 const httpLink = createHttpLink({

@@ -4,14 +4,15 @@ import { useQuery, useMutation } from '@apollo/react-hooks';
 
 import { AuthenticationContext } from '../providers/AuthenticationProvider';
 import { TaskContext } from '../providers/TaskProvider';
+import { getMappedClients, getMappedTasks, getMappedSubtasks } from './helpers/DataProcessors'
 import TimerBox from "./timer/TimerBox";
 
-import { curryDeleteClient, callDeleteClient, callDeleteTask, callDeleteSubtask } from './helpers/deleteFunctions';
+import { curryDeleteClient, callDeleteClient, callDeleteTask, callDeleteSubtask } from './helpers/DeleteFunctions';
 import DropdownSegment from "./DropdownSegment";
 import Queries from '../../graphql/Queries';
 import Mutations from '../../graphql/Mutations';
 /** 
- * Top level component for storing and sending data 
+ * Top level component for getting and processing data 
 **/
 function TopSegment() {
   const authenticationContext = useContext(AuthenticationContext);
@@ -31,24 +32,16 @@ function TopSegment() {
   const curriedDeleteTask = curryDeleteClient(callDeleteTask);
   const curriedDeleteSubtask = curryDeleteClient(callDeleteSubtask);
 
-  const mapForDropdown = (data, itemName) => {
-    return data.sort((a, b) => a[itemName].localeCompare(b[itemName]))
-      .map((el, index) => ({
-        key: index,
-        text: el[itemName],
-        value: el.id
-      }))
-  }
 
   const handleUpdateActiveSubtaskId = (id) => {
     setActiveSubtaskId(id);
     taskContext.setActiveSubtaskId(id);
   }
 
+  // Retrieve data for all clients and tasks
   const { loading: clientsLoading, error: clientsError, data: clientsData, refetch: clientsRefetch } = useQuery(Queries.ALL_CLIENTS, {
     variables: { ownerId },
   });
-
   const { loading: tasksLoading, error: tasksError, data: tasksData, refetch: tasksRefetch } = useQuery(Queries.ALL_TASKS, {
     variables: { ownerId },
   });
@@ -57,17 +50,13 @@ function TopSegment() {
   if (clientsError || tasksError) clientsError ? console.error(clientsError) : console.error(tasksError);
 
   taskContext.setClients(clientsData.getAllClients);
-  const clients = mapForDropdown(clientsData.getAllClients, "clientName");
+  const clients = getMappedClients(clientsData.getAllClients);
 
   taskContext.setTasks(tasksData.getAllTasks);
-  const tasks = mapForDropdown(tasksData.getAllTasks
-    .filter(task => task.client.id === activeClientId), "taskName");
+  const tasks = getMappedTasks(tasksData.getAllTasks, activeClientId);
 
   // subtasks associated with the currently selected task
-  const activeSubtasks = tasksData.getAllTasks
-    .filter(task => task.client.id === activeClientId && task.id === activeTaskId)
-    .flatMap(task => task.subtasks);
-  const subtasks = mapForDropdown(activeSubtasks, "subtaskName")
+  const subtasks = getMappedSubtasks(tasksData.getAllTasks, activeClientId, activeTaskId)
 
   const callSetClientId = (id) => {
     setActiveClientId(id);

@@ -11,18 +11,18 @@ function register(email, password) {
     // send post request to register endpoint with
     // email and password in body 
     const response = axios.post(server + '/register', {email, password})
-        .then(res => res.data)
+        .then(res => res.data);
 
-    return response
+    return response;
 }
 
 function authenticate(email, password) {
     // send post request to autenticate endpoint with
     // email and password in body 
     const response = axios.post(server + '/authenticate', {email, password})
-        .then(res => res.data)
+        .then(res => res.data);
 
-    return response
+    return response;
 }
 
 export { register, authenticate }

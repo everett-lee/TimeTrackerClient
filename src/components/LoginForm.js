@@ -38,19 +38,19 @@ function LoginForm() {
             // response from server
             if (error.response) {
                 msg = error.response.data.message;
-                // server not reached
+            // server not reached
             } else {
-                msg = 'Unable to reach server'
+                msg = 'Unable to reach server';
             }
-            setResultMsg(msg)
+            setResultMsg(msg);
         }
 
         if (user) {
-            setApiSuccess(true)
-            setResultMsg('Registration successful')
+            setApiSuccess(true);
+            setResultMsg('Registration successful');
 
             // switch modal off and clear error if successful
-            changeModalState()
+            changeModalState();
         }
     }
 
@@ -78,7 +78,7 @@ function LoginForm() {
 
         if (user) {
             // clear error message
-            authenticationContext.updateUserandLocalStorage(user);
+            authenticationContext.updateUserAndLocalStorage(user);
             authenticationContext.setAuthenticated(true);
             setResultMsg('')
         }

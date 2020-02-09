@@ -4,7 +4,7 @@ import TopSegment from './topsegment/TopSegment';
 import { AuthenticationContext }  from './providers/AuthenticationProvider';
 
 function App() {
-  const authentcationContext = useContext(AuthenticationContext);
+  const authenticationContext = useContext(AuthenticationContext);
 
 
   const loginView = () => {
@@ -13,7 +13,7 @@ function App() {
     );
   }
 
-  if (!authentcationContext.authenticated) {
+  if (!authenticationContext.authenticated) {
     return loginView();
   } else {
     return <TopSegment></TopSegment>

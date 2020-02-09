@@ -25,6 +25,7 @@ function DropdownSegment({ items, refetch, deleteItem, itemName, setActiveItem, 
         if (dropdownValue) {
             deleteItem(dropdownValue);
             setDropdownValue(null);
+            setActiveItem(null);
         }
     }
 

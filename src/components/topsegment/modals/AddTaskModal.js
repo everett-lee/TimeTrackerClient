@@ -13,7 +13,7 @@ function AddTaskModal({ onClose, activeClientId }) {
     const [createTask] = useMutation(Mutations.CREATE_TASK);
 
     const taskNameOnChangeHandler = (e) => {
-        setTaskName(e.target.value)
+        setTaskName(e.target.value);
     }
 
     const callCreateTask = () => {

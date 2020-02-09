@@ -7,14 +7,14 @@ function AuthenticationProvider({ children }) {
     const [authenticated, setAuthenticated] = useState(false);
     const [user, setUser] = useState(nullUser);
 
-    const updateUserandLocalStorage = (user) => {
+    const updateUserAndLocalStorage = (user) => {
         localStorage.setItem('token', user.token);
         setUser(user);
     }
 
     return (
         <AuthenticationContext.Provider value={{ authenticated, setAuthenticated, 
-                                                 user, updateUserandLocalStorage }}>
+                                                 user, updateUserAndLocalStorage }}>
             {children}
         </ AuthenticationContext.Provider>
     );
