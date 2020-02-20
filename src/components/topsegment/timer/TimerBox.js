@@ -30,7 +30,7 @@ function TimerBox() {
 
             handleResetTimerClick();
         } else {
-            const message = time == 0? "Please start the timer before saving": "Please select a subtask"
+            const message = time === 0? "Please start the timer before saving": "Please select a subtask"
             setMessage(message);
             handleShowMessageStateChange();
         }

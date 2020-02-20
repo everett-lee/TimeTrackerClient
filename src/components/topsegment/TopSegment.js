@@ -11,6 +11,7 @@ import { curryDeleteClient, callDeleteClient, callDeleteTask, callDeleteSubtask 
 import DropdownSegment from "./DropdownSegment";
 import Queries from '../../graphql/Queries';
 import Mutations from '../../graphql/Mutations';
+
 /** 
  * Top level component for getting and processing data 
 **/
@@ -31,7 +32,6 @@ function TopSegment() {
   const curriedDeleteClient = curryDeleteClient(callDeleteClient);
   const curriedDeleteTask = curryDeleteClient(callDeleteTask);
   const curriedDeleteSubtask = curryDeleteClient(callDeleteSubtask);
-
 
   const handleUpdateActiveSubtaskId = (id) => {
     setActiveSubtaskId(id);
