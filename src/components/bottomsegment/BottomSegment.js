@@ -1,10 +1,15 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import { ResponsiveNetwork } from '../nivo/network';
-import TEMP_DATA from './TempData';
+
+import { TaskContext } from '../providers/TaskProvider';
 
 function BottomSegment() {
+    const taskContext = useContext(TaskContext);
 
-    const MyResponsiveNetwork = ( {nodes, links }) => (
+    const [nodes, setNodes] = useState([null]);
+    const [links, setLinks] = useState([]);
+
+    const MyResponsiveNetwork = (nodes, links) => (
         <div id="graphDiv">
             <ResponsiveNetwork
                 nodes={nodes}
@@ -16,13 +21,13 @@ function BottomSegment() {
                 nodeBorderWidth={1}
                 nodeBorderColor={{ from: 'color', modifiers: [['darker', 0.8]] }}
                 linkThickness={function (t) { return 2 * (2 - t.source.depth) }}
-                motionStiffness={160}
+                motionStiffness={160}   
                 motionDamping={12}
             />
         </div>
     );
 
-    return MyResponsiveNetwork(TEMP_DATA);
+    return MyResponsiveNetwork(nodes, links);
 }
 
 export default BottomSegment;

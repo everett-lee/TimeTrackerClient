@@ -49,24 +49,26 @@ function TopSegment() {
   if (clientsLoading || tasksLoading) return null;
   if (clientsError || tasksError) clientsError ? console.error(clientsError) : console.error(tasksError);
 
-  taskContext.setClients(clientsData.getAllClients);
   const clients = getMappedClients(clientsData.getAllClients);
 
   taskContext.setTasks(tasksData.getAllTasks);
   const tasks = getMappedTasks(tasksData.getAllTasks, activeClientId);
-
+  
   // subtasks associated with the currently selected task
   const subtasks = getMappedSubtasks(tasksData.getAllTasks, activeClientId, activeTaskId)
 
   const callSetClientId = (id) => {
     setActiveClientId(id);
     setActiveTaskId(null);
-    setActiveSubtaskId(null);
+    taskContext.setTasks(null);
+    taskContext.setActiveTaskIdHelper(null);
+    setActiveSubtaskId(null);;
   }
 
   const callSetTaskId = (id) => {
     setActiveTaskId(id);
-    setActiveSubtaskId(null);
+    taskContext.setActiveTaskIdHelper(id);
+    setActiveSubtaskId(null);;
   }
 
   return (
