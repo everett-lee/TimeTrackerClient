@@ -21,14 +21,12 @@ const Queries = {
         getAllTasks(ownerId: $ownerId) {
            id
            taskName
+           totalTime
            subtasks {
             id
             subtaskName
             category
-            timeCommits {
-               id 
-               time
-            }
+            totalTime
             dependsOn {
                id   
             }

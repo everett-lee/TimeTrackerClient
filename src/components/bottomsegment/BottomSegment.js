@@ -6,16 +6,13 @@ import { TaskContext } from '../providers/TaskProvider';
 function BottomSegment() {
     const taskContext = useContext(TaskContext);
 
-    const [nodes, setNodes] = useState([null]);
-    const [links, setLinks] = useState([]);
-
     const MyResponsiveNetwork = (nodes, links) => (
         <div id="graphDiv">
             <ResponsiveNetwork
                 nodes={nodes}
                 links={links}
                 margin={{ top: 0, right: 0, bottom: 0, left: 0 }}
-                repulsivity={6}
+                repulsivity={100}
                 iterations={60}
                 nodeColor={function (t) { return t.color }}
                 nodeBorderWidth={1}
@@ -27,7 +24,7 @@ function BottomSegment() {
         </div>
     );
 
-    return MyResponsiveNetwork(nodes, links);
+    return MyResponsiveNetwork(taskContext.nodes, taskContext.links);
 }
 
 export default BottomSegment;

@@ -1,5 +1,5 @@
 import React, { useState, createContext } from 'react';
-import { getTaskNode } from './NodeFactory';
+import { getTaskNode, getSubtaskTaskNode, getLinks} from './NodeFactory';
 
 const TaskContext = createContext();
 
@@ -9,19 +9,33 @@ function TaskProvider({ children }) {
     const [activeTaskId, setActiveTaskId] = useState(null);
     const [activeSubtaskId, setActiveSubtaskId] = useState(null);
 
-    const [nodes, setNodes] = useState([null]);
+    const [nodes, setNodes] = useState([]);
     const [links, setLinks] = useState([]);
 
     const setActiveTaskIdHelper = (id) => {
         if (id === null) {
             setActiveTaskId(null);
-            setNodes(null);
-            setLinks(null);
+            setNodes([]);
+            setLinks([]);
             return;
         }
 
         const activeTask = tasks.filter(task => task.id === id)[0];
-        setNodes(getTaskNode(activeTask));
+        const taskNode = getTaskNode(activeTask);
+        const subtaskNodes = activeTask.subtasks
+                                .map(subtask => getSubtaskTaskNode(subtask));
+
+        console.log(activeTask)
+        const links = subtaskNodes
+                        .map(subtaskNode => getLinks(subtaskNode))
+                        .flatMap(link => link);
+
+        console.log("+++++++++")
+        console.log([taskNode, ...subtaskNodes])
+        console.log(links)
+
+        setNodes([taskNode, ...subtaskNodes]);
+        setLinks(links)
 
     }
 
@@ -29,7 +43,8 @@ function TaskProvider({ children }) {
         <TaskContext.Provider value={{
             tasks, setTasks,
             activeTaskId, setActiveTaskIdHelper,
-            activeSubtaskId, setActiveSubtaskId
+            activeSubtaskId, setActiveSubtaskId,
+            nodes, links
         }}>
             {children}
         </ TaskContext.Provider>
