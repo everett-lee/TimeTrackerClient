@@ -3,7 +3,6 @@ import { getTaskNode, getSubtaskTaskNode, getLinks} from './NodeFactory';
 
 const TaskContext = createContext();
 
-// only store tasks here?
 function TaskProvider({ children }) {
     const [tasks, setTasks] = useState(null);
     const [activeTaskId, setActiveTaskId] = useState(null);
@@ -21,6 +20,9 @@ function TaskProvider({ children }) {
         }
 
         const activeTask = tasks.filter(task => task.id === id)[0];
+        
+        // Transform the active task and its subtasks to graph nodes
+        // and the links between them 
         const taskNode = getTaskNode(activeTask);
         const subtaskNodes = activeTask.subtasks
                                 .map(subtask => getSubtaskTaskNode(subtask));
@@ -36,7 +38,6 @@ function TaskProvider({ children }) {
 
         setNodes([taskNode, ...subtaskNodes]);
         setLinks(links)
-
     }
 
     return (

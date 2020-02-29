@@ -12,7 +12,7 @@ function BottomSegment() {
                 nodes={nodes}
                 links={links}
                 margin={{ top: 0, right: 0, bottom: 0, left: 0 }}
-                repulsivity={100}
+                repulsivity={1000}
                 iterations={60}
                 nodeColor={function (t) { return t.color }}
                 nodeBorderWidth={1}

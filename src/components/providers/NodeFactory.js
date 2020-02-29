@@ -1,3 +1,8 @@
+// Number to divide totalTime by
+const divisor = 50000;
+const rbgValueTask = 'rgb(51, 204, 51)';
+const rbgValueSubtask = 'rgb(153, 255, 153)';
+
 const getTaskNode = (task) => {
     if (!task) {
         return;
@@ -6,17 +11,15 @@ const getTaskNode = (task) => {
     const { id, taskName, totalTime, complete } = task;
 
     const minRadius = 16;
-    const reducedTime = totalTime / 100;
+    const reducedTime = totalTime / divisor;
 
     const radius = Math.max(reducedTime, minRadius);
 
     return {
-        "id": 1,
-        "radius": radius,
-        "depth": 1,
-        "color": "rgb(97, 205, 187)",
-
-        "dependsOn": [1, 2, 3]
+        'id': 1,
+        'radius': radius,
+        'depth': 1,
+        'color': rbgValueTask
     }
 }
 
@@ -32,21 +35,20 @@ const getSubtaskTaskNode = (subtask) => {
     const idPlusOne = Number(id) + 1;
 
     const minRadius = 8;
-    const reducedTime = totalTime / 100;
+    const reducedTime = totalTime / divisor;
 
     const radius = Math.max(reducedTime, minRadius);
 
     return {
-        "id": idPlusOne,
-        "radius": radius,
-        "depth": 1,
-        "dependsOn": dependsOn,
-        "color": "rgb(97, 205, 187)"
+        'id': idPlusOne,
+        'radius': radius,
+        'depth': 1,
+        'dependsOn': dependsOn,
+        'color': rbgValueSubtask
     }
 }
 
 const getLinks = (node) => {
-
     // Return links from this node to its dependencies
     if (node.dependsOn.length) {
         return node.dependsOn
@@ -58,12 +60,10 @@ const getLinks = (node) => {
 }
 
 const getLink = (from, to) => {
-    console.log(from, to, "from and to")
-
     return {
-        "source": from,
-        "target": to,
-        "distance": 60
+        'source': from,
+        'target': to,
+        'distance': 120
     }
 }
 
