@@ -39,6 +39,7 @@ function AddSubtaskModal({ onClose, activeTaskId, refetch, subtasks }) {
                 }
             });
 
+            refetch()
             onClose();
         }
     }

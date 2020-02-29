@@ -53,7 +53,7 @@ function TopSegment() {
 
   taskContext.setTasks(tasksData.getAllTasks);
   const tasks = getMappedTasks(tasksData.getAllTasks, activeClientId);
-  
+
   // subtasks associated with the currently selected task
   const subtasks = getMappedSubtasks(tasksData.getAllTasks, activeClientId, activeTaskId)
 
@@ -71,6 +71,12 @@ function TopSegment() {
     setActiveSubtaskId(null);;
   }
 
+  const handleTaskRefetch = () => {
+    tasksRefetch()
+    taskContext.setActiveTaskIdHelper(activeTaskId);
+    taskContext.setTasks(tasksData.getAllTasks);
+  }
+
   return (
     <Segment.Group horizontal id="topSegment">
       <Segment id="selectionBox">
@@ -83,7 +89,7 @@ function TopSegment() {
           deleteDisabled={!Boolean(activeClientId)}
           addDisabled={false} />
         <DropdownSegment
-          refetch={tasksRefetch}
+          refetch={handleTaskRefetch}
           items={tasks}
           deleteItem={curriedDeleteTask(setActiveTaskId, tasksRefetch, deleteTask, ownerId)}
           itemName={"task"}
@@ -92,7 +98,7 @@ function TopSegment() {
           addDisabled={!Boolean(activeClientId)}
           deleteDisabled={!Boolean(activeTaskId)} />
         <DropdownSegment
-          refetch={tasksRefetch}
+          refetch={handleTaskRefetch}
           items={subtasks}
           deleteItem={curriedDeleteSubtask(setActiveSubtaskId, tasksRefetch, deleteSubtask, ownerId)}
           itemName={"subtask"}
