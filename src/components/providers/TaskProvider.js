@@ -1,5 +1,5 @@
-import React, { useState, createContext } from 'react';
-import { getTaskNode, getSubtaskTaskNode, getLinks} from './NodeFactory';
+import React, { useEffect, useState, createContext } from 'react';
+import { getTaskNode, getSubtaskTaskNode, getLinks } from './NodeFactory';
 
 const TaskContext = createContext();
 
@@ -11,39 +11,33 @@ function TaskProvider({ children }) {
     const [nodes, setNodes] = useState([]);
     const [links, setLinks] = useState([]);
 
-    const setActiveTaskIdHelper = (id) => {
-        if (id === null) {
-            setActiveTaskId(null);
+    useEffect(() => {
+        if (activeTaskId === null) {
             setNodes([]);
             setLinks([]);
             return;
         }
 
-        const activeTask = tasks.filter(task => task.id === id)[0];
-        
+        const activeTask = tasks.filter(task => task.id === activeTaskId)[0];
+
         // Transform the active task and its subtasks to graph nodes
         // and the links between them 
         const taskNode = getTaskNode(activeTask);
         const subtaskNodes = activeTask.subtasks
-                                .map(subtask => getSubtaskTaskNode(subtask));
+            .map(subtask => getSubtaskTaskNode(subtask));
 
-        console.log(activeTask)
         const links = subtaskNodes
-                        .map(subtaskNode => getLinks(subtaskNode))
-                        .flatMap(link => link);
-
-        console.log("+++++++++")
-        console.log([taskNode, ...subtaskNodes])
-        console.log(links)
+            .map(subtaskNode => getLinks(subtaskNode))
+            .flatMap(link => link);
 
         setNodes([taskNode, ...subtaskNodes]);
         setLinks(links)
-    }
+    }, [tasks, activeTaskId]);
 
     return (
         <TaskContext.Provider value={{
             tasks, setTasks,
-            activeTaskId, setActiveTaskIdHelper,
+            activeTaskId, setActiveTaskId,
             activeSubtaskId, setActiveSubtaskId,
             nodes, links
         }}>

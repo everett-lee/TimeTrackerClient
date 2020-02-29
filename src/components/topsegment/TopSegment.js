@@ -61,19 +61,19 @@ function TopSegment() {
     setActiveClientId(id);
     setActiveTaskId(null);
     taskContext.setTasks(null);
-    taskContext.setActiveTaskIdHelper(null);
+    taskContext.setActiveTaskId(null);
     setActiveSubtaskId(null);;
   }
 
   const callSetTaskId = (id) => {
     setActiveTaskId(id);
-    taskContext.setActiveTaskIdHelper(id);
+    taskContext.setActiveTaskId(id);
     setActiveSubtaskId(null);;
   }
 
   const handleTaskRefetch = () => {
     tasksRefetch()
-    taskContext.setActiveTaskIdHelper(activeTaskId);
+    taskContext.setActiveTaskId(activeTaskId);
     taskContext.setTasks(tasksData.getAllTasks);
   }
 
