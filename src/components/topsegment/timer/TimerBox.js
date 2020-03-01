@@ -7,14 +7,19 @@ import Mutations from '../../../graphql/Mutations'
 import { AuthenticationContext } from '../../providers/AuthenticationProvider';
 import { TaskContext } from '../../providers/TaskProvider';
 
-function TimerBox() {
+function TimerBox({ refetch }) {
     const authenticationContext = useContext(AuthenticationContext);
     const taskContext = useContext(TaskContext);
 
     const [time, setTime] = useState(0);
     const [showMessage, setShowMessage] = useState(false);
     const [message, setMessage] = useState(false);
-    const [createOrUpdateTimeCommit] = useMutation(Mutations.CREATE_OR_UPDATE_TIMECOMMIT);
+    const [createOrUpdateTimeCommit] = useMutation(Mutations.CREATE_OR_UPDATE_TIMECOMMIT,
+        {
+            onCompleted: () => {
+                refetch()
+            }
+        });
 
     const callCreateOrUpdateTimeCommit = () => {
         // if all fields are completed
@@ -30,7 +35,7 @@ function TimerBox() {
 
             handleResetTimerClick();
         } else {
-            const message = time === 0? "Please start the timer before saving": "Please select a subtask"
+            const message = time === 0 ? "Please start the timer before saving" : "Please select a subtask"
             setMessage(message);
             handleShowMessageStateChange();
         }
@@ -98,7 +103,7 @@ function TimerBox() {
             </Grid>
             {resultMessage()}
         </Segment>
-        
+
     );
 }
 
