@@ -26,7 +26,13 @@ function TopSegment() {
 
   const [deleteClient] = useMutation(Mutations.DELETE_CLIENT);
   const [deleteTask] = useMutation(Mutations.DELETE_TASK);
-  const [deleteSubtask] = useMutation(Mutations.DELETE_SUBTASK);
+  // Define mutation, which will refetch results on completion
+  const [deleteSubtask] = useMutation(Mutations.DELETE_SUBTASK,
+    {
+      onCompleted: () => {
+        handleTaskRefetch()
+      }
+    });
 
   // Curry delete mutations to return when item id provided
   const curriedDeleteClient = curryDeleteClient(callDeleteClient);
@@ -83,7 +89,7 @@ function TopSegment() {
         <DropdownSegment
           refetch={clientsRefetch}
           items={clients}
-          deleteItem={curriedDeleteClient(setActiveClientId, clientsRefetch, deleteClient, ownerId)}
+          deleteItem={curriedDeleteClient(setActiveClientId, deleteClient, ownerId)}
           itemName={"client"}
           setActiveItem={callSetClientId}
           deleteDisabled={!Boolean(activeClientId)}
@@ -91,7 +97,7 @@ function TopSegment() {
         <DropdownSegment
           refetch={handleTaskRefetch}
           items={tasks}
-          deleteItem={curriedDeleteTask(setActiveTaskId, tasksRefetch, deleteTask, ownerId)}
+          deleteItem={curriedDeleteTask(setActiveTaskId, deleteTask, ownerId)}
           itemName={"task"}
           setActiveItem={callSetTaskId}
           activeClientId={activeClientId}
@@ -100,7 +106,7 @@ function TopSegment() {
         <DropdownSegment
           refetch={handleTaskRefetch}
           items={subtasks}
-          deleteItem={curriedDeleteSubtask(setActiveSubtaskId, tasksRefetch, deleteSubtask, ownerId)}
+          deleteItem={curriedDeleteSubtask(setActiveSubtaskId, deleteSubtask, ownerId)}
           itemName={"subtask"}
           setActiveItem={handleUpdateActiveSubtaskId}
           activeTaskId={activeTaskId}

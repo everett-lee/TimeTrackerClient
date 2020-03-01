@@ -12,7 +12,13 @@ function AddSubtaskModal({ onClose, activeTaskId, refetch, subtasks }) {
     const [category, setCategory] = useState('');
     const [dependsOnIds, setDependsOnIds] = useState([]);
 
-    const [createSubtask] = useMutation(Mutations.CREATE_SUBTASK, { onCompleted: () => {console.log("yo"); refetch()}});
+    // Define mutation, which will refetch results on completion
+    const [createSubtask] = useMutation(Mutations.CREATE_SUBTASK,
+        {
+            onCompleted: () => {
+                refetch()
+            }
+        });
 
     const subtaskNameOnChangeHandler = (e) => {
         setSubtaskName(e.target.value);
