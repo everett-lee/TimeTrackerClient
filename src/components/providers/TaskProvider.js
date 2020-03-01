@@ -32,7 +32,7 @@ function TaskProvider({ children }) {
 
         setNodes([taskNode, ...subtaskNodes]);
         setLinks(links)
-    }, [tasks, activeTaskId]);
+    }, [tasks, activeTaskId, activeSubtaskId]);
 
     return (
         <TaskContext.Provider value={{

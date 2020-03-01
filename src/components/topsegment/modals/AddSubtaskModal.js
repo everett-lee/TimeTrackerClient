@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { useMutation } from '@apollo/react-hooks';
+import { useMutation, onCompleted } from '@apollo/react-hooks';
 import { Button, Form } from 'semantic-ui-react'
 import { AuthenticationContext } from '../../providers/AuthenticationProvider';
 
@@ -12,7 +12,7 @@ function AddSubtaskModal({ onClose, activeTaskId, refetch, subtasks }) {
     const [category, setCategory] = useState('');
     const [dependsOnIds, setDependsOnIds] = useState([]);
 
-    const [createSubtask] = useMutation(Mutations.CREATE_SUBTASK);
+    const [createSubtask] = useMutation(Mutations.CREATE_SUBTASK, { onCompleted: () => {console.log("yo"); refetch()}});
 
     const subtaskNameOnChangeHandler = (e) => {
         setSubtaskName(e.target.value);
@@ -38,8 +38,6 @@ function AddSubtaskModal({ onClose, activeTaskId, refetch, subtasks }) {
                     "dependsOnIds": dependsOnIds
                 }
             });
-
-            refetch()
             onClose();
         }
     }
