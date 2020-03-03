@@ -16,13 +16,11 @@ import Mutations from '../../graphql/Mutations';
  * Top level component for getting and processing data 
 **/
 function TopSegment() {
-  const authenticationContext = useContext(AuthenticationContext);
-  const taskContext = useContext(TaskContext);
-  const ownerId = authenticationContext.user.id;
+  const { user } = useContext(AuthenticationContext);
+  const { setTasks, activeTaskId, setActiveTaskId, activeSubtaskId, setActiveSubtaskId } = useContext(TaskContext);
+  const ownerId = user.id;
 
   const [activeClientId, setActiveClientId] = useState(null);
-  const [activeTaskId, setActiveTaskId] = useState(null);
-  const [activeSubtaskId, setActiveSubtaskId] = useState(null);
 
   const [deleteClient] = useMutation(Mutations.DELETE_CLIENT);
   const [deleteTask] = useMutation(Mutations.DELETE_TASK);
@@ -39,11 +37,6 @@ function TopSegment() {
   const curriedDeleteTask = curryDeleteClient(callDeleteTask);
   const curriedDeleteSubtask = curryDeleteClient(callDeleteSubtask);
 
-  const handleUpdateActiveSubtaskId = (id) => {
-    setActiveSubtaskId(id);
-    taskContext.setActiveSubtaskId(id);
-  }
-
   // Retrieve data for all clients and tasks
   const { loading: clientsLoading, error: clientsError, data: clientsData, refetch: clientsRefetch } = useQuery(Queries.ALL_CLIENTS, {
     variables: { ownerId },
@@ -57,7 +50,7 @@ function TopSegment() {
 
   const clients = getMappedClients(clientsData.getAllClients);
 
-  taskContext.setTasks(tasksData.getAllTasks);
+  setTasks(tasksData.getAllTasks);
   const tasks = getMappedTasks(tasksData.getAllTasks, activeClientId);
 
   // subtasks associated with the currently selected task
@@ -66,21 +59,19 @@ function TopSegment() {
   const callSetClientId = (id) => {
     setActiveClientId(id);
     setActiveTaskId(null);
-    taskContext.setTasks(null);
-    taskContext.setActiveTaskId(null);
+    setTasks(null);
     setActiveSubtaskId(null);;
   }
 
   const callSetTaskId = (id) => {
     setActiveTaskId(id);
-    taskContext.setActiveTaskId(id);
     setActiveSubtaskId(null);;
   }
 
   const handleTaskRefetch = () => {
     tasksRefetch()
-    taskContext.setActiveTaskId(activeTaskId);
-    taskContext.setTasks(tasksData.getAllTasks);
+    setActiveTaskId(activeTaskId);
+    setTasks(tasksData.getAllTasks);
   }
 
   return (
@@ -108,7 +99,7 @@ function TopSegment() {
           items={subtasks}
           deleteItem={curriedDeleteSubtask(setActiveSubtaskId, deleteSubtask, ownerId)}
           itemName={"subtask"}
-          setActiveItem={handleUpdateActiveSubtaskId}
+          setActiveItem={setActiveSubtaskId}
           activeTaskId={activeTaskId}
           addDisabled={!Boolean(activeTaskId)}
           deleteDisabled={!Boolean(activeSubtaskId)} />

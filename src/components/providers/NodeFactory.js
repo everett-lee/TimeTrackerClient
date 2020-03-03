@@ -1,7 +1,8 @@
 // Number to divide totalTime by
 const divisor = 50000;
 const rbgValueTask = 'rgb(51, 204, 51)';
-const rbgValueSubtask = 'rgb(153, 255, 153)';
+const rbgValueLightGreen = 'rgb(153, 255, 153)';
+const rbgValueRed = 'rgb(255, 77, 77)';
 
 const getTaskNode = (task) => {
     if (!task) {
@@ -23,16 +24,18 @@ const getTaskNode = (task) => {
     }
 }
 
-const getSubtaskTaskNode = (subtask) => {
+const getSubtaskTaskNode = (subtask, activeSubtaskId) => {
     if (!subtask) {
         return;
     }
 
     const { id, subtaskName, totalTime, complete, dependsOn } = subtask;
 
-    // The node representing the origin task has taken id 1, 
+    // The node representing the original task has taken id 1, 
     // so add one to each subsequent subtask id
     const idPlusOne = Number(id) + 1;
+
+    const colour = activeSubtaskId == id ? rbgValueRed : rbgValueLightGreen
 
     const minRadius = 8;
     const reducedTime = totalTime / divisor;
@@ -44,7 +47,7 @@ const getSubtaskTaskNode = (subtask) => {
         'radius': radius,
         'depth': 1,
         'dependsOn': dependsOn,
-        'color': rbgValueSubtask
+        'color': colour
     }
 }
 

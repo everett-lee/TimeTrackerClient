@@ -7,7 +7,6 @@ import BottomSegment from './bottomsegment/BottomSegment';
 function App() {
   const authenticationContext = useContext(AuthenticationContext);
 
-
   const loginView = () => {
     return (
       <LoginForm />

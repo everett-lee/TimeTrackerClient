@@ -40,6 +40,8 @@ function DropdownSegment({ items, refetch, deleteItem, itemName, setActiveItem, 
         case 'subtask':
             modal = <AddSubtaskModal onClose={handleClose} activeTaskId={activeTaskId} subtasks={items} refetch={refetch}> </AddSubtaskModal>;
             break;
+        default: 
+            modal = null;
     }
 
     const deleteButton = deleteDisabled ? <Button disabled basic onClick={callDeleteItem}>Delete {itemName}</Button> :

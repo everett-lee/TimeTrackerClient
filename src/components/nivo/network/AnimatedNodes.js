@@ -42,11 +42,12 @@ const AnimatedNodes = ({ nodes, color, borderWidth, borderColor }) => {
                     radius: spring(node.radius, springConfig),
                     scale: spring(1, springConfig),
                 },
-            }))}
-        >
+            }))}>
             {interpolatedStyles => (
                 <>
                     {interpolatedStyles.map(({ key, style, data: node }) => {
+                        console.log("+++++++ NODE")
+                        console.log(node)
                         return (
                             <Node
                                 key={key}

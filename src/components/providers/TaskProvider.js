@@ -24,7 +24,7 @@ function TaskProvider({ children }) {
         // and the links between them 
         const taskNode = getTaskNode(activeTask);
         const subtaskNodes = activeTask.subtasks
-            .map(subtask => getSubtaskTaskNode(subtask));
+            .map(subtask => getSubtaskTaskNode(subtask, activeSubtaskId));
 
         const links = subtaskNodes
             .map(subtaskNode => getLinks(subtaskNode))

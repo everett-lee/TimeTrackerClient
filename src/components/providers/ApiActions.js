@@ -17,7 +17,7 @@ function register(email, password) {
 }
 
 function authenticate(email, password) {
-    // send post request to autenticate endpoint with
+    // send post request to authenticate endpoint with
     // email and password in body 
     const response = axios.post(server + '/authenticate', {email, password})
         .then(res => res.data);

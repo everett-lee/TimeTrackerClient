@@ -22,7 +22,7 @@ function TimerBox({ refetch }) {
         });
 
     const callCreateOrUpdateTimeCommit = () => {
-        // if all fields are completed
+        // If all fields are completed
         if (time > 0 && taskContext.activeSubtaskId) {
             createOrUpdateTimeCommit({
                 variables:
