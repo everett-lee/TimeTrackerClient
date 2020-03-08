@@ -40,6 +40,15 @@ const Queries = {
            completed
         }
     }
+    `,
+    ALL_TIMECOMMITS: gql`
+    query getAllTimeCommits($ownerId: ID!, $subtaskId: ID!) {
+        getAllTimeCommits(ownerId: $ownerId, subtaskId: $subtaskId) {
+           id
+           date
+           time
+        }
+    }
     `
 }
 

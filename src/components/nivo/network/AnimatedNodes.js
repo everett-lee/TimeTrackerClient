@@ -46,8 +46,6 @@ const AnimatedNodes = ({ nodes, color, borderWidth, borderColor }) => {
             {interpolatedStyles => (
                 <>
                     {interpolatedStyles.map(({ key, style, data: node }) => {
-                        console.log("+++++++ NODE")
-                        console.log(node)
                         return (
                             <Node
                                 key={key}
