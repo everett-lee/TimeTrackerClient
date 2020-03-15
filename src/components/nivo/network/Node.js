@@ -6,25 +6,31 @@ import NodeModal from '../../bottomsegment/NodeModal';
 const Node = ({ x, y, radius, color, borderWidth, borderColor, scale = 1, node }) => {
     const [modelOpen, setModelOpen] = useState(false);
 
-    const handleToggleModalState = () => {
-        setModelOpen(!modelOpen);
+    const handleOpenModal = () => {
+        setModelOpen(true);
+    }
+
+    const handleCloseModal = () => {
+        setModelOpen(false);
     }
 
     return (
+        <React.Fragment>
+            <circle
+                onClick={handleOpenModal}
+                transform={`translate(${x},${y}) scale(${scale})`}
+                r={radius}
+                fill={color}
+                strokeWidth={borderWidth}
+                stroke={borderColor}
+            >
 
-        <circle
-            onClick={handleToggleModalState}
-            transform={`translate(${x},${y}) scale(${scale})`}
-            r={radius}
-            fill={color}
-            strokeWidth={borderWidth}
-            stroke={borderColor}
-        >
+            </circle>
             <NodeModal
-                trigger={handleToggleModalState}
+                handleClose={handleCloseModal}
                 isOpen={modelOpen}
                 nodeId={node.id} />
-        </circle>
+        </React.Fragment>
     )
 }
 

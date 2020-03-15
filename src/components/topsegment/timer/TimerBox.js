@@ -3,9 +3,10 @@ import { Segment, Grid, Button, Message } from 'semantic-ui-react';
 import { useMutation } from '@apollo/react-hooks';
 
 import { callTimer, resetTimer } from './Timer';
-import Mutations from '../../../graphql/Mutations'
+import Mutations from '../../../graphql/Mutations';
 import { AuthenticationContext } from '../../providers/AuthenticationProvider';
 import { TaskContext } from '../../providers/TaskProvider';
+import convertToMinutesAndSecondsDisplay from './ConvertToMinutesAndSeconds';
 
 function TimerBox({ refetch }) {
     const authenticationContext = useContext(AuthenticationContext);
@@ -52,20 +53,6 @@ function TimerBox({ refetch }) {
 
     const handleResetTimerClick = () => {
         resetTimer(setTime);
-    }
-
-    const convertToMinutesAndSecondsDisplay = (timeIn) => {
-        // Time will stop updating after 23:59
-        if (timeIn >= (60 * 24) - 1) {
-            return '23:59'
-        }
-
-        const hours = timeIn / 60;
-        const seconds = timeIn % 60;
-        const hoursLeadingZero = hours < 10 ? '0' : '';
-        const secondsLeadingZero = seconds < 10 ? '0' : '';
-
-        return `${hoursLeadingZero}${Math.round(hours)}:${secondsLeadingZero}${seconds}`;
     }
 
     const handleShowMessageStateChange = () => {
