@@ -4,7 +4,7 @@ import { useQuery } from '@apollo/react-hooks';
 
 import Queries from '../../graphql/Queries';
 import { AuthenticationContext } from '../providers/AuthenticationProvider';
-import Slider from './Slider';
+import SliderContainer from './SliderContainer';
 
 function NodeModal({ handleClose, isOpen, nodeId }) {
   const { user } = useContext(AuthenticationContext);
@@ -19,12 +19,15 @@ function NodeModal({ handleClose, isOpen, nodeId }) {
   if (loading || nodeId === 1) return null;
   if (error) console.error(error);
 
-  const renderTimeCommits = ({ getAllTimeCommits }) => {
+  const renderTimeCommits = () => {
+    refetch();
+
+    const { getAllTimeCommits } = data;
     return getAllTimeCommits
       .map((timeCommit, i) => {
         return (
           <div key={i}>
-            <Slider timeCommit={timeCommit} />
+            <SliderContainer timeCommit={timeCommit} />
           </div>)
       });
   }
@@ -32,7 +35,7 @@ function NodeModal({ handleClose, isOpen, nodeId }) {
   return (
     <Modal open={isOpen}>
       <Modal.Content>
-        {renderTimeCommits(data)}
+        {renderTimeCommits()}
       </Modal.Content>
       <Modal.Actions>
         <Button onClick={handleClose} >
