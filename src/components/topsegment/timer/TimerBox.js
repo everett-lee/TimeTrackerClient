@@ -8,7 +8,7 @@ import { AuthenticationContext } from '../../providers/AuthenticationProvider';
 import { TaskContext } from '../../providers/TaskProvider';
 import convertToMinutesAndSecondsDisplay from './ConvertToMinutesAndSeconds';
 
-function TimerBox({ refetch }) {
+function TimerBox() {
     const authenticationContext = useContext(AuthenticationContext);
     const taskContext = useContext(TaskContext);
 
@@ -18,7 +18,7 @@ function TimerBox({ refetch }) {
     const [createOrUpdateTimeCommit] = useMutation(Mutations.CREATE_OR_UPDATE_TIMECOMMIT);
 
     const callCreateOrUpdateTimeCommit = () => {
-        // If all fields are completed
+        // If all fields are assigned
         if (time > 0 && taskContext.activeSubtaskId) {
             createOrUpdateTimeCommit({
                 variables:

@@ -1,5 +1,11 @@
+/**
+ *  Convert time in seconds to a format suitable for display
+ * 
+ * @param {number} timeIn 
+ * @param {boolean} hideSeconds 
+ */
 const convertToMinutesAndSecondsDisplay = (timeIn, hideSeconds) => {
-    // Time will stop updating after 23:59
+    // Time will stop updating after 23:59:59
     if (timeIn >= (60 * 60 * 24) - 1) {
         return '23:59:59'
     }

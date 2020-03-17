@@ -2,6 +2,10 @@ let time = 0;
 let isRunning = false;
 let interval = null;
 
+/**
+ *  Start or stop the timer 
+ * @param {func} setTime 
+ */
 const callTimer = (setTime) => {
     // The timer is not running 
     if (!isRunning) {
@@ -15,6 +19,11 @@ const callTimer = (setTime) => {
     }
 }
 
+/**
+ *  Resets all state and returns the
+ *  current time
+ * @param {func} setTime 
+ */
 const resetTimer = (setTime) => {
     clearInterval(interval);
     setTime(0);

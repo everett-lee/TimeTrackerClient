@@ -13,12 +13,12 @@ function LoginForm() {
     const [resultMsg, setResultMsg] = useState(''); // info message for api calls
     const [apiSuccess, setApiSuccess] = useState(false); // is api call success or failure
 
-    const emailOnChangeHandler = (e) => {
-        setEmail(e.target.value);
+    const emailOnChangeHandler = ({ target: { value } }) => {
+        setEmail(value);
     }
 
-    const passwordOnChangeHandler = (e) => {
-        setPassword(e.target.value);
+    const passwordOnChangeHandler = ({ target: { value } }) => {
+        setPassword(value);
     }
 
     // register the user and update the user object if successful
@@ -38,7 +38,7 @@ function LoginForm() {
             // response from server
             if (error.response) {
                 msg = error.response.data.message;
-            // server not reached
+                // server not reached
             } else {
                 msg = 'Unable to reach server';
             }

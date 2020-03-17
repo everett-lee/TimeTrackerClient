@@ -9,11 +9,10 @@ function AddTaskModal({ onClose, activeClientId }) {
     const authenticationContext = useContext(AuthenticationContext);
 
     const [taskName, setTaskName] = useState('');
-
     const [createTask] = useMutation(Mutations.CREATE_TASK);
 
-    const taskNameOnChangeHandler = (e) => {
-        setTaskName(e.target.value);
+    const taskNameOnChangeHandler = ({ target: { value } }) => {
+        setTaskName(value);
     }
 
     const callCreateTask = () => {
@@ -38,7 +37,7 @@ function AddTaskModal({ onClose, activeClientId }) {
                 label={'Task name'}
                 placeholder={'Task name'}
                 onChange={taskNameOnChangeHandler}
-                value={taskName} /> 
+                value={taskName} />
             <Button type='submit' onClick={callCreateTask}>
                 Save
             </Button>

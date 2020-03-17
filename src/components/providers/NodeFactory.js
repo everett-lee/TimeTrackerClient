@@ -9,7 +9,7 @@ const getTaskNode = (task) => {
         return;
     }
 
-    const { id, taskName, totalTime, complete } = task;
+    const { totalTime } = task;
 
     const minRadius = 16;
     const reducedTime = totalTime / divisor;
@@ -29,13 +29,13 @@ const getSubtaskTaskNode = (subtask, activeSubtaskId) => {
         return;
     }
 
-    const { id, subtaskName, totalTime, complete, dependsOn } = subtask;
+    const { id, totalTime, dependsOn } = subtask;
 
     // The node representing the original task has taken id 1, 
     // so add one to each subsequent subtask id
     const idPlusOne = Number(id) + 1;
 
-    const colour = activeSubtaskId == id ? rbgValueRed : rbgValueLightGreen
+    const colour = activeSubtaskId === id ? rbgValueRed : rbgValueLightGreen
 
     const minRadius = 8;
     const reducedTime = totalTime / divisor;

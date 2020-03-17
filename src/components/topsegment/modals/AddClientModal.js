@@ -14,16 +14,16 @@ function AddClientModal({ onClose }) {
 
     const [createClient] = useMutation(Mutations.CREATE_CLIENT);
 
-    const clientNameOnChangeHandler = (e) => {
-        setClientName(e.target.value)
+    const clientNameOnChangeHandler = ({ target: { value } }) => {
+        setClientName(value)
     }
 
-    const businessTypeOnChangeHandler = (e) => {
-        setBusinessType(e.target.value)
+    const businessTypeOnChangeHandler = ({ target: { value } }) => {
+        setBusinessType(value)
     }
 
-    const locationOnChangeHandler = (e) => {
-        setLocation(e.target.value)
+    const locationOnChangeHandler = ({ target: { value } }) => {
+        setLocation(value)
     }
 
     const callCreateClient = () => {
@@ -35,7 +35,7 @@ function AddClientModal({ onClose }) {
                     "ownerId": authenticationContext.user.id,
                     "clientName": clientName,
                     "businessType": businessType,
-                    "location": location    
+                    "location": location
                 }
             });
 

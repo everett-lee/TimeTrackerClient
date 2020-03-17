@@ -27,11 +27,10 @@ function SliderContainer({ timeCommit }) {
     }
 
     const { time, date } = timeCommit;
-
     const [value, setValue] = useState(asFiveMinutes(time));
 
-    const handleSliderChange = (e) => {
-        setValue(e.target.value);
+    const handleSliderChange = ({ target: { value } }) => {
+        setValue(value);
     }
 
     return (

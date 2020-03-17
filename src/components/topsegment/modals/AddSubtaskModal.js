@@ -20,12 +20,12 @@ function AddSubtaskModal({ onClose, activeTaskId, refetch, subtasks }) {
             }
         });
 
-    const subtaskNameOnChangeHandler = (e) => {
-        setSubtaskName(e.target.value);
+    const subtaskNameOnChangeHandler = ({ target: { value } }) => {
+        setSubtaskName(value);
     }
 
-    const categoryOnChangeHandler = (e) => {
-        setCategory(e.target.value);
+    const categoryOnChangeHandler = ({ target: { value } }) => {
+        setCategory(value);
     }
     const dropdownOnChangeHandler = (e, { value }) => {
         setDependsOnIds(value);

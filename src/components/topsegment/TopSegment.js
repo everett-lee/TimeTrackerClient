@@ -13,7 +13,7 @@ import Queries from '../../graphql/Queries';
 import Mutations from '../../graphql/Mutations';
 
 /** 
- * Top level component for getting and processing data 
+ * Top level component for retrieving and processing data 
 **/
 function TopSegment() {
   const { user } = useContext(AuthenticationContext);
@@ -32,7 +32,7 @@ function TopSegment() {
       }
     });
 
-  // Curry delete mutations to return when item id provided
+  // Returns curried function awaiting deleted item id
   const curriedDeleteClient = curryDeleteClient(callDeleteClient);
   const curriedDeleteTask = curryDeleteClient(callDeleteTask);
   const curriedDeleteSubtask = curryDeleteClient(callDeleteSubtask);
