@@ -1,13 +1,34 @@
-import React, { useState, memo } from 'react'
+import React, { useContext, useState, memo } from 'react'
 import PropTypes from 'prop-types'
 
+import { useLazyQuery } from '@apollo/react-hooks';
+
+import Queries from '../../../graphql/Queries';
+import { AuthenticationContext } from '../../providers/AuthenticationProvider';
 import NodeModal from '../../bottomsegment/NodeModal';
 
 const Node = ({ x, y, radius, color, borderWidth, borderColor, scale = 1, node }) => {
+    const { user } = useContext(AuthenticationContext);
+    const ownerId = user.id;
     const [modelOpen, setModelOpen] = useState(false);
+    const [timeCommits, setTimecommits] = useState([]);
+
+    const [getTimecommits] = useLazyQuery(Queries.ALL_TIMECOMMITS, {
+        variables: { ownerId, subtaskId: node.id - 1 },
+        onCompleted: data => {
+            setTimecommits(data.getAllTimeCommits);
+        }
+    });
 
     const handleOpenModal = () => {
-        setModelOpen(true);
+        // Don't call for task node 
+        if (node.id !== 1) {
+            getTimecommits();
+        }
+
+        if (timeCommits) {
+            setModelOpen(true);
+        }
     }
 
     const handleCloseModal = () => {
@@ -24,12 +45,11 @@ const Node = ({ x, y, radius, color, borderWidth, borderColor, scale = 1, node }
                 strokeWidth={borderWidth}
                 stroke={borderColor}
             >
-
             </circle>
             <NodeModal
                 handleClose={handleCloseModal}
                 isOpen={modelOpen}
-                nodeId={node.id} />
+                timeCommits={timeCommits} />
         </React.Fragment>
     )
 }

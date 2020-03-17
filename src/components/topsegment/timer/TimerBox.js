@@ -15,12 +15,7 @@ function TimerBox({ refetch }) {
     const [time, setTime] = useState(0);
     const [showMessage, setShowMessage] = useState(false);
     const [message, setMessage] = useState(false);
-    const [createOrUpdateTimeCommit] = useMutation(Mutations.CREATE_OR_UPDATE_TIMECOMMIT,
-        {
-            onCompleted: () => {
-                refetch()
-            }
-        });
+    const [createOrUpdateTimeCommit] = useMutation(Mutations.CREATE_OR_UPDATE_TIMECOMMIT);
 
     const callCreateOrUpdateTimeCommit = () => {
         // If all fields are completed
