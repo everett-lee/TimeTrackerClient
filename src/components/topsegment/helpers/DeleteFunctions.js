@@ -13,8 +13,8 @@ const callDeleteClient = (setActive, deleteItem, ownerId, id) => {
   if (id) {
     deleteItem({
       variables: {
-        "ownerId": ownerId,
-        "clientId": id
+        'ownerId': ownerId,
+        'clientId': id
       }
     });
     setActive(null);
@@ -26,8 +26,8 @@ const callDeleteTask = (setActive, deleteItem, ownerId, id) => {
     deleteItem({
       variables:
       {
-        "ownerId": ownerId,
-        "taskId": id
+        'ownerId': ownerId,
+        'taskId': id
       }
     });
     setActive(null);
@@ -39,8 +39,8 @@ const callDeleteSubtask = (setActive, deleteItem, ownerId, id) => {
     deleteItem({
       variables:
       {
-        "ownerId": ownerId,
-        "subtaskId": id
+        'ownerId': ownerId,
+        'subtaskId': id
       }
     });
     setActive(null);

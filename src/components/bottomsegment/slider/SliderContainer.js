@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { Segment } from 'semantic-ui-react';
+import { Segment, Button } from 'semantic-ui-react';
 
 import Slider from './Slider';
+import SliderDisplay from './SliderDisplay';
 
-import convertToMinutesAndSecondsDisplay from '../topsegment/timer/ConvertToMinutesAndSeconds';
+import convertToMinutesAndSecondsDisplay from '../../topsegment/timer/ConvertToMinutesAndSeconds';
 
 function SliderContainer({ timeCommit }) {
     const min = 0;
@@ -26,7 +27,7 @@ function SliderContainer({ timeCommit }) {
         return convertToMinutesAndSecondsDisplay(asSeconds(timeIn), true);
     }
 
-    const { time, date } = timeCommit;
+    const { id, time, date } = timeCommit;
     const [value, setValue] = useState(asFiveMinutes(time));
 
     const handleSliderChange = ({ target: { value } }) => {
@@ -43,11 +44,12 @@ function SliderContainer({ timeCommit }) {
                     value={value}
                 />
             </Segment>
-            <Segment.Group horizontal>
-                <Segment>{new Date(date).toDateString()}</Segment>
-                <Segment>{handleDisplayTime(value)}</Segment>
-                <Segment>Right</Segment>
-            </Segment.Group>
+            <SliderDisplay 
+            date={new Date(date).toDateString()} 
+            displayTime={handleDisplayTime(value)}
+            timeCommitId={new Number(id)}
+            time={asSeconds(value)}
+            />
         </Segment.Group>
     );
 }

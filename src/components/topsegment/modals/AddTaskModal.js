@@ -21,9 +21,9 @@ function AddTaskModal({ onClose, activeClientId }) {
             createTask({
                 variables:
                 {
-                    "ownerId": authenticationContext.user.id,
-                    "taskName": taskName,
-                    "clientId": activeClientId
+                    'ownerId': authenticationContext.user.id,
+                    'taskName': taskName,
+                    'clientId': activeClientId
                 }
             });
 

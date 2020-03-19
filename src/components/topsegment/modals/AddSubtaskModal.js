@@ -37,11 +37,11 @@ function AddSubtaskModal({ onClose, activeTaskId, refetch, subtasks }) {
             createSubtask({
                 variables:
                 {
-                    "ownerId": authenticationContext.user.id,
-                    "taskId": activeTaskId,
-                    "subtaskName": subtaskName,
-                    "category": category,
-                    "dependsOnIds": dependsOnIds
+                    'ownerId': authenticationContext.user.id,
+                    'taskId': activeTaskId,
+                    'subtaskName': subtaskName,
+                    'category': category,
+                    'dependsOnIds': dependsOnIds
                 }
             });
             onClose();

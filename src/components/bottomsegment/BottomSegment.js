@@ -7,7 +7,7 @@ function BottomSegment() {
     const taskContext = useContext(TaskContext);
 
     const MyResponsiveNetwork = (nodes, links) => (
-        <div id="graphDiv">
+        <div id='graphDiv'>
             <ResponsiveNetwork
                 nodes={nodes}
                 links={links}

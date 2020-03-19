@@ -23,15 +23,15 @@ function TimerBox() {
             createOrUpdateTimeCommit({
                 variables:
                 {
-                    "ownerId": authenticationContext.user.id,
-                    "subtaskId": taskContext.activeSubtaskId,
-                    "time": time
+                    'ownerId': authenticationContext.user.id,
+                    'subtaskId': taskContext.activeSubtaskId,
+                    'time': time
                 }
             });
 
             handleResetTimerClick();
         } else {
-            const message = time === 0 ? "Please start the timer before saving" : "Please select a subtask"
+            const message = time === 0 ? 'Please start the timer before saving' : 'Please select a subtask'
             setMessage(message);
             handleShowMessageStateChange();
         }
@@ -41,7 +41,7 @@ function TimerBox() {
         if (taskContext.activeSubtaskId) {
             callTimer(setTime);
         } else {
-            setMessage("Please select a subtask");
+            setMessage('Please select a subtask');
             handleShowMessageStateChange();
         }
     }
@@ -60,7 +60,7 @@ function TimerBox() {
     const resultMessage = () => {
         if (showMessage) {
             return (
-                <Message negative id="selectSubtaskPrompt">
+                <Message negative id='selectSubtaskPrompt'>
                     <Message.Header>{message}</Message.Header>
                 </Message>
             );
@@ -68,11 +68,11 @@ function TimerBox() {
     }
 
     return (
-        <Segment id="timerBox">
+        <Segment id='timerBox'>
             <Grid columns={2} stackable textAlign='center'>
                 <Grid.Column id='timerCol'>
                     <div className='counterWrapper'>
-                        <button className="timerButton" onClick={handleTimerClick}>{convertToMinutesAndSecondsDisplay(time)}
+                        <button className='timerButton' onClick={handleTimerClick}>{convertToMinutesAndSecondsDisplay(time)}
                         </button>
                     </div>
                 </Grid.Column>

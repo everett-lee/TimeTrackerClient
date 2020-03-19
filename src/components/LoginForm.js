@@ -109,10 +109,10 @@ function LoginForm() {
     }
 
     return (
-        <div className="loginDiv">
-            <Segment placeholder className="loginSegment">
+        <div className='loginDiv'>
+            <Segment placeholder className='loginSegment'>
                 <Grid columns={2} relaxed='very' stackable>
-                    <Grid.Column className="loginGridColumn">
+                    <Grid.Column className='loginGridColumn'>
                         <Form>
                             <Form.Input
                                 icon='user'
@@ -133,9 +133,9 @@ function LoginForm() {
                                 onClick={callAuthenticateEndpoint} />
                         </Form>
                     </Grid.Column>
-                    <Grid.Column verticalAlign='middle' className="loginGridColumn">
+                    <Grid.Column verticalAlign='middle' className='loginGridColumn'>
                         <RegisterModal
-                            data-testid="registerModal"
+                            data-testid='registerModal'
                             trigger={<Button content='Sign up'
                                 icon='signup' size='big'
                                 onClick={changeModalState} />}

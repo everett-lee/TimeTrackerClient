@@ -32,10 +32,10 @@ function AddClientModal({ onClose }) {
             createClient({
                 variables:
                 {
-                    "ownerId": authenticationContext.user.id,
-                    "clientName": clientName,
-                    "businessType": businessType,
-                    "location": location
+                    'ownerId': authenticationContext.user.id,
+                    'clientName': clientName,
+                    'businessType': businessType,
+                    'location': location
                 }
             });
 

@@ -45,27 +45,27 @@ function DropdownSegment({ items, refetch, deleteItem, itemName, setActiveItem, 
     }
 
     const deleteButton = deleteDisabled ? <Button disabled basic onClick={callDeleteItem}>Delete {itemName}</Button> :
-        <Button basic onClick={callDeleteItem}>Delete {itemName}</Button>
+        <Button basic size='medium' onClick={callDeleteItem}>Delete {itemName}</Button>
 
     const addButton = addDisabled ? <Button disabled basic onClick={handleOpen}>New {itemName}</Button> :
-        <Button basic onClick={handleOpen}>New {itemName}</Button>
+        <Button basic size='medium' onClick={handleOpen}>New {itemName}</Button>
 
     return (
         <Segment.Group horizontal>
-            <Segment id="dropdownContainerLeft" textAlign="center">
+            <Segment id='dropdownContainerLeft' textAlign='center'>
                 <Dropdown
                     search selection
-                    id="dropdown"
+                    id='dropdown'
                     placeholder={`Select ${itemName}`}
                     options={items}
                     onClick={() => refetch()}
                     onChange={handleDropdownChange}
                     value={dropdownValue} />
             </Segment>
-            <Segment textAlign="center">
+            <Segment textAlign='center'>
                 {deleteButton}
             </Segment>
-            <Segment textAlign="center">
+            <Segment textAlign='center'>
                 <Modal
                     trigger={addButton}
                     open={modalOpen} >

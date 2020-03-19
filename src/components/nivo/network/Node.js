@@ -15,6 +15,7 @@ const Node = ({ x, y, radius, color, borderWidth, borderColor, scale = 1, node }
 
     const [getTimecommits] = useLazyQuery(Queries.ALL_TIMECOMMITS, {
         variables: { ownerId, subtaskId: node.id - 1 },
+        fetchPolicy: 'cache-and-network',
         onCompleted: data => {
             setTimecommits(data.getAllTimeCommits);
         }

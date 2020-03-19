@@ -1,10 +1,9 @@
 import React from 'react'
 import { Modal, Button } from 'semantic-ui-react'
 
-import SliderContainer from './SliderContainer';
+import SliderContainer from './slider/SliderContainer';
 
 function NodeModal({ handleClose, isOpen, timeCommits }) {
-
 
   const renderTimeCommits = () => {
     return timeCommits

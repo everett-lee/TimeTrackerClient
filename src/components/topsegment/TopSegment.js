@@ -5,10 +5,10 @@ import { useQuery, useMutation } from '@apollo/react-hooks';
 import { AuthenticationContext } from '../providers/AuthenticationProvider';
 import { TaskContext } from '../providers/TaskProvider';
 import { getMappedClients, getMappedTasks, getMappedSubtasks } from './helpers/DataProcessors'
-import TimerBox from "./timer/TimerBox";
+import TimerBox from './timer/TimerBox';
 
 import { curryDeleteClient, callDeleteClient, callDeleteTask, callDeleteSubtask } from './helpers/DeleteFunctions';
-import DropdownSegment from "./DropdownSegment";
+import DropdownSegment from './DropdownSegment';
 import Queries from '../../graphql/Queries';
 import Mutations from '../../graphql/Mutations';
 
@@ -75,13 +75,13 @@ function TopSegment() {
   }
 
   return (
-    <Segment.Group horizontal id="topSegment">
-      <Segment id="selectionBox">
+    <Segment.Group horizontal id='topSegment'>
+      <Segment id='selectionBox'>
         <DropdownSegment
           refetch={clientsRefetch}
           items={clients}
           deleteItem={curriedDeleteClient(setActiveClientId, deleteClient, ownerId)}
-          itemName={"client"}
+          itemName={'client'}
           setActiveItem={callSetClientId}
           deleteDisabled={!Boolean(activeClientId)}
           addDisabled={false} />
@@ -89,7 +89,7 @@ function TopSegment() {
           refetch={handleTaskRefetch}
           items={tasks}
           deleteItem={curriedDeleteTask(setActiveTaskId, deleteTask, ownerId)}
-          itemName={"task"}
+          itemName={'task'}
           setActiveItem={callSetTaskId}
           activeClientId={activeClientId}
           addDisabled={!Boolean(activeClientId)}
@@ -98,7 +98,7 @@ function TopSegment() {
           refetch={handleTaskRefetch}
           items={subtasks}
           deleteItem={curriedDeleteSubtask(setActiveSubtaskId, deleteSubtask, ownerId)}
-          itemName={"subtask"}
+          itemName={'subtask'}
           setActiveItem={setActiveSubtaskId}
           activeTaskId={activeTaskId}
           addDisabled={!Boolean(activeTaskId)}

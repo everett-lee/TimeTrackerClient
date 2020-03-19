@@ -2,7 +2,7 @@ import { gql } from 'apollo-boost';
 
 /**
  * GraphQL queries for execution via the
- * APollo API
+ * Apollo API
  */
 const Queries = {
     ALL_CLIENTS: gql`

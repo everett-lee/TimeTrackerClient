@@ -1,5 +1,9 @@
 import gql from 'graphql-tag';
 
+/**
+ * GraphQL mutations for execution via the
+ * Apollo API
+ */
 const Mutations = {
     CREATE_CLIENT: gql`
     mutation createClient($ownerId: ID!, $clientName: String!, $businessType: String!, $location: String!){
@@ -57,6 +61,13 @@ const Mutations = {
       }
     }
     `,
+    UPDATE_TIMECOMMIT: gql`
+    mutation updateTimeCommit($ownerId: ID!, $timeCommitId: ID!, $time: Long!){
+      updateTimeCommit(ownerId: $ownerId, timeCommitId: $timeCommitId, time: $time) {
+        id
+      }
+    }
+    `
 };
 
 export default Mutations;

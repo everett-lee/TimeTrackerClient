@@ -3,14 +3,14 @@ import React from 'react';
 function Slider({ handleSliderChange, min, max, value }) {
 
     return (
-        <div className="sliderContainer">
+        <div className='sliderContainer'>
             <input
                 onInput={handleSliderChange}
-                type="range" min={min}
+                type='range' min={min}
                 max={max}
                 value={value}
-                className="slider"
-                id="myRange"
+                className='slider'
+                id='myRange'
             />
         </div>
     );

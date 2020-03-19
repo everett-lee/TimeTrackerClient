@@ -8,12 +8,12 @@ const mapForDropdown = (data, itemName) => {
 }
 
 const getMappedClients = (clients) => {
-    return mapForDropdown(clients, "clientName");
+    return mapForDropdown(clients, 'clientName');
 }
 
 const getMappedTasks = (tasks, activeClientId) => {
     return mapForDropdown(tasks
-        .filter(task => task.client.id === activeClientId), "taskName");
+        .filter(task => task.client.id === activeClientId), 'taskName');
 }
 
 const getMappedSubtasks = (tasks, activeClientId, activeTaskId) => {
@@ -21,7 +21,7 @@ const getMappedSubtasks = (tasks, activeClientId, activeTaskId) => {
         .filter(task => task.client.id === activeClientId && task.id === activeTaskId)
         .flatMap(task => task.subtasks);
 
-    return mapForDropdown(activeSubtasks, "subtaskName");
+    return mapForDropdown(activeSubtasks, 'subtaskName');
 }
 
 export { getMappedClients, getMappedTasks, getMappedSubtasks }
