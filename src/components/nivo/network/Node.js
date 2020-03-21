@@ -18,6 +18,7 @@ const Node = ({ x, y, radius, color, borderWidth, borderColor, scale = 1, node }
         fetchPolicy: 'cache-and-network',
         onCompleted: data => {
             setTimecommits(data.getAllTimeCommits);
+            setModelOpen(true);
         }
     });
 
@@ -25,10 +26,6 @@ const Node = ({ x, y, radius, color, borderWidth, borderColor, scale = 1, node }
         // Don't call for task node 
         if (node.id !== 1) {
             getTimecommits();
-        }
-
-        if (timeCommits) {
-            setModelOpen(true);
         }
     }
 
