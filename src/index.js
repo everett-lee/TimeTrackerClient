@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 
 import App from './components/App';
 import { AuthenticationProvider } from './components/providers/AuthenticationProvider';
+import { MessageProvider } from './components/providers/MessageProvider'
 import { TaskProvider } from './components/providers/TaskProvider';
 
 import { ApolloProvider } from '@apollo/react-hooks';
@@ -12,12 +13,14 @@ import 'semantic-ui-css/semantic.min.css';
 ReactDOM.render(
   <ApolloProvider client={client}>
     <TaskProvider>
-    <AuthenticationProvider>
-        <App />
-    </AuthenticationProvider>
+      <AuthenticationProvider>
+        <MessageProvider>
+          <App />
+        </MessageProvider>
+      </AuthenticationProvider>
     </TaskProvider>
   </ApolloProvider>
-    ,
-    document.getElementById('root')
+  ,
+  document.getElementById('root')
 );
 

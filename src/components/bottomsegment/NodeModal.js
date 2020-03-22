@@ -3,7 +3,7 @@ import { Modal, Button } from 'semantic-ui-react'
 
 import SliderContainer from './slider/SliderContainer';
 
-function NodeModal({ handleClose, isOpen, timeCommits }) {
+function NodeModal({ handleClose, isOpen, timeCommits, name }) {
 
   const renderTimeCommits = () => {
     return timeCommits
@@ -17,6 +17,7 @@ function NodeModal({ handleClose, isOpen, timeCommits }) {
 
   return (
     <Modal open={isOpen}>
+      <Modal.Header>{name}</Modal.Header>
       <Modal.Content>
         {renderTimeCommits()}
       </Modal.Content>

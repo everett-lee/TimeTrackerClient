@@ -68,7 +68,7 @@ function TimerBox() {
     }
 
     return (
-        <Segment id='timerBox'>
+        <Segment size={"small"} compact id='timerBox'>
             <Grid columns={2} stackable textAlign='center'>
                 <Grid.Column id='timerCol'>
                     <div className='counterWrapper'>

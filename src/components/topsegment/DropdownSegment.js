@@ -45,13 +45,13 @@ function DropdownSegment({ items, refetch, deleteItem, itemName, setActiveItem, 
     }
 
     const deleteButton = deleteDisabled ? <Button disabled basic onClick={callDeleteItem}>Delete {itemName}</Button> :
-        <Button basic size='medium' onClick={callDeleteItem}>Delete {itemName}</Button>
+        <Button basic size='small' onClick={callDeleteItem}>Delete {itemName}</Button>
 
     const addButton = addDisabled ? <Button disabled basic onClick={handleOpen}>New {itemName}</Button> :
-        <Button basic size='medium' onClick={handleOpen}>New {itemName}</Button>
+        <Button basic size='small' onClick={handleOpen}>New {itemName}</Button>
 
     return (
-        <Segment.Group horizontal>
+        <Segment.Group compact horizontal>
             <Segment id='dropdownContainerLeft' textAlign='center'>
                 <Dropdown
                     search selection

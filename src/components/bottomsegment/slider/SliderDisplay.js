@@ -18,7 +18,7 @@ function SliderDisplay({ date, time, timeCommitId, displayTime }) {
                 {
                     'ownerId': userId,
                     'timeCommitId': timeCommitId,
-                    'time': new Number(time)
+                    'time': Number(time)
                 }
             });
         }

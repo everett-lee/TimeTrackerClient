@@ -4,6 +4,7 @@ import { useQuery, useMutation } from '@apollo/react-hooks';
 
 import { AuthenticationContext } from '../providers/AuthenticationProvider';
 import { TaskContext } from '../providers/TaskProvider';
+import { MessageContext } from '../providers/MessageProvider';
 import { getMappedClients, getMappedTasks, getMappedSubtasks } from './helpers/DataProcessors'
 import TimerBox from './timer/TimerBox';
 
@@ -17,18 +18,33 @@ import Mutations from '../../graphql/Mutations';
 **/
 function TopSegment() {
   const { user } = useContext(AuthenticationContext);
+  const { parseError } = useContext(MessageContext);
+
   const { setTasks, activeTaskId, setActiveTaskId, activeSubtaskId, setActiveSubtaskId } = useContext(TaskContext);
   const ownerId = user.id;
 
   const [activeClientId, setActiveClientId] = useState(null);
 
-  const [deleteClient] = useMutation(Mutations.DELETE_CLIENT);
-  const [deleteTask] = useMutation(Mutations.DELETE_TASK);
+  const [deleteClient] = useMutation(Mutations.DELETE_CLIENT,
+    {
+      onError: (e) => {
+        parseError(e);
+      }
+    });
+  const [deleteTask] = useMutation(Mutations.DELETE_TASK,
+    {
+      onError: (e) => {
+        parseError(e);
+      }
+    });
   // Define mutation, which will refetch results on completion
   const [deleteSubtask] = useMutation(Mutations.DELETE_SUBTASK,
     {
       onCompleted: () => {
         handleTaskRefetch()
+      },
+      onError: (e) => {
+        parseError(e);
       }
     });
 
@@ -75,8 +91,8 @@ function TopSegment() {
   }
 
   return (
-    <Segment.Group horizontal id='topSegment'>
-      <Segment id='selectionBox'>
+    <Segment.Group size={"small"} compact horizontal id='topSegment'>
+      <Segment size={"small"} id='selectionBox'>
         <DropdownSegment
           refetch={clientsRefetch}
           items={clients}

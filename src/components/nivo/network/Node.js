@@ -47,7 +47,8 @@ const Node = ({ x, y, radius, color, borderWidth, borderColor, scale = 1, node }
             <NodeModal
                 handleClose={handleCloseModal}
                 isOpen={modelOpen}
-                timeCommits={timeCommits} />
+                timeCommits={timeCommits}
+                name={node.name} />
         </React.Fragment>
     )
 }

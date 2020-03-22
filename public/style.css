@@ -11,8 +11,6 @@
     min-width: 500px;
 }
 
-#topSegment {}
-
 #selectionBox {
     width: 40%;
 }
@@ -72,9 +70,7 @@
 #graphDiv {
     margin: auto;
     height: 500px;
-    width: 1000px;
-    border: 3px solid green;
-    padding: 10px;
+    width: 100%;
 }
 
 .slidecontainer {
@@ -137,3 +133,6 @@
         /* Cursor on hover */
     }
     
+    .graphMessage {
+        text-align: center;
+    }

@@ -29,7 +29,7 @@ const getSubtaskTaskNode = (subtask, activeSubtaskId) => {
         return;
     }
 
-    const { id, totalTime, dependsOn } = subtask;
+    const { id, subtaskName, totalTime, dependsOn } = subtask;
 
     // The node representing the original task has taken id 1, 
     // so add one to each subsequent subtask id
@@ -44,6 +44,7 @@ const getSubtaskTaskNode = (subtask, activeSubtaskId) => {
 
     return {
         'id': idPlusOne,
+        'name': subtaskName,
         'radius': radius,
         'depth': 1,
         'dependsOn': dependsOn,
