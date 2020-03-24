@@ -2,6 +2,7 @@ import React, { useState, createContext } from 'react';
 
 import sleep from '../utils/sleep';
 
+
 const MessageContext = createContext();
 
 function MessageProvider({ children }) {
@@ -14,7 +15,7 @@ function MessageProvider({ children }) {
 
         setErrorMessage(outputMessage);
         sleep(1000).then( () => {
-            setErrorMessage("");
+            setErrorMessage('');
         })
     }
 

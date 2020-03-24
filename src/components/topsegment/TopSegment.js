@@ -6,8 +6,7 @@ import { AuthenticationContext } from '../providers/AuthenticationProvider';
 import { TaskContext } from '../providers/TaskProvider';
 import { MessageContext } from '../providers/MessageProvider';
 import { getMappedClients, getMappedTasks, getMappedSubtasks } from './helpers/DataProcessors'
-import TimerBox from './timer/TimerBox';
-
+import TimerBox from './timercomponents/TimerBox';
 import { curryDeleteClient, callDeleteClient, callDeleteTask, callDeleteSubtask } from './helpers/DeleteFunctions';
 import DropdownSegment from './DropdownSegment';
 import Queries from '../../graphql/Queries';
@@ -91,8 +90,8 @@ function TopSegment() {
   }
 
   return (
-    <Segment.Group size={"small"} compact horizontal id='topSegment'>
-      <Segment size={"small"} id='selectionBox'>
+    <Segment.Group size={'small'} compact horizontal id='topSegment'>
+      <Segment size={'small'} id='selectionBox'>
         <DropdownSegment
           refetch={clientsRefetch}
           items={clients}

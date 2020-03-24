@@ -3,6 +3,10 @@ import { getTaskNode, getSubtaskTaskNode, getLinks } from './NodeFactory';
 
 const TaskContext = createContext();
 
+/**
+ * Makes array of tasks globally available and initiates 
+ * task to graph node transformation process
+ */
 function TaskProvider({ children }) {
     const [tasks, setTasks] = useState(null);
     const [activeTaskId, setActiveTaskId] = useState(null);

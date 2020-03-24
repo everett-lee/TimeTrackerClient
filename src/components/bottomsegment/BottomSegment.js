@@ -5,7 +5,10 @@ import { Message } from 'semantic-ui-react'
 import { TaskContext } from '../providers/TaskProvider';
 import { MessageContext } from '../providers/MessageProvider';
 
-
+/**
+ * Contains the graph components and modals
+ * associated with each subtask/graph node
+ */
 function BottomSegment() {
     const taskContext = useContext(TaskContext);
     const { errorMessage } = useContext(MessageContext);
@@ -14,7 +17,7 @@ function BottomSegment() {
         if (message) {
             return (
                 <Message negative>
-                    <Message.Header className="graphMessage">
+                    <Message.Header className='graphMessage'>
                         {message}
                     </Message.Header>
                 </Message>

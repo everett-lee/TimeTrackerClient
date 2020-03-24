@@ -4,6 +4,10 @@ import { Modal, Message, Button } from 'semantic-ui-react'
 import SliderContainer from './slider/SliderContainer';
 import Sleep from './../utils/sleep';
 
+/**
+ * Display a list of timecommits associated with each subtask
+ * and enable update of committed time by adjusting the slider
+ */
 function NodeModal({ handleClose, isOpen, timeCommits, name }) {
   const [messageText, setMessageText] = useState('');
   const [isSuccessMessage, setIsSuccessMessage] = useState(true);

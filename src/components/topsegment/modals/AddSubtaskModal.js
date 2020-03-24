@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { useMutation, onCompleted } from '@apollo/react-hooks';
+import { useMutation } from '@apollo/react-hooks';
 import { Button, Form } from 'semantic-ui-react'
 import { AuthenticationContext } from '../../providers/AuthenticationProvider';
 

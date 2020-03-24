@@ -3,7 +3,7 @@ import LoginForm from '../components/LoginForm.js';
 import { register, authenticate } from '../components/providers/ApiActions';
 import {render, fireEvent, cleanup} from '@testing-library/react';
 
-const mockToken = "token";
+const mockToken = 'token';
 const mockUser = { id: 30, token: mockToken};
 authenticate.mockImplementation((username, password) => Promise.resolve(mockUser));
 

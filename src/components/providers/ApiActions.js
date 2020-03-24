@@ -4,7 +4,6 @@ import axios from 'axios';
  * For making calls to register and/or authenticate with
  * the server in order to get JWT.
  */
-
 const server = 'http://localhost:8080';
 
 function register(email, password) {

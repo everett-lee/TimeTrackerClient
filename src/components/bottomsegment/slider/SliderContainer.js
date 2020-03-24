@@ -1,11 +1,15 @@
 import React, { useState } from 'react';
-import { Segment, Button } from 'semantic-ui-react';
+import { Segment } from 'semantic-ui-react';
 
 import Slider from './Slider';
 import SliderDisplay from './SliderDisplay';
 
-import convertToMinutesAndSecondsDisplay from '../../topsegment/modals/timer/ConvertToMinutesAndSeconds';
+import convertToMinutesAndSecondsDisplay from '../../topsegment/timercomponents/ConvertToMinutesAndSeconds';
 
+/**
+ * Contains the slider for adjusting time associated with
+ * time commit and its relevant details.
+ */
 function SliderContainer({ timeCommit, setMessage }) {
     const min = 0;
     const max = 288;
@@ -47,7 +51,7 @@ function SliderContainer({ timeCommit, setMessage }) {
             <SliderDisplay 
             date={new Date(date).toDateString()} 
             displayTime={handleDisplayTime(value)}
-            timeCommitId={new Number(id)}
+            timeCommitId={Number(id)}
             time={asSeconds(value)}
             setMessage={setMessage}
             />

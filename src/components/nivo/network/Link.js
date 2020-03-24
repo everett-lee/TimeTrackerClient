@@ -14,7 +14,7 @@ const Link = ({ sourceX, sourceY, targetX, targetY, thickness, color }) => {
         <line
             stroke={color}
             strokeWidth={thickness}
-            strokeLinecap="round"
+            strokeLinecap='round'
             x1={sourceX}
             y1={sourceY}
             x2={targetX}

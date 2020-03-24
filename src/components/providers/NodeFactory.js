@@ -4,6 +4,11 @@ const rbgValueTask = 'rgb(51, 204, 51)';
 const rbgValueLightGreen = 'rgb(153, 255, 153)';
 const rbgValueRed = 'rgb(255, 77, 77)';
 
+/**
+ * Input a task to create a corresponding graph node object
+ * 
+ * @param {Object} task 
+ */
 const getTaskNode = (task) => {
     if (!task) {
         return;
@@ -24,6 +29,13 @@ const getTaskNode = (task) => {
     }
 }
 
+/**
+ * Input a task to create a corresponding graph node object 
+ * 
+ * @param {Object} subtask 
+ * @param {Number} activeSubtaskId the id of the active subtask 
+ * to highlight
+ */
 const getSubtaskTaskNode = (subtask, activeSubtaskId) => {
     if (!subtask) {
         return;
@@ -52,6 +64,13 @@ const getSubtaskTaskNode = (subtask, activeSubtaskId) => {
     }
 }
 
+/**
+ * 
+ * Map each node to an array of links to 
+ * other nodes
+ * 
+ * @param {Object} node 
+ */
 const getLinks = (node) => {
     // Return links from this node to its dependencies
     if (node.dependsOn.length) {

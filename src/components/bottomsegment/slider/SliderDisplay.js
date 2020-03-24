@@ -11,10 +11,10 @@ function SliderDisplay({ date, time, timeCommitId, displayTime, setMessage }) {
     const [updateTime] = useMutation(Mutations.UPDATE_TIMECOMMIT,
         {
             onCompleted: () => {
-                setMessage(true, "Update successful");
+                setMessage(true, 'Update successful');
             },
             onError: (e) => {
-                setMessage(false, "Update failed");
+                setMessage(false, 'Update failed');
             }
         });
 
