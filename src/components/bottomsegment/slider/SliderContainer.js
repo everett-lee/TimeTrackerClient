@@ -4,9 +4,9 @@ import { Segment, Button } from 'semantic-ui-react';
 import Slider from './Slider';
 import SliderDisplay from './SliderDisplay';
 
-import convertToMinutesAndSecondsDisplay from '../../topsegment/timer/ConvertToMinutesAndSeconds';
+import convertToMinutesAndSecondsDisplay from '../../topsegment/modals/timer/ConvertToMinutesAndSeconds';
 
-function SliderContainer({ timeCommit }) {
+function SliderContainer({ timeCommit, setMessage }) {
     const min = 0;
     const max = 288;
 
@@ -49,6 +49,7 @@ function SliderContainer({ timeCommit }) {
             displayTime={handleDisplayTime(value)}
             timeCommitId={new Number(id)}
             time={asSeconds(value)}
+            setMessage={setMessage}
             />
         </Segment.Group>
     );
