@@ -1,35 +1,50 @@
 import React, { useState, useContext } from 'react';
 import { Segment, Grid, Button, Message } from 'semantic-ui-react';
-import { useMutation } from '@apollo/react-hooks';
+import { useMutation, useLazyQuery } from '@apollo/react-hooks';
 
 import { callTimer, resetTimer } from './Timer';
 import Mutations from '../../../graphql/Mutations';
+import Queries from '../../../graphql/Queries';
 import { AuthenticationContext } from '../../providers/AuthenticationProvider';
 import { TaskContext } from '../../providers/TaskProvider';
 import convertToHoursMinutesAndSecondsDisplay from './ConvertToHoursMinutesAndSeconds';
 import TotalTimeDisplay from './TotalTimeDisplay';
 
 function TimerBox() {
-    const authenticationContext = useContext(AuthenticationContext);
-    const taskContext = useContext(TaskContext);
+    const { user: { id: userId } } = useContext(AuthenticationContext);
+    const { activeSubtaskId, activeTaskId, tasks } = useContext(TaskContext);
 
     const [time, setTime] = useState(0);
     const [showMessage, setShowMessage] = useState(false);
     const [message, setMessage] = useState(false);
-    const [createOrUpdateTimeCommit] = useMutation(Mutations.CREATE_OR_UPDATE_TIMECOMMIT);
+    const [activeTask, setActiveTask] = useState(null);
+
+    const [getTask, { loading }] = useLazyQuery(Queries.GET_TASK, {
+        variables: {
+            'ownerId': userId,
+            'taskId': activeTaskId
+        },
+        fetchPolicy: 'cache-and-network',
+        onCompleted: data => {
+            setActiveTask(data.getTask)
+        }
+    });
+
+    const [createOrUpdateTimeCommit] = useMutation(Mutations.CREATE_OR_UPDATE_TIMECOMMIT, {
+        onCompleted: () => getTask()
+    });
 
     const callCreateOrUpdateTimeCommit = () => {
         // If all fields are assigned
-        if (time > 0 && taskContext.activeSubtaskId) {
+        if (time > 0 && activeSubtaskId) {
             createOrUpdateTimeCommit({
                 variables:
                 {
-                    'ownerId': authenticationContext.user.id,
-                    'subtaskId': taskContext.activeSubtaskId,
+                    'ownerId': userId,
+                    'subtaskId': activeSubtaskId,
                     'time': time
                 }
             });
-
             handleResetTimerClick();
         } else {
             const message = time === 0 ? 'Please start the timer before saving' : 'Please select a subtask'
@@ -39,7 +54,7 @@ function TimerBox() {
     }
 
     const handleTimerClick = () => {
-        if (taskContext.activeSubtaskId) {
+        if (activeSubtaskId) {
             callTimer(setTime);
         } else {
             setMessage('Please select a subtask');
@@ -70,7 +85,7 @@ function TimerBox() {
 
     return (
         <Segment.Group id='timerBox'>
-            <TotalTimeDisplay/>
+            <TotalTimeDisplay activeTask={activeTask} activeTaskId={activeTaskId} tasks={tasks} />
             <Segment >
                 <Grid columns={2} stackable textAlign='center'>
                     <Grid.Column id='timerCol'>

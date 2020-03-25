@@ -1,22 +1,25 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Segment, Statistic } from 'semantic-ui-react';
 
-import { TaskContext } from '../../providers/TaskProvider';
 import convertToHoursMinutesAndSecondsDisplay from './ConvertToHoursMinutesAndSeconds';
 
-function TotalTimeDisplay() {
-    const { activeTaskId, tasks } = useContext(TaskContext);
+function TotalTimeDisplay({ activeTask, activeTaskId, tasks }) {
+    let taskForDisplay;
+
+    // The task has not been updated by the timer yet,
+    // to use the current task state
+    if (!activeTask && activeTaskId && tasks) {
+        taskForDisplay = tasks
+            .filter(task => Number(task.id) === Number(activeTaskId))[0];
+        
+    } else if (activeTask) {
+        taskForDisplay = activeTask;
+    }
 
     const getResultDisplay = () => {
-        let activeTask;
-
-        if (activeTaskId && tasks) {
-            activeTask = tasks.filter(task => Number(task.id) === Number(activeTaskId))[0];
-        }
-
         // If task has been retrieved
-        if (activeTask) {
-            const { taskName, totalTime } = activeTask;
+        if (taskForDisplay) {
+            const { taskName, totalTime } = taskForDisplay;
 
             return <Statistic label={taskName} value={convertToHoursMinutesAndSecondsDisplay(totalTime, false, false)} />
         } else {

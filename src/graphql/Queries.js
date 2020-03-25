@@ -40,6 +40,15 @@ const Queries = {
         }
     }
     `,
+    GET_TASK: gql`
+    query getTask($ownerId: ID!, $taskId: ID!) {
+        getTask(ownerId: $ownerId, taskId: $taskId) {
+           id
+           taskName
+           totalTime
+        }
+    }
+    `,
     ALL_SUBTASKS: gql`
     query getAllSubtasks($ownerId: ID!, $taskId: ID!) {
         getAllSubtasks(ownerId: $ownerId, taskId: $taskId) {
