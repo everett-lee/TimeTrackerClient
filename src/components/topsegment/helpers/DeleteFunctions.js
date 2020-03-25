@@ -1,7 +1,7 @@
 /**
  *  Helper function to export graphql delete wrapper functions
  */
-const curryDeleteClient = (f) => {
+const curryDeleteItem = (f) => {
   return (setActive, deleteItem, ownerId) => {
     return (id) => {
       return f(setActive, deleteItem, ownerId, id);
@@ -47,4 +47,4 @@ const callDeleteSubtask = (setActive, deleteItem, ownerId, id) => {
   }
 }
 
-export { curryDeleteClient, callDeleteClient, callDeleteTask, callDeleteSubtask };
+export { curryDeleteItem, callDeleteClient, callDeleteTask, callDeleteSubtask };

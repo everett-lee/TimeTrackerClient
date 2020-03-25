@@ -7,7 +7,7 @@ function TotalTimeDisplay({ activeTask, activeTaskId, tasks }) {
     let taskForDisplay;
 
     // The task has not been updated by the timer yet,
-    // to use the current task state
+    // so use the current task state
     if (!activeTask && activeTaskId && tasks) {
         taskForDisplay = tasks
             .filter(task => Number(task.id) === Number(activeTaskId))[0];

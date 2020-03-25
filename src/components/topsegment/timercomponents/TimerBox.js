@@ -1,10 +1,9 @@
 import React, { useState, useContext } from 'react';
 import { Segment, Grid, Button, Message } from 'semantic-ui-react';
-import { useMutation, useLazyQuery } from '@apollo/react-hooks';
+import { useMutation } from '@apollo/react-hooks';
 
 import { callTimer, resetTimer } from './Timer';
 import Mutations from '../../../graphql/Mutations';
-import Queries from '../../../graphql/Queries';
 import { AuthenticationContext } from '../../providers/AuthenticationProvider';
 import { TaskContext } from '../../providers/TaskProvider';
 import convertToHoursMinutesAndSecondsDisplay from './ConvertToHoursMinutesAndSeconds';

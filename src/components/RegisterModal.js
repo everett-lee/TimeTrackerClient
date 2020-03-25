@@ -20,12 +20,12 @@ function RegisterModal({ callRegisterEndpoint, active, changeModalState, trigger
             <Modal.Content>
                 <Form>
                     <Form.Input required={true}
-                        label={'username'}
+                        label={'Username'}
                         placeholder={'Username'}
                         onChange={emailOnChangeHandler}
                         value={email} />
                     <Form.Input required={true}
-                        label={'password'}
+                        label={'Password'}
                         placeholder={'Password'}
                         type={'password'}
                         value={password}
