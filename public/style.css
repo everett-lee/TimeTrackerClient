@@ -40,7 +40,7 @@
 }
 
 .timerButton:hover {
-    background-color: #3e8e41
+    background-color: #3e8e41;
 }
 
 .timerButton:active {
@@ -53,17 +53,15 @@
     width: 50%;
 }
 
-#timerButtons {
-    line-height: 250px;
-    padding-right: 200px;
-}
-
 #timerBox {
-    line-height: 250px;
-    width: 35%;
+    margin-top: 3%;
 }
 
 #selectSubtaskPrompt {
+    text-align: center;
+}
+
+#totalTimeDisplay {
     text-align: center;
 }
 

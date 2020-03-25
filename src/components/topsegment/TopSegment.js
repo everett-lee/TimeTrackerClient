@@ -119,7 +119,9 @@ function TopSegment() {
           addDisabled={!Boolean(activeTaskId)}
           deleteDisabled={!Boolean(activeSubtaskId)} />
       </Segment>
+      <Segment>
       <TimerBox refetch={handleTaskRefetch} />
+      </Segment>
     </Segment.Group>
   );
 }

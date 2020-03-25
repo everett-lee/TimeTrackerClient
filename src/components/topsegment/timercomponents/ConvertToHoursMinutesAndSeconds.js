@@ -1,12 +1,14 @@
+const ONE_DAY = 60 * 60 * 24;
 /**
  *  Convert time in seconds to a format suitable for display
  * 
  * @param {number} timeIn 
  * @param {boolean} hideSeconds 
+ * @param {boolean} OneDayMax
  */
-const convertToMinutesAndSecondsDisplay = (timeIn, hideSeconds) => {
+const convertToHoursMinutesAndSecondsDisplay = (timeIn, hideSeconds, OneDayMax) => {
     // Time will stop updating after 23:59:59
-    if (timeIn >= (60 * 60 * 24) - 1) {
+    if (OneDayMax && timeIn >= (ONE_DAY) - 1) {
         return '23:59:59'
     }
 
@@ -25,4 +27,4 @@ const convertToMinutesAndSecondsDisplay = (timeIn, hideSeconds) => {
     }
 }
 
-export default convertToMinutesAndSecondsDisplay;
+export default convertToHoursMinutesAndSecondsDisplay;

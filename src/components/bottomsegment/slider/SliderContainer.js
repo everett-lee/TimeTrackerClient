@@ -4,7 +4,7 @@ import { Segment } from 'semantic-ui-react';
 import Slider from './Slider';
 import SliderDisplay from './SliderDisplay';
 
-import convertToMinutesAndSecondsDisplay from '../../topsegment/timercomponents/ConvertToMinutesAndSeconds';
+import convertToHoursMinutesAndSecondsDisplay from '../../topsegment/timercomponents/ConvertToHoursMinutesAndSeconds';
 
 /**
  * Contains the slider for adjusting time associated with
@@ -28,7 +28,7 @@ function SliderContainer({ timeCommit, setMessage }) {
     // the display as hours:minutes:seconds
     const handleDisplayTime = (timeIn) => {
         // Hide seconds flag set to true
-        return convertToMinutesAndSecondsDisplay(asSeconds(timeIn), true);
+        return convertToHoursMinutesAndSecondsDisplay(asSeconds(timeIn), true, true);
     }
 
     const { id, time, date } = timeCommit;

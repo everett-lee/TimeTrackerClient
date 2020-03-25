@@ -6,7 +6,8 @@ import { callTimer, resetTimer } from './Timer';
 import Mutations from '../../../graphql/Mutations';
 import { AuthenticationContext } from '../../providers/AuthenticationProvider';
 import { TaskContext } from '../../providers/TaskProvider';
-import convertToMinutesAndSecondsDisplay from './ConvertToMinutesAndSeconds';
+import convertToHoursMinutesAndSecondsDisplay from './ConvertToHoursMinutesAndSeconds';
+import TotalTimeDisplay from './TotalTimeDisplay';
 
 function TimerBox() {
     const authenticationContext = useContext(AuthenticationContext);
@@ -68,24 +69,26 @@ function TimerBox() {
     }
 
     return (
-        <Segment size={"small"} compact id='timerBox'>
-            <Grid columns={2} stackable textAlign='center'>
-                <Grid.Column id='timerCol'>
-                    <div className='counterWrapper'>
-                        <button className='timerButton' onClick={handleTimerClick}>{convertToMinutesAndSecondsDisplay(time)}
-                        </button>
-                    </div>
-                </Grid.Column>
-                <Grid.Column id='timerCol'>
-                    <Button.Group id='timerButtons'>
-                        <Button size='huge' basic color='green' onClick={callCreateOrUpdateTimeCommit}>Save</Button>
-                        <Button size='huge' basic color='green' onClick={handleResetTimerClick}>Reset</Button>
-                    </ Button.Group>
-                </Grid.Column>
-            </Grid>
-            {resultMessage()}
-        </Segment>
-
+        <Segment.Group id='timerBox'>
+            <TotalTimeDisplay/>
+            <Segment >
+                <Grid columns={2} stackable textAlign='center'>
+                    <Grid.Column id='timerCol'>
+                        <div className='counterWrapper'>
+                            <button className='timerButton' onClick={handleTimerClick}>{convertToHoursMinutesAndSecondsDisplay(time, false, true)}
+                            </button>
+                        </div>
+                    </Grid.Column>
+                    <Grid.Column id='timerCol'>
+                        <Button.Group id='timerButtons'>
+                            <Button size='huge' basic color='green' onClick={callCreateOrUpdateTimeCommit}>Save</Button>
+                            <Button size='huge' basic color='green' onClick={handleResetTimerClick}>Reset</Button>
+                        </ Button.Group>
+                    </Grid.Column>
+                </Grid>
+                {resultMessage()}
+            </Segment>
+        </Segment.Group>
     );
 }
 
