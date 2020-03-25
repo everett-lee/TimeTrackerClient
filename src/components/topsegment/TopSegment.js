@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { Segment } from 'semantic-ui-react';
-import { useQuery, useMutation } from '@apollo/react-hooks';
+import { useQuery, useLazyQuery, useMutation } from '@apollo/react-hooks';
 
 import { AuthenticationContext } from '../providers/AuthenticationProvider';
 import { TaskContext } from '../providers/TaskProvider';
@@ -23,6 +23,18 @@ function TopSegment() {
   const ownerId = user.id;
 
   const [activeClientId, setActiveClientId] = useState(null);
+  const [activeTask, setActiveTask] = useState(null);
+
+  const [getTask] = useLazyQuery(Queries.GET_TASK, {
+      variables: {
+          'ownerId': ownerId,
+          'taskId': activeTaskId
+      },
+      fetchPolicy: 'cache-and-network',
+      onCompleted: data => {
+          setActiveTask(data.getTask)
+      }
+  });
 
   const [deleteClient] = useMutation(Mutations.DELETE_CLIENT,
     {
@@ -40,6 +52,7 @@ function TopSegment() {
   const [deleteSubtask] = useMutation(Mutations.DELETE_SUBTASK,
     {
       onCompleted: () => {
+        getTask()
         handleTaskRefetch()
       },
       onError: (e) => {
@@ -120,7 +133,10 @@ function TopSegment() {
           deleteDisabled={!Boolean(activeSubtaskId)} />
       </Segment>
       <Segment>
-      <TimerBox refetch={handleTaskRefetch} />
+      <TimerBox 
+        getTask={getTask}
+        activeTask={activeTask}
+      />
       </Segment>
     </Segment.Group>
   );

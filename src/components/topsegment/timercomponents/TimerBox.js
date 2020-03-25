@@ -10,25 +10,13 @@ import { TaskContext } from '../../providers/TaskProvider';
 import convertToHoursMinutesAndSecondsDisplay from './ConvertToHoursMinutesAndSeconds';
 import TotalTimeDisplay from './TotalTimeDisplay';
 
-function TimerBox() {
+function TimerBox({ getTask, activeTask }) {
     const { user: { id: userId } } = useContext(AuthenticationContext);
     const { activeSubtaskId, activeTaskId, tasks } = useContext(TaskContext);
 
     const [time, setTime] = useState(0);
     const [showMessage, setShowMessage] = useState(false);
     const [message, setMessage] = useState(false);
-    const [activeTask, setActiveTask] = useState(null);
-
-    const [getTask, { loading }] = useLazyQuery(Queries.GET_TASK, {
-        variables: {
-            'ownerId': userId,
-            'taskId': activeTaskId
-        },
-        fetchPolicy: 'cache-and-network',
-        onCompleted: data => {
-            setActiveTask(data.getTask)
-        }
-    });
 
     const [createOrUpdateTimeCommit] = useMutation(Mutations.CREATE_OR_UPDATE_TIMECOMMIT, {
         onCompleted: () => getTask()
