@@ -2,12 +2,12 @@ import React, { useState, useContext } from 'react';
 import { Segment, Grid, Button, Message } from 'semantic-ui-react';
 import { useMutation } from '@apollo/react-hooks';
 
+import { AuthenticationContext } from '../../providers/AuthenticationProvider';
 import { GraphQLContext } from '../../providers/GraphQLProvider';
+import { TaskContext } from '../../providers/TaskProvider';
 
 import { callTimer, resetTimer } from './Timer';
 import Mutations from '../../../graphql/Mutations';
-import { AuthenticationContext } from '../../providers/AuthenticationProvider';
-import { TaskContext } from '../../providers/TaskProvider';
 import convertToHoursMinutesAndSecondsDisplay from './ConvertToHoursMinutesAndSeconds';
 import TotalTimeDisplay from './TotalTimeDisplay';
 
