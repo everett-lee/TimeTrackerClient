@@ -18,25 +18,22 @@ const Queries = {
     ALL_TASKS: gql`
     query getAllTasks($ownerId: ID!) {
         getAllTasks(ownerId: $ownerId) {
-           id
-           taskName
-           totalTime
-           subtasks {
             id
-            subtaskName
-            category
+            taskName
             totalTime
-            dependsOn {
-               id   
+            completed
+            subtasks {
+              id
+              subtaskName
+              category
+              totalTime
+              dependsOn {
+                 id   
+               }
             }
-        }
-           client {
+            client {
                id
-               clientName
-               businessType
-               location
-           }
-           completed
+            }
         }
     }
     `,
