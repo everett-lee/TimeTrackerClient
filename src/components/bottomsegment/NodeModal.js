@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Modal, Message, Button } from 'semantic-ui-react'
+import { Modal, Message, Button, Statistic } from 'semantic-ui-react'
 
 import SliderContainer from './slider/SliderContainer';
 import Sleep from './../utils/sleep';
@@ -8,7 +8,7 @@ import Sleep from './../utils/sleep';
  * Display a list of timecommits associated with each subtask
  * and enable update of committed time by adjusting the slider
  */
-function NodeModal({ handleClose, isOpen, timeCommits, name }) {
+function NodeModal({ handleClose, isOpen, timeCommits, name, totalTime, getTimecommits }) {
   const [messageText, setMessageText] = useState('');
   const [isSuccessMessage, setIsSuccessMessage] = useState(true);
 
@@ -55,14 +55,20 @@ function NodeModal({ handleClose, isOpen, timeCommits, name }) {
       .map((timeCommit, i) => {
         return (
           <div key={i}>
-            <SliderContainer timeCommit={timeCommit} setMessage={setMessage} />
+            <SliderContainer
+              timeCommit={timeCommit}
+              setMessage={setMessage}
+              getTimecommits={getTimecommits}
+            />
           </div>)
       });
   }
 
   return (
     <Modal open={isOpen}>
-      <Modal.Header>{name}</Modal.Header>
+      <Modal.Header className="nodeModalHeader">
+        <Statistic label={name} value={totalTime} />
+      </Modal.Header>
       <Modal.Content scrolling>
         {renderTimeCommits()}
       </Modal.Content>

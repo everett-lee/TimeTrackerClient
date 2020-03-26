@@ -5,13 +5,14 @@ import { AuthenticationContext } from '../../providers/AuthenticationProvider';
 
 import Mutations from '../../../graphql/Mutations'
 
-function SliderDisplay({ date, time, timeCommitId, displayTime, setMessage }) {
+function SliderDisplay({ date, time, timeCommitId, displayTime, setMessage, getTimecommits }) {
     const { user: { id: userId } } = useContext(AuthenticationContext);
 
     const [updateTime] = useMutation(Mutations.UPDATE_TIMECOMMIT,
         {
             onCompleted: () => {
                 setMessage(true, 'Update successful');
+                getTimecommits()
             },
             onError: (e) => {
                 setMessage(false, 'Update failed');

@@ -10,7 +10,7 @@ import convertToHoursMinutesAndSecondsDisplay from '../../topsegment/timercompon
  * Contains the slider for adjusting time associated with
  * time commit and its relevant details.
  */
-function SliderContainer({ timeCommit, setMessage }) {
+function SliderContainer({ timeCommit, setMessage, getTimecommits }) {
     const min = 0;
     const max = 288;
 
@@ -54,6 +54,7 @@ function SliderContainer({ timeCommit, setMessage }) {
             timeCommitId={Number(id)}
             time={asSeconds(value)}
             setMessage={setMessage}
+            getTimecommits={getTimecommits}
             />
         </Segment.Group>
     );

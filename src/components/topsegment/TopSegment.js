@@ -23,19 +23,6 @@ function TopSegment() {
   const { setTasks, activeTaskId, setActiveTaskId, activeSubtaskId, setActiveSubtaskId } = useContext(TaskContext);
 
   const [activeClientId, setActiveClientId] = useState(null);
-  const [activeTask, setActiveTask] = useState(null);
-
-  // Get a single task by its id
-  const [getTask] = useLazyQuery(Queries.GET_TASK, {
-    variables: {
-      'ownerId': userId,
-      'taskId': activeTaskId
-    },
-    fetchPolicy: 'cache-and-network',
-    onCompleted: data => {
-      setActiveTask(data.getTask)
-    }
-  });
 
   const [deleteClient] = useMutation(Mutations.DELETE_CLIENT,
     {

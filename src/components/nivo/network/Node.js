@@ -6,18 +6,21 @@ import { useLazyQuery } from '@apollo/react-hooks';
 import Queries from '../../../graphql/Queries';
 import { AuthenticationContext } from '../../providers/AuthenticationProvider';
 import NodeModal from '../../bottomsegment/NodeModal';
+import ConvertToHoursMinutesAndSeconds from '../../topsegment/timercomponents/ConvertToHoursMinutesAndSeconds';
 
 const Node = ({ x, y, radius, color, borderWidth, borderColor, scale = 1, node }) => {
     const { user } = useContext(AuthenticationContext);
     const ownerId = user.id;
     const [modelOpen, setModelOpen] = useState(false);
     const [timeCommits, setTimecommits] = useState([]);
+    const [totalTime, setTotalTime] = useState(0);
 
     const [getTimecommits] = useLazyQuery(Queries.ALL_TIMECOMMITS, {
         variables: { ownerId, subtaskId: node.id - 1 },
         fetchPolicy: 'cache-and-network',
         onCompleted: data => {
             setTimecommits(data.getAllTimeCommits);
+            setTotalTime(calculateTotalTime(data.getAllTimeCommits));
             setModelOpen(true);
         }
     });
@@ -31,6 +34,14 @@ const Node = ({ x, y, radius, color, borderWidth, borderColor, scale = 1, node }
 
     const handleCloseModal = () => {
         setModelOpen(false);
+    }
+
+    const calculateTotalTime = (timeCommits) => {
+        if (!timeCommits.length || !timeCommits) return 0;
+
+        return timeCommits
+        .map(item => item.time)
+        .reduce((total, time) => total + time)
     }
 
     return (
@@ -48,7 +59,9 @@ const Node = ({ x, y, radius, color, borderWidth, borderColor, scale = 1, node }
                 handleClose={handleCloseModal}
                 isOpen={modelOpen}
                 timeCommits={timeCommits}
-                name={node.name} />
+                totalTime={ConvertToHoursMinutesAndSeconds(totalTime, false, false)}
+                name={node.name} 
+                getTimecommits={getTimecommits}/>
         </React.Fragment>
     )
 }
