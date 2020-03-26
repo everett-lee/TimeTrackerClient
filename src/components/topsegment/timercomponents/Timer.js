@@ -4,7 +4,7 @@ let interval = null;
 
 /**
  *  Start or stop the timer 
- * @param {func} setTime 
+ * @param {Function} setTime 
  */
 const callTimer = (setTime) => {
     // The timer is not running 
@@ -22,7 +22,7 @@ const callTimer = (setTime) => {
 /**
  *  Resets all state and returns the
  *  current time
- * @param {func} setTime 
+ * @param {Function} setTime 
  */
 const resetTimer = (setTime) => {
     clearInterval(interval);

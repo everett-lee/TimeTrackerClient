@@ -9,7 +9,7 @@ const ONE_DAY = 60 * 60 * 24;
 const convertToHoursMinutesAndSecondsDisplay = (timeIn, hideSeconds, OneDayMax) => {
     // Time will stop updating after 23:59:59
     if (OneDayMax && timeIn >= (ONE_DAY) - 1) {
-        return '23:59:59'
+        return '24:00:00'
     }
 
     const hours = timeIn / (60 * 60);
