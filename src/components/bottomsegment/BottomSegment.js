@@ -3,15 +3,15 @@ import { ResponsiveNetwork } from '../nivo/network';
 import { Message } from 'semantic-ui-react'
 
 import { TaskContext } from '../providers/TaskProvider';
-import { MessageContext } from '../providers/MessageProvider';
+import { GraphQLContext } from '../providers/GraphQLProvider';
 
 /**
  * Contains the graph components and modals
  * associated with each subtask/graph node
  */
 function BottomSegment() {
-    const taskContext = useContext(TaskContext);
-    const { errorMessage } = useContext(MessageContext);
+    const { nodes, links } = useContext(TaskContext);
+    const { errorMessage } = useContext(GraphQLContext);
 
     const renderMessage = (message) => {
         if (message) {
@@ -45,7 +45,7 @@ function BottomSegment() {
         </div>
     );
 
-    return MyResponsiveNetwork(taskContext.nodes, taskContext.links);
+    return MyResponsiveNetwork(nodes, links);
 }
 
 export default BottomSegment;

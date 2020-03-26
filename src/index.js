@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 
 import App from './components/App';
 import { AuthenticationProvider } from './components/providers/AuthenticationProvider';
-import { MessageProvider } from './components/providers/MessageProvider'
+import { GraphQLProvider } from './components/providers/GraphQLProvider'
 import { TaskProvider } from './components/providers/TaskProvider';
 
 import { ApolloProvider } from '@apollo/react-hooks';
@@ -14,9 +14,9 @@ ReactDOM.render(
   <ApolloProvider client={client}>
     <TaskProvider>
       <AuthenticationProvider>
-        <MessageProvider>
+        <GraphQLProvider>
           <App />
-        </MessageProvider>
+        </GraphQLProvider>
       </AuthenticationProvider>
     </TaskProvider>
   </ApolloProvider>

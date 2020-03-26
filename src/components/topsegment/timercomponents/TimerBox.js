@@ -2,6 +2,8 @@ import React, { useState, useContext } from 'react';
 import { Segment, Grid, Button, Message } from 'semantic-ui-react';
 import { useMutation } from '@apollo/react-hooks';
 
+import { GraphQLContext } from '../../providers/GraphQLProvider';
+
 import { callTimer, resetTimer } from './Timer';
 import Mutations from '../../../graphql/Mutations';
 import { AuthenticationContext } from '../../providers/AuthenticationProvider';
@@ -9,16 +11,26 @@ import { TaskContext } from '../../providers/TaskProvider';
 import convertToHoursMinutesAndSecondsDisplay from './ConvertToHoursMinutesAndSeconds';
 import TotalTimeDisplay from './TotalTimeDisplay';
 
-function TimerBox({ getTask, activeTask }) {
+function TimerBox() {
     const { user: { id: userId } } = useContext(AuthenticationContext);
-    const { activeSubtaskId, activeTaskId, tasks } = useContext(TaskContext);
+    const { activeSubtaskId, activeTaskId, tasks, activeTask, setActiveTask } = useContext(TaskContext);
+    const { getTask } = useContext(GraphQLContext);
 
     const [time, setTime] = useState(0);
     const [showMessage, setShowMessage] = useState(false);
     const [message, setMessage] = useState(false);
 
     const [createOrUpdateTimeCommit] = useMutation(Mutations.CREATE_OR_UPDATE_TIMECOMMIT, {
-        onCompleted: () => getTask()
+        onCompleted: () => getTask({
+            variables:
+            {
+                'ownerId': userId,
+                'taskId': activeTaskId
+            },
+            onCompleted: data => {
+                setActiveTask(data.getTask)
+            }
+        })
     });
 
     const callCreateOrUpdateTimeCommit = () => {

@@ -1,10 +1,9 @@
 import React, { useContext, useState } from 'react';
 import { Segment } from 'semantic-ui-react';
-import { useQuery, useLazyQuery, useMutation } from '@apollo/react-hooks';
+import { useQuery, useMutation } from '@apollo/react-hooks';
 
-import { AuthenticationContext } from '../providers/AuthenticationProvider';
-import { TaskContext } from '../providers/TaskProvider';
-import { MessageContext } from '../providers/MessageProvider';
+import { GraphQLContext } from '../providers/GraphQLProvider';
+
 import { getMappedClients, getMappedTasks, getMappedSubtasks } from './helpers/DataProcessors'
 import TimerBox from './timercomponents/TimerBox';
 import { curryDeleteItem, callDeleteClient, callDeleteTask, callDeleteSubtask } from './helpers/DeleteFunctions';
@@ -16,31 +15,15 @@ import Mutations from '../../graphql/Mutations';
  * Top level component for fetching and processing data to supply
  * to its children
 **/
-function TopSegment() {
-  const { user: { id: userId } } = useContext(AuthenticationContext);
-  const { parseError } = useContext(MessageContext);
+function TopSegment({ userId, setTasks, activeTaskId, setActiveTaskId, activeTask,
+  setActiveTask, activeSubtaskId, setActiveSubtaskId }) {
 
-  const { setTasks, activeTaskId, setActiveTaskId, activeSubtaskId, setActiveSubtaskId } = useContext(TaskContext);
+  const { parseError, getTask } = useContext(GraphQLContext);
 
   const [activeClientId, setActiveClientId] = useState(null);
-  const [activeTask, setActiveTask] = useState(null);
-
-  const [getTask] = useLazyQuery(Queries.GET_TASK, {
-    variables: {
-      'ownerId': userId,
-      'taskId': activeTaskId
-    },
-    fetchPolicy: 'cache-and-network',
-    onCompleted: data => {
-      setActiveTask(data.getTask)
-    }
-  });
 
   const [deleteClient] = useMutation(Mutations.DELETE_CLIENT,
     {
-      onCompleted: () => {
-        setActiveTask(null)
-      },
       onError: (e) => {
         parseError(e);
       }
@@ -48,6 +31,7 @@ function TopSegment() {
   const [deleteTask] = useMutation(Mutations.DELETE_TASK,
     {
       onError: (e) => {
+        setActiveTask(null);
         parseError(e);
       }
     });
@@ -55,7 +39,16 @@ function TopSegment() {
   const [deleteSubtask] = useMutation(Mutations.DELETE_SUBTASK,
     {
       onCompleted: () => {
-        getTask()
+        getTask({
+          variables:
+          {
+            'ownerId': userId,
+            'taskId': activeTaskId
+          },
+          onCompleted: data => {
+            setActiveTask(data.getTask)
+          }
+        })
         handleTaskRefetch()
       },
       onError: (e) => {

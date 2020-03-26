@@ -11,6 +11,7 @@ function TaskProvider({ children }) {
     const [tasks, setTasks] = useState(null);
     const [activeTaskId, setActiveTaskId] = useState(null);
     const [activeSubtaskId, setActiveSubtaskId] = useState(null);
+    const [activeTask, setActiveTask] = useState(null);
 
     const [nodes, setNodes] = useState([]);
     const [links, setLinks] = useState([]);
@@ -42,6 +43,7 @@ function TaskProvider({ children }) {
         <TaskContext.Provider value={{
             tasks, setTasks,
             activeTaskId, setActiveTaskId,
+            activeTask, setActiveTask,
             activeSubtaskId, setActiveSubtaskId,
             nodes, links
         }}>
