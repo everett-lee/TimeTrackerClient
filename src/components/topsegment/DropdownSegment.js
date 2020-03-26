@@ -6,7 +6,7 @@ import AddTaskModal from './modals/AddTaskModal';
 import AddSubtaskModal from './modals/AddSubtaskModal';
 
 function DropdownSegment({ items, refetch, deleteItem, itemName, setActiveItem, activeClientId, activeTaskId,
-    addDisabled, deleteDisabled }) {
+    addDisabled, deleteDisabled, handleTaskRefetch }) {
 
     const [modalOpen, setModalOpen] = useState(false);
     const [dropdownValue, setDropdownValue] = useState(null);
@@ -23,7 +23,7 @@ function DropdownSegment({ items, refetch, deleteItem, itemName, setActiveItem, 
 
     const callDeleteItem = () => {
         if (dropdownValue) {
-            deleteItem(dropdownValue);
+            deleteItem(dropdownValue, handleTaskRefetch);
             setDropdownValue(null);
             setActiveItem(null);
         }

@@ -1,15 +1,14 @@
 import React, { useContext, useState } from 'react';
 import { Segment } from 'semantic-ui-react';
-import { useQuery, useMutation } from '@apollo/react-hooks';
+import { useQuery } from '@apollo/react-hooks';
 
 import { GraphQLContext } from '../providers/GraphQLProvider';
+import Queries from '../../graphql/Queries';
 
 import { getMappedClients, getMappedTasks, getMappedSubtasks } from './helpers/DataProcessors'
-import TimerBox from './timercomponents/TimerBox';
 import { curryDeleteItem, callDeleteClient, callDeleteTask, callDeleteSubtask } from './helpers/DeleteFunctions';
 import DropdownSegment from './DropdownSegment';
-import Queries from '../../graphql/Queries';
-import Mutations from '../../graphql/Mutations';
+import TimerBox from './timercomponents/TimerBox';
 
 /** 
  * Top level component for fetching and processing data to supply
@@ -18,43 +17,9 @@ import Mutations from '../../graphql/Mutations';
 function TopSegment({ userId, setTasks, activeTaskId, setActiveTaskId, activeTask,
   setActiveTask, activeSubtaskId, setActiveSubtaskId }) {
 
-  const { parseError, getTask } = useContext(GraphQLContext);
+  const { getTask, deleteClient, deleteTask, deleteSubtask } = useContext(GraphQLContext);
 
   const [activeClientId, setActiveClientId] = useState(null);
-
-  const [deleteClient] = useMutation(Mutations.DELETE_CLIENT,
-    {
-      onError: (e) => {
-        parseError(e);
-      }
-    });
-  const [deleteTask] = useMutation(Mutations.DELETE_TASK,
-    {
-      onError: (e) => {
-        setActiveTask(null);
-        parseError(e);
-      }
-    });
-  // Define mutation, which will refetch results on completion
-  const [deleteSubtask] = useMutation(Mutations.DELETE_SUBTASK,
-    {
-      onCompleted: () => {
-        getTask({
-          variables:
-          {
-            'ownerId': userId,
-            'taskId': activeTaskId
-          },
-          onCompleted: data => {
-            setActiveTask(data.getTask)
-          }
-        })
-        handleTaskRefetch()
-      },
-      onError: (e) => {
-        parseError(e);
-      }
-    });
 
   // Returns curried function awaiting deleted item id
   const curriedDeleteClient = curryDeleteItem(callDeleteClient);
@@ -96,6 +61,16 @@ function TopSegment({ userId, setTasks, activeTaskId, setActiveTaskId, activeTas
     tasksRefetch()
     setActiveTaskId(activeTaskId);
     setTasks(tasksData.getAllTasks);
+    getTask({
+      variables:
+      {
+        'ownerId': userId,
+        'taskId': activeTaskId
+      },
+      onCompleted: data => {
+        setActiveTask(data.getTask)
+      }
+    })
   }
 
   return (
@@ -122,6 +97,7 @@ function TopSegment({ userId, setTasks, activeTaskId, setActiveTaskId, activeTas
           refetch={handleTaskRefetch}
           items={subtasks}
           deleteItem={curriedDeleteSubtask(setActiveSubtaskId, deleteSubtask, userId)}
+          handleTaskRefetch={handleTaskRefetch}
           itemName={'subtask'}
           setActiveItem={setActiveSubtaskId}
           activeTaskId={activeTaskId}

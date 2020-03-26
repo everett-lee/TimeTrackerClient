@@ -1,7 +1,8 @@
 import React, { useState, createContext } from 'react';
-import { useLazyQuery } from '@apollo/react-hooks';
+import { useLazyQuery, useMutation } from '@apollo/react-hooks';
 
 import Queries from '../../graphql/Queries';
+import Mutations from '../../graphql/Mutations';
 import sleep from '../utils/sleep';
 
 const GraphQLContext = createContext();
@@ -12,8 +13,28 @@ function GraphQLProvider({ children }) {
     // Used by both the top and bottom components to fetch a single
     // task with the latest total time
     const [getTask] = useLazyQuery(Queries.GET_TASK, {
-      fetchPolicy: 'cache-and-network'
+        fetchPolicy: 'cache-and-network'
     });
+
+    const [deleteClient] = useMutation(Mutations.DELETE_CLIENT,
+        {
+            onError: (e) => {
+                parseError(e);
+            }
+        });
+    const [deleteTask] = useMutation(Mutations.DELETE_TASK,
+        {
+            onError: (e) => {
+                parseError(e);
+            }
+        });
+    // Define mutation, which will refetch results on completion
+    const [deleteSubtask] = useMutation(Mutations.DELETE_SUBTASK,
+        {
+            onError: (e) => {
+                parseError(e);
+            }
+        });
 
     // Strips 'GraphQL error:' from message
     const parseError = ({ message }) => {
@@ -21,13 +42,16 @@ function GraphQLProvider({ children }) {
         const outputMessage = message.slice(firstColon + 1);
 
         setErrorMessage(outputMessage);
-        sleep(1000).then( () => {
+        sleep(1000).then(() => {
             setErrorMessage('');
         })
     }
 
     return (
-        <GraphQLContext.Provider value={{ errorMessage, parseError, getTask }}>
+        <GraphQLContext.Provider value={{
+            errorMessage, parseError, getTask,
+            deleteClient, deleteTask, deleteSubtask
+        }}>
             {children}
         </ GraphQLContext.Provider>
     );
