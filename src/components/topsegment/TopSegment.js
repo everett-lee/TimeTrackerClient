@@ -7,37 +7,40 @@ import { TaskContext } from '../providers/TaskProvider';
 import { MessageContext } from '../providers/MessageProvider';
 import { getMappedClients, getMappedTasks, getMappedSubtasks } from './helpers/DataProcessors'
 import TimerBox from './timercomponents/TimerBox';
-import { curryDeleteClient, callDeleteClient, callDeleteTask, callDeleteSubtask } from './helpers/DeleteFunctions';
+import { curryDeleteItem, callDeleteClient, callDeleteTask, callDeleteSubtask } from './helpers/DeleteFunctions';
 import DropdownSegment from './DropdownSegment';
 import Queries from '../../graphql/Queries';
 import Mutations from '../../graphql/Mutations';
 
 /** 
- * Top level component for retrieving and processing data 
+ * Top level component for fetching and processing data to supply
+ * to its children
 **/
 function TopSegment() {
-  const { user } = useContext(AuthenticationContext);
+  const { user: { id: userId } } = useContext(AuthenticationContext);
   const { parseError } = useContext(MessageContext);
 
   const { setTasks, activeTaskId, setActiveTaskId, activeSubtaskId, setActiveSubtaskId } = useContext(TaskContext);
-  const ownerId = user.id;
 
   const [activeClientId, setActiveClientId] = useState(null);
   const [activeTask, setActiveTask] = useState(null);
 
   const [getTask] = useLazyQuery(Queries.GET_TASK, {
-      variables: {
-          'ownerId': ownerId,
-          'taskId': activeTaskId
-      },
-      fetchPolicy: 'cache-and-network',
-      onCompleted: data => {
-          setActiveTask(data.getTask)
-      }
+    variables: {
+      'ownerId': userId,
+      'taskId': activeTaskId
+    },
+    fetchPolicy: 'cache-and-network',
+    onCompleted: data => {
+      setActiveTask(data.getTask)
+    }
   });
 
   const [deleteClient] = useMutation(Mutations.DELETE_CLIENT,
     {
+      onCompleted: () => {
+        setActiveTask(null)
+      },
       onError: (e) => {
         parseError(e);
       }
@@ -61,16 +64,16 @@ function TopSegment() {
     });
 
   // Returns curried function awaiting deleted item id
-  const curriedDeleteClient = curryDeleteClient(callDeleteClient);
-  const curriedDeleteTask = curryDeleteClient(callDeleteTask);
-  const curriedDeleteSubtask = curryDeleteClient(callDeleteSubtask);
+  const curriedDeleteClient = curryDeleteItem(callDeleteClient);
+  const curriedDeleteTask = curryDeleteItem(callDeleteTask);
+  const curriedDeleteSubtask = curryDeleteItem(callDeleteSubtask);
 
   // Retrieve data for all clients and tasks
   const { loading: clientsLoading, error: clientsError, data: clientsData, refetch: clientsRefetch } = useQuery(Queries.ALL_CLIENTS, {
-    variables: { ownerId },
+    variables: { ownerId: userId },
   });
   const { loading: tasksLoading, error: tasksError, data: tasksData, refetch: tasksRefetch } = useQuery(Queries.ALL_TASKS, {
-    variables: { ownerId },
+    variables: { ownerId: userId },
   });
 
   if (clientsLoading || tasksLoading) return null;
@@ -84,14 +87,14 @@ function TopSegment() {
   // subtasks associated with the currently selected task
   const subtasks = getMappedSubtasks(tasksData.getAllTasks, activeClientId, activeTaskId)
 
-  const callSetClientId = (id) => {
+  const handleSetClientId = (id) => {
     setActiveClientId(id);
     setActiveTaskId(null);
     setTasks(null);
     setActiveSubtaskId(null);;
   }
 
-  const callSetTaskId = (id) => {
+  const handleSetTaskId = (id) => {
     setActiveTaskId(id);
     setActiveSubtaskId(null);;
   }
@@ -108,24 +111,24 @@ function TopSegment() {
         <DropdownSegment
           refetch={clientsRefetch}
           items={clients}
-          deleteItem={curriedDeleteClient(setActiveClientId, deleteClient, ownerId)}
+          deleteItem={curriedDeleteClient(setActiveClientId, deleteClient, userId)}
           itemName={'client'}
-          setActiveItem={callSetClientId}
+          setActiveItem={handleSetClientId}
           deleteDisabled={!Boolean(activeClientId)}
           addDisabled={false} />
         <DropdownSegment
           refetch={handleTaskRefetch}
           items={tasks}
-          deleteItem={curriedDeleteTask(setActiveTaskId, deleteTask, ownerId)}
+          deleteItem={curriedDeleteTask(setActiveTaskId, deleteTask, userId)}
           itemName={'task'}
-          setActiveItem={callSetTaskId}
+          setActiveItem={handleSetTaskId}
           activeClientId={activeClientId}
           addDisabled={!Boolean(activeClientId)}
           deleteDisabled={!Boolean(activeTaskId)} />
         <DropdownSegment
           refetch={handleTaskRefetch}
           items={subtasks}
-          deleteItem={curriedDeleteSubtask(setActiveSubtaskId, deleteSubtask, ownerId)}
+          deleteItem={curriedDeleteSubtask(setActiveSubtaskId, deleteSubtask, userId)}
           itemName={'subtask'}
           setActiveItem={setActiveSubtaskId}
           activeTaskId={activeTaskId}
@@ -133,10 +136,10 @@ function TopSegment() {
           deleteDisabled={!Boolean(activeSubtaskId)} />
       </Segment>
       <Segment>
-      <TimerBox 
-        getTask={getTask}
-        activeTask={activeTask}
-      />
+        <TimerBox
+          getTask={getTask}
+          activeTask={activeTask}
+        />
       </Segment>
     </Segment.Group>
   );
