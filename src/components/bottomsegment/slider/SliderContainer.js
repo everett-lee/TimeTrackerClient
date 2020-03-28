@@ -27,7 +27,7 @@ function SliderContainer({ timeCommit, setMessage, getTimecommits }) {
     // Convert time from five minute segments to seconds
     // the display as hours:minutes:seconds
     const handleDisplayTime = (timeIn) => {
-        // Hide seconds flag set to true
+        // Hide seconds and one day max set to true
         return convertToHoursMinutesAndSecondsDisplay(asSeconds(timeIn), true, true);
     }
 
@@ -48,13 +48,13 @@ function SliderContainer({ timeCommit, setMessage, getTimecommits }) {
                     value={value}
                 />
             </Segment>
-            <SliderDisplay 
-            date={new Date(date).toDateString()} 
-            displayTime={handleDisplayTime(value)}
-            timeCommitId={Number(id)}
-            time={asSeconds(value)}
-            setMessage={setMessage}
-            getTimecommits={getTimecommits}
+            <SliderDisplay
+                date={new Date(date).toDateString()}
+                displayTime={handleDisplayTime(value)}
+                timeCommitId={Number(id)}
+                time={asSeconds(value)}
+                setMessage={setMessage}
+                getTimecommits={getTimecommits}
             />
         </Segment.Group>
     );

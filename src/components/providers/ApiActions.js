@@ -7,7 +7,7 @@ import axios from 'axios';
 const server = 'http://localhost:8080';
 
 function register(email, password) {
-    // send post request to register endpoint with
+    // Send post request to register endpoint with
     // email and password in body 
     const response = axios.post(server + '/register', {email, password})
         .then(res => res.data);
@@ -16,7 +16,7 @@ function register(email, password) {
 }
 
 function authenticate(email, password) {
-    // send post request to authenticate endpoint with
+    // Send post request to authenticate endpoint with
     // email and password in body 
     const response = axios.post(server + '/authenticate', {email, password})
         .then(res => res.data);

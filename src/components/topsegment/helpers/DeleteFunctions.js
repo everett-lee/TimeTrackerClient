@@ -6,7 +6,7 @@
 
  /**
   * The generic function which partially applies first 
-  * the arguments and functions required for deletion, then the id of 
+  * the arguments required for deletion, then the id of 
   * the deleted item together with an optional callback function
   * 
   * @param {Function} f the function to curry

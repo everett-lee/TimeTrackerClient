@@ -3,6 +3,7 @@ import { Segment } from 'semantic-ui-react';
 import { useQuery } from '@apollo/react-hooks';
 
 import { GraphQLContext } from '../providers/GraphQLProvider';
+import { TaskContext } from '../providers/TaskProvider';
 import Queries from '../../graphql/Queries';
 
 import { getMappedClients, getMappedTasks, getMappedSubtasks } from './helpers/DataProcessors'
@@ -14,10 +15,10 @@ import TimerBox from './timercomponents/TimerBox';
  * Top level component for fetching and processing data to supply
  * to its children
 **/
-function TopSegment({ userId, setTasks, activeTaskId, setActiveTaskId, activeTask,
-  setActiveTask, activeSubtaskId, setActiveSubtaskId }) {
-
+function TopSegment({ userId }) {
   const { getTask, deleteClient, deleteTask, deleteSubtask } = useContext(GraphQLContext);
+  const { setTasks, activeTaskId, setActiveTaskId, activeTask,
+    setActiveTask, activeSubtaskId, setActiveSubtaskId } = useContext(TaskContext);
 
   const [activeClientId, setActiveClientId] = useState(null);
 

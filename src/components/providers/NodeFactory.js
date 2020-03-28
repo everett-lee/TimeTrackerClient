@@ -1,5 +1,5 @@
 // Number to divide totalTime by
-const divisor = 50000;
+const divisor = 10000;
 const rbgValueTask = 'rgb(51, 204, 51)';
 const rbgValueLightGreen = 'rgb(153, 255, 153)';
 const rbgValueRed = 'rgb(255, 77, 77)';
@@ -16,10 +16,10 @@ const getTaskNode = (task) => {
 
     const { totalTime } = task;
 
-    const minRadius = 16;
-    const reducedTime = totalTime / divisor;
-
-    const radius = Math.max(reducedTime, minRadius);
+    const minRadius = 14;
+    const maxRadius = 25;
+    
+    const radius = getRadius(totalTime, divisor, minRadius, maxRadius);
 
     return {
         'id': 1,
@@ -50,9 +50,9 @@ const getSubtaskTaskNode = (subtask, activeSubtaskId) => {
     const colour = activeSubtaskId === id ? rbgValueRed : rbgValueLightGreen
 
     const minRadius = 8;
-    const reducedTime = totalTime / divisor;
+    const maxRadius = 20;
 
-    const radius = Math.max(reducedTime, minRadius);
+    const radius = getRadius(totalTime, divisor, minRadius, maxRadius);
 
     return {
         'id': idPlusOne,
@@ -88,6 +88,18 @@ const getLink = (from, to) => {
         'target': to,
         'distance': 120
     }
+}
+
+/**
+ * @param {Number} totalTime 
+ * @param {Number} divisor 
+ * @param {Number} minRadius 
+ * @param {Number} maxRadius 
+ */
+const getRadius = (totalTime, divisor, minRadius, maxRadius) => {
+    const reducedTime = totalTime / divisor;
+
+    return Math.min(Math.max(reducedTime, minRadius), maxRadius);
 }
 
 export { getTaskNode, getSubtaskTaskNode, getLinks };

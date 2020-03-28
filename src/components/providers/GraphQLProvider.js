@@ -22,12 +22,14 @@ function GraphQLProvider({ children }) {
                 parseError(e);
             }
         });
+
     const [deleteTask] = useMutation(Mutations.DELETE_TASK,
         {
             onError: (e) => {
                 parseError(e);
             }
         });
+        
     // Define mutation, which will refetch results on completion
     const [deleteSubtask] = useMutation(Mutations.DELETE_SUBTASK,
         {
