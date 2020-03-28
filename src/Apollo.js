@@ -8,7 +8,7 @@ import { setContext } from 'apollo-link-context';
  * 
  */
 const httpLink = createHttpLink({
-    uri: 'http://localhost:8080/graphql',
+    uri: 'https://newtimetracker-272513.appspot.com/graphql',
   });
   
   const authLink = setContext((_, { headers }) => {

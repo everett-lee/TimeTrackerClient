@@ -1,4 +1,4 @@
-let time = 0;
+let time = 1;
 let isRunning = false;
 let interval = null;
 
@@ -29,7 +29,7 @@ const resetTimer = (setTime) => {
     setTime(0);
     isRunning = false;
     const returnTime = time;
-    time = 0;
+    time = 1;
 
     return returnTime;
 }

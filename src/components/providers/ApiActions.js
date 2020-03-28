@@ -4,7 +4,7 @@ import axios from 'axios';
  * For making calls to register and/or authenticate with
  * the server in order to get JWT.
  */
-const server = 'http://localhost:8080';
+const server = 'https://newtimetracker-272513.appspot.com';
 
 function register(email, password) {
     // Send post request to register endpoint with
