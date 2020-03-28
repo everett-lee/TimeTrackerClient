@@ -62,16 +62,18 @@ function TopSegment({ userId }) {
     tasksRefetch()
     setActiveTaskId(activeTaskId);
     setTasks(tasksData.getAllTasks);
-    getTask({
-      variables:
-      {
-        'ownerId': userId,
-        'taskId': activeTaskId
-      },
-      onCompleted: data => {
-        setActiveTask(data.getTask)
-      }
-    })
+    if (activeTaskId) {
+      getTask({
+        variables:
+        {
+          'ownerId': userId,
+          'taskId': activeTaskId
+        },
+        onCompleted: data => {
+          setActiveTask(data.getTask)
+        }
+      })
+    } 
   }
 
   return (
