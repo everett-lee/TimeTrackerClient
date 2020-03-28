@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.js": "/TimeTrackerClient/static/js/main.a900e101.chunk.js",
+    "main.js.map": "/TimeTrackerClient/static/js/main.a900e101.chunk.js.map",
+    "runtime-main.js": "/TimeTrackerClient/static/js/runtime-main.87af903a.js",
+    "runtime-main.js.map": "/TimeTrackerClient/static/js/runtime-main.87af903a.js.map",
+    "static/css/2.38fcffbf.chunk.css": "/TimeTrackerClient/static/css/2.38fcffbf.chunk.css",
+    "static/js/2.18c37111.chunk.js": "/TimeTrackerClient/static/js/2.18c37111.chunk.js",
+    "static/js/2.18c37111.chunk.js.map": "/TimeTrackerClient/static/js/2.18c37111.chunk.js.map",
+    "index.html": "/TimeTrackerClient/index.html",
+    "precache-manifest.db151c0cb9e4f9683398d156a02d06da.js": "/TimeTrackerClient/precache-manifest.db151c0cb9e4f9683398d156a02d06da.js",
+    "service-worker.js": "/TimeTrackerClient/service-worker.js",
+    "static/css/2.38fcffbf.chunk.css.map": "/TimeTrackerClient/static/css/2.38fcffbf.chunk.css.map",
+    "static/js/2.18c37111.chunk.js.LICENSE.txt": "/TimeTrackerClient/static/js/2.18c37111.chunk.js.LICENSE.txt",
+    "static/media/semantic.min.css": "/TimeTrackerClient/static/media/outline-icons.ef60a4f6.woff"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.87af903a.js",
+    "static/css/2.38fcffbf.chunk.css",
+    "static/js/2.18c37111.chunk.js",
+    "static/js/main.a900e101.chunk.js"
+  ]
+}
