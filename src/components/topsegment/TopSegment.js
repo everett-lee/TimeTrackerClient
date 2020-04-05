@@ -50,12 +50,12 @@ function TopSegment({ userId }) {
     setActiveClientId(id);
     setActiveTaskId(null);
     setTasks(null);
-    setActiveSubtaskId(null);;
+    setActiveSubtaskId(null);
   }
 
   const handleSetTaskId = (id) => {
     setActiveTaskId(id);
-    setActiveSubtaskId(null);;
+    setActiveSubtaskId(null);
   }
 
   const handleTaskRefetch = () => {

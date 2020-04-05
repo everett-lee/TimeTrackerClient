@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 
 import { AuthenticationContext } from './providers/AuthenticationProvider';
 
@@ -13,7 +13,7 @@ function App() {
     return (
       <LoginForm />
     );
-  }
+  } 
 
   if (!authenticated) {
     return loginView();
